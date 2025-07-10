@@ -6,19 +6,19 @@ Este repositorio contiene los materiales, notebooks, apuntes y recursos de las c
 
 - [Clase 01 - Gestión de Datos](/Clase%2001%20-%20Gestión%20de%20Datos/): Manejo eficiente de los datos. Roles en la gestión de datos.
 - [Clase 02 - Diagrama Entidad Relación (DER)](/Clase%2002%20-%20Diagrama%20Entidad%20Relación%20(DER)/): Qué es un DER. Entidades, atributos y relaciones. Cardinalidad.
-- [Clase 03 - Diagrama Entidad Relación (DER) - Clase Práctica](/Clase%2003%20-%20Diagrama%20Entidad%20Relación%20(DER)%20-%20Clase%20Práctica/): Resolución de casos práctico de la guía. 
+- [Clase 03 - Diagrama Entidad Relación (DER) - Clase Práctica](/Clase%2003%20-%20Diagrama%20Entidad%20Relación%20(DER)%20-%20Clase%20Práctica/): Resolución de casos prácticos de la guía. 
 - [Clase 04 - Normalización](/Clase%2004%20-%20Normalización/): Normalización de datos. Pasar de 1FN a 3FN.
-- [Clase 05 - Normalización - Clase Práctica](/Clase%2005%20-%20Normalización%20-%20Clase%20Práctica/): Resolución de casos práctico de la guía.
+- [Clase 05 - Normalización - Clase Práctica](/Clase%2005%20-%20Normalización%20-%20Clase%20Práctica/): Resolución de casos prácticos de la guía.
 - [Clase 06 - SQL Parte 1](/Clase%2006%20-%20SQL%20Parte%201/): Introducción a SQL. Data Definition Language y Data Manipulation Language.
 - [Clase 07 - SQL Parte 2](/Clase%2007%20-%20SQL%20Parte%202/): SQL Avanzado. Having, sub-queries, window functions, CTEs y optimización de consultas.
 - [Clase 08 - NoSQL](/Clase%2008%20-%20NoSQL/): NoSQL. Bases de datos agregadas y sin esquema.
-- [Clase 09 - NoSQL - Clase Práctica](/Clase%2009%20-%20NoSQL%20-%20Clase%20Práctica/): Resolución de casos práctico de la guía.
+- [Clase 09 - NoSQL - Clase Práctica](/Clase%2009%20-%20NoSQL%20-%20Clase%20Práctica/): Resolución de casos prácticos de la guía.
 - [Clase 10 - Arquitecturas Analíticas](/Clase%2010%20-%20Arquitecturas%20Analíticas/): Data Lakes, Data Warehouses & Data Marts
 - [Clase 11 - Casos Integradores](/Clase%2011%20-%20Casos%20Integradores/): Presentación por parte de los tutores de lo que será el trabajo integrador de tutoriales.
 - [Clase 12 - Presentación de Casos Integradores]: Presentación de los casos resueltos por los alumnos.
 - [Clase 13 - Repaso]: Repaso para el final. Cierre de las tutoriales.
 
-## Tabla de clases
+## Cronograma
 
 | # Clase | Sapoznik (Mar 9hs) | Rodríguez del Castillo (Mié 10.40hs) | Giacchetta (Jue 12.20hs) | Apicella (Jue 12.20hs) | Lapidus (Jue 19hs) | Rodríguez del Castillo (Vie 10.40hs) |
 |:------:|:-----------------:|:------------------------------------:|:------------------------:|:----------------------:|:-----------------:|:------------------------------------:|
@@ -37,4 +37,4 @@ Este repositorio contiene los materiales, notebooks, apuntes y recursos de las c
 |   12   | 18/11 | 19/11 | 20/11 | 20/11 | 20/11 | 14/11 |
 |   13   | 25/11 | 26/11 | 27/11 | 27/11 | 27/11 | 28/11 |
 
-Nota: La tutorial de los viernes sí tiene clase la primera semana para compensar con el feriado del 15/08. Ídem para post-parciales.
+Nota: La tutorial de los viernes sí tiene clase la primera semana para compensar con el feriado del 15/08. Ídem para post-parciales con el feriado del 21/11.
