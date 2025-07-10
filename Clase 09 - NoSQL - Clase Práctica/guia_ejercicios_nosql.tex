@@ -1,0 +1,377 @@
+\documentclass[12pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[spanish]{babel}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{forest}
+\usepackage{float}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{tikz}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+
+\sloppy
+\setlength{\parindent}{0pt}
+
+\begin{document}
+
+\begin{center}
+  {\LARGE \textbf{Guía de Ejercicios \\ Selección de Bases de Datos NoSQL}}\\[0.5em]
+  {Gestión y Arquitectura de Datos, Universidad de San Andrés}
+\end{center}
+
+Si encuentran algún error en el documento o hay alguna duda, mandenmé un mail a rodriguezf@udesa.edu.ar y lo revisamos.
+
+\section{Ejercicios}
+
+A continuación se presentan 10 casos de uso reales donde se debe decidir qué tipo(s) de base(s) de datos NoSQL utilizar. Para cada caso:
+\begin{itemize}
+    \item Analice los requerimientos del sistema
+    \item Identifique las características clave que influyen en la elección
+    \item Seleccione la(s) tecnología(s) más apropiada(s)
+    \item Justifique su elección
+\end{itemize}
+
+Intenten resolver los casos por su cuenta. Las respuestas se encuentran al final del documento.
+
+\subsection{Caso 1: E-commerce Básico}
+Una pequeña tienda online está comenzando su negocio. Necesitan almacenar un catálogo de productos con descripciones y categorías y tener carritos de compra temporales. Tambien necesitan saber el historial de pedidos por usuario. La tienda espera tener unos 1,000 productos y 5,000 usuarios en su primer año.
+
+\subsection{Caso 2: Red Social de Fotografías}
+Una startup está desarrollando una red social centrada en compartir fotos. Necesitan almacenar fotos y sus metadatos, manejar relaciones de ``seguir'' entre usuarios, gestionar likes y comentarios y tener un feed personalizado para cada usuario. La red social espera tener unos 10,000 usuarios y 100,000 fotos en su primer año.
+
+\subsection{Caso 3: Sistema de Monitoreo Industrial}
+Una fábrica necesita monitorear sus máquinas en tiempo real. Los sensores envían datos cada segundo y se necesita almacenar históricos por 6 meses. La fábrica tiene 100 máquinas, cada una con 5 sensores diferentes.
+
+\subsection{Caso 4: Plataforma de Streaming de Videos}
+Un servicio de streaming necesita un catálogo de videos con metadatos, un sistema de recomendaciones, un historial de visualización por usuario, preferencias y configuraciones de usuario y caché de videos populares. El servicio espera manejar millones de usuarios concurrentes.
+
+\subsection{Caso 5: Sistema de Reservas de Hotel}
+Una cadena hotelera internacional necesita un sistema para gestionar disponibilidad en tiempo real, manejar reservas y cancelaciones, perfiles de clientes con preferencias, historial de estadías, sistema de fidelización y reportes de ocupación. La cadena tiene 50 hoteles en 20 países diferentes.
+
+\subsection{Caso 6: Sistema de Logística}
+Una empresa de logística necesita un sistema para rastrear ubicación de paquetes en tiempo real, optimizar rutas de entrega, gestionar flota de vehículos, historial de entregas y análisis de eficiencia. La empresa maneja 1,000 entregas diarias con 100 vehículos en 5 ciudades.
+
+\subsection{Caso 7: Plataforma de Juegos Online}
+Un estudio de videojuegos necesita una plataforma para perfiles de jugadores y estadísticas, rankings y logros, inventarios de items in-game, chat en tiempo real, matchmaking y transacciones de items entre jugadores. Esperan picos de 100,000 jugadores simultáneos.
+
+\subsection{Caso 8: Sistema de Salud}
+Un hospital necesita modernizar su sistema para historias clínicas electrónicas, gestión de citas y turnos, resultados de estudios (incluyendo imágenes), prescripciones médicas, seguimiento de tratamientos e integración con otros centros médicos. El hospital atiende 2,000 pacientes diarios y necesita acceso 24/7 a los datos.
+
+\subsection{Caso 9: Plataforma IoT Smart City}
+Una ciudad inteligente necesita gestionar datos de sensores de tráfico, monitoreo de calidad del aire, control de semáforos, sistema de parking inteligente, consumo energético y análisis predictivo para servicios públicos. La ciudad tiene 1 millón de habitantes y miles de sensores distribuidos.
+
+\subsection{Caso 10: Sistema Financiero}
+Un banco digital necesita manejar transacciones en tiempo real, detección de fraude, historial de operaciones, perfiles de clientes, análisis de riesgo crediticio, reportes regulatorios e integración con otros bancos. El banco tiene 500,000 clientes y procesa millones de transacciones diarias.
+
+\newpage
+\section{Anexo: Respuestas}
+
+\subsection{Respuesta Caso 1: E-commerce Básico}
+
+\textbf{MongoDB (Base de Datos Documental)} como base principal:
+\begin{itemize}
+    \item Ideal para el catálogo de productos por su esquema flexible
+    \item Permite almacenar productos con diferentes atributos y categorías
+    \item Bueno para el historial de pedidos con documentos anidados
+\end{itemize}
+
+\textbf{Redis (Base de Datos Clave-Valor)} para:
+\begin{itemize}
+    \item Carritos de compra temporales
+    \item Caché de productos populares
+    \item Sesiones de usuario
+\end{itemize}
+
+Justificación: Para un e-commerce pequeño, esta combinación ofrece:
+\begin{itemize}
+    \item Flexibilidad para el crecimiento del catálogo
+    \item Alta velocidad para operaciones frecuentes
+    \item Simplicidad de implementación
+    \item Buena relación costo-beneficio
+\end{itemize}
+
+\subsection{Respuesta Caso 2: Red Social de Fotografías}
+
+\textbf{MongoDB (Base de Datos Documental)} para:
+\begin{itemize}
+    \item Perfiles de usuario
+    \item Metadatos de fotos
+    \item Comentarios y likes
+\end{itemize}
+
+\textbf{Neo4j (Base de Datos de Grafos)} para:
+\begin{itemize}
+    \item Relaciones de "seguir"
+    \item Recomendaciones de usuarios
+    \item Análisis de redes sociales
+\end{itemize}
+
+\textbf{Redis (Base de Datos Clave-Valor)} para:
+\begin{itemize}
+    \item Caché de feeds
+    \item Contadores de likes
+    \item Sesiones activas
+\end{itemize}
+
+Justificación: Esta combinación permite:
+\begin{itemize}
+    \item Escalabilidad para el crecimiento rápido
+    \item Optimización de consultas sociales
+    \item Alta velocidad en operaciones frecuentes
+\end{itemize}
+
+\subsection{Respuesta Caso 3: Sistema de Monitoreo Industrial}
+
+\textbf{Cassandra (Base de Datos Columnar)} para:
+\begin{itemize}
+    \item Almacenamiento de datos de sensores
+    \item Series temporales
+    \item Alta disponibilidad
+\end{itemize}
+
+\textbf{Redis (Base de Datos Clave-Valor)} para:
+\begin{itemize}
+    \item Análisis en tiempo real
+    \item Caché de últimas lecturas
+    \item Alertas temporales
+\end{itemize}
+
+Justificación:
+\begin{itemize}
+    \item Cassandra es excelente para series temporales y escrituras intensivas
+    \item Permite escalabilidad horizontal para históricos
+    \item Redis complementa con análisis en tiempo real
+\end{itemize}
+
+\subsection{Respuesta Caso 4: Plataforma de Streaming}
+
+\textbf{MongoDB (Base de Datos Documental)} para:
+\begin{itemize}
+    \item Catálogo de videos y metadatos
+    \item Perfiles de usuario
+    \item Historial de visualización
+\end{itemize}
+
+\textbf{Redis (Base de Datos Clave-Valor)} para:
+\begin{itemize}
+    \item Caché de videos populares
+    \item Sesiones de usuario
+    \item Estado de reproducción
+\end{itemize}
+
+\textbf{Neo4j (Base de Datos de Grafos)} para:
+\begin{itemize}
+    \item Sistema de recomendaciones
+    \item Análisis de preferencias
+\end{itemize}
+
+Justificación: Esta arquitectura permite:
+\begin{itemize}
+    \item Alta disponibilidad
+    \item Escalabilidad horizontal
+    \item Recomendaciones personalizadas eficientes
+\end{itemize}
+
+\subsection{Respuesta Caso 5: Sistema de Reservas de Hotel}
+
+\textbf{MongoDB (Base de Datos Documental)} para:
+\begin{itemize}
+    \item Perfiles de clientes
+    \item Detalles de hoteles
+    \item Historial de estadías
+\end{itemize}
+
+\textbf{Redis (Base de Datos Clave-Valor)} para:
+\begin{itemize}
+    \item Disponibilidad en tiempo real
+    \item Bloqueo temporal de habitaciones
+    \item Caché de búsquedas frecuentes
+\end{itemize}
+
+Justificación:
+\begin{itemize}
+    \item Permite consistencia eventual entre regiones
+    \item Alta disponibilidad para reservas
+    \item Buen manejo de datos distribuidos
+\end{itemize}
+
+\subsection{Respuesta Caso 6: Sistema de Logística}
+
+\textbf{MongoDB (Base de Datos Documental)} para:
+\begin{itemize}
+    \item Información de paquetes
+    \item Detalles de vehículos
+    \item Historial de entregas
+\end{itemize}
+
+\textbf{Redis (Base de Datos Clave-Valor)} para:
+\begin{itemize}
+    \item Ubicación en tiempo real
+    \item Estado de entregas
+    \item Caché de rutas
+\end{itemize}
+
+\textbf{Neo4j (Base de Datos de Grafos)} para:
+\begin{itemize}
+    \item Optimización de rutas
+    \item Análisis de red logística
+\end{itemize}
+
+Justificación:
+\begin{itemize}
+    \item Permite tracking en tiempo real
+    \item Optimización eficiente de rutas
+    \item Análisis histórico de eficiencia
+\end{itemize}
+
+\subsection{Respuesta Caso 7: Plataforma de Juegos Online}
+
+\textbf{MongoDB (Base de Datos Documental)} para:
+\begin{itemize}
+    \item Perfiles de jugadores
+    \item Inventarios
+    \item Estadísticas
+\end{itemize}
+
+\textbf{Redis (Base de Datos Clave-Valor)} para:
+\begin{itemize}
+    \item Chat en tiempo real
+    \item Estado de partidas
+    \item Rankings temporales
+    \item Matchmaking
+\end{itemize}
+
+\textbf{Neo4j (Base de Datos de Grafos)} para:
+\begin{itemize}
+    \item Relaciones entre jugadores
+    \item Análisis de comportamiento
+\end{itemize}
+
+Justificación:
+\begin{itemize}
+    \item Alta velocidad para operaciones en tiempo real
+    \item Escalabilidad para picos de usuarios
+    \item Análisis social para matchmaking
+\end{itemize}
+
+\subsection{Respuesta Caso 8: Sistema de Salud}
+
+\textbf{MongoDB (Base de Datos Documental)} para:
+\begin{itemize}
+    \item Historias clínicas
+    \item Resultados de estudios
+    \item Prescripciones
+\end{itemize}
+
+\textbf{Redis (Base de Datos Clave-Valor)} para:
+\begin{itemize}
+    \item Gestión de turnos
+    \item Caché de datos frecuentes
+    \item Estado de pacientes
+\end{itemize}
+
+\textbf{Neo4j (Base de Datos de Grafos)} para:
+\begin{itemize}
+    \item Relaciones entre diagnósticos
+    \item Análisis de tratamientos
+    \item Seguimiento de derivaciones
+\end{itemize}
+
+Justificación:
+\begin{itemize}
+    \item Alta disponibilidad 24/7
+    \item Seguridad y consistencia de datos
+    \item Análisis complejo de historias clínicas
+\end{itemize}
+
+\subsection{Respuesta Caso 9: Plataforma IoT Smart City}
+
+\textbf{Cassandra (Base de Datos Columnar)} para:
+\begin{itemize}
+    \item Datos de sensores
+    \item Métricas ambientales
+    \item Históricos de tráfico
+\end{itemize}
+
+\textbf{Redis (Base de Datos Clave-Valor)} para:
+\begin{itemize}
+    \item Estado actual de sensores
+    \item Control de semáforos
+    \item Alertas en tiempo real
+\end{itemize}
+
+\textbf{Neo4j (Base de Datos de Grafos)} para:
+\begin{itemize}
+    \item Análisis de patrones de tráfico
+    \item Optimización de rutas
+    \item Relaciones entre servicios
+\end{itemize}
+
+Justificación:
+\begin{itemize}
+    \item Manejo eficiente de grandes volúmenes de datos
+    \item Alta velocidad para decisiones en tiempo real
+    \item Capacidad de análisis predictivo
+\end{itemize}
+
+\subsection{Respuesta Caso 10: Sistema Financiero}
+
+\textbf{MongoDB (Base de Datos Documental)} para:
+\begin{itemize}
+    \item Perfiles de clientes
+    \item Historial de transacciones
+    \item Documentación
+\end{itemize}
+
+\textbf{Redis (Base de Datos Clave-Valor)} para:
+\begin{itemize}
+    \item Procesamiento de transacciones
+    \item Detección de fraude en tiempo real
+    \item Caché de datos frecuentes
+\end{itemize}
+
+\textbf{Cassandra (Base de Datos Columnar)} para:
+\begin{itemize}
+    \item Logs de auditoría
+    \item Históricos de operaciones
+    \item Reportes regulatorios
+\end{itemize}
+
+Justificación:
+\begin{itemize}
+    \item Garantiza consistencia en transacciones
+    \item Alta disponibilidad y tolerancia a fallos
+    \item Cumplimiento regulatorio
+    \item Escalabilidad para millones de operaciones
+\end{itemize}
+
+\end{document} 

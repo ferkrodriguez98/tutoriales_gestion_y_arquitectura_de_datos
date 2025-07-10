@@ -1,0 +1,465 @@
+\documentclass[12pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[spanish]{babel}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{forest}
+\usepackage{float}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{tikz}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+
+\sloppy
+\setlength{\parindent}{0pt}
+
+\begin{document}
+
+\begin{center}
+  {\LARGE \textbf{Normalización de Bases de Datos}}\\[0.5em]
+  {Gestión y Arquitectura de Datos, Universidad de San Andrés}
+\end{center}
+
+Si encuentran algún error en el documento o hay alguna duda, mandenmé un mail a rodriguezf@udesa.edu.ar y lo revisamos.
+
+\section{Introducción}
+La normalización es un proceso de diseño de bases de datos que reduce la redundancia y las anomalías de actualización. Se aplica a través de una serie de formas normales, cada una construyendo sobre la anterior.
+
+\section{Primera Forma Normal (1FN)}
+Una tabla está en Primera Forma Normal si:
+\begin{itemize}
+    \item Cada columna contiene valores atómicos (no divisibles)
+    \item No hay grupos repetitivos
+    \item Existe una clave primaria
+\end{itemize}
+
+\subsection{Ejemplo - Violación de 1FN}
+Tabla: Estudiantes (No normalizada)
+\begin{center}
+\begin{tabular}{llll}
+\toprule
+ID & Nombre & Teléfonos & Materias \\
+\midrule
+1 & Juan & 1234567, 7654321 & Matemática, Física \\
+2 & María & 2345678 & Química, Biología, Física \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Solución en 1FN}
+
+Tabla: Estudiantes
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+ID & Nombre & Teléfono \\
+\midrule
+1 & Juan & 1234567 \\
+1 & Juan & 7654321 \\
+2 & María & 2345678 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Tabla: EstudiantesMaterias
+\begin{center}
+\begin{tabular}{ll}
+\toprule
+ID\_Estudiante & Materia \\
+\midrule
+1 & Matemática \\
+1 & Física \\
+2 & Química \\
+2 & Biología \\
+2 & Física \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section{Segunda Forma Normal (2FN)}
+Una tabla está en Segunda Forma Normal si:
+\begin{itemize}
+    \item Está en 1FN
+    \item Todos los atributos no clave dependen completamente de la clave primaria
+\end{itemize}
+
+\subsection{Ejemplo - Violación de 2FN}
+Tabla: VentasProductos (en 1FN pero no en 2FN)
+\begin{center}
+\begin{tabular}{lllll}
+\toprule
+ID\_Venta & ID\_Producto & Cantidad & Precio\_Producto & Categoría\_Producto \\
+\midrule
+1 & P1 & 2 & 100 & Electrónica \\
+1 & P2 & 1 & 200 & Hogar \\
+2 & P1 & 3 & 100 & Electrónica \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Aquí, Precio\_Producto y Categoría\_Producto solo dependen de ID\_Producto, no de la clave completa (ID\_Venta, ID\_Producto).
+
+\subsection{Solución en 2FN}
+
+Tabla: Ventas
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+ID\_Venta & ID\_Producto & Cantidad \\
+\midrule
+1 & P1 & 2 \\
+1 & P2 & 1 \\
+2 & P1 & 3 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Tabla: Productos
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+ID\_Producto & Precio & Categoría \\
+\midrule
+P1 & 100 & Electrónica \\
+P2 & 200 & Hogar \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section{Tercera Forma Normal (3FN)}
+Una tabla está en Tercera Forma Normal si:
+\begin{itemize}
+    \item Está en 2FN
+    \item No hay dependencias transitivas (atributos no clave que dependen de otros atributos no clave)
+\end{itemize}
+
+\subsection{Ejemplo - Violación de 3FN}
+Tabla: Empleados (en 2FN pero no en 3FN)
+\begin{center}
+\begin{tabular}{llll}
+\toprule
+ID\_Empleado & Departamento & ID\_Jefe & Nombre\_Jefe \\
+\midrule
+1 & Ventas & J1 & Ana López \\
+2 & IT & J2 & Pedro Gómez \\
+3 & Ventas & J1 & Ana López \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Aquí, Nombre\_Jefe depende transitivamente de ID\_Empleado a través de ID\_Jefe.
+
+\subsection{Solución en 3FN}
+
+Tabla: Empleados
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+ID\_Empleado & Departamento & ID\_Jefe \\
+\midrule
+1 & Ventas & J1 \\
+2 & IT & J2 \\
+3 & Ventas & J1 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Tabla: Jefes
+\begin{center}
+\begin{tabular}{ll}
+\toprule
+ID\_Jefe & Nombre \\
+\midrule
+J1 & Ana López \\
+J2 & Pedro Gómez \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section{Ejemplo - TravelPro}
+
+\subsection{Consigna}
+La empresa TravelPro gestiona reservas de clientes en hoteles internacionales. Actualmente, la información está almacenada en una única tabla con la siguiente estructura:
+
+\vspace{1em}
+
+\begin{minipage}[t]{0.48\textwidth}
+\begin{itemize}
+    \item IDCliente
+    \item ClienteNombre
+    \item ClienteEmail *
+    \item IDHotel
+    \item HotelNombre
+    \item IdCiudadHotel
+    \item CiudadHotel
+    \item IdPaisHotel
+\end{itemize}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.48\textwidth}
+\begin{itemize}
+    \item NombrePaisHotel
+    \item FechaCheckIn
+    \item FechaCheckOut
+    \item HabitaciónTipo
+    \item IdGerenteHotel
+    \item NombreGerenteHotel
+    \item IdiomasGerenteHotel **
+    \item NivelIdiomaGerenteHotel ***
+\end{itemize}
+\end{minipage}
+
+\vspace{2em}
+
+{\small * ClienteEmail: un cliente puede tener varios emails} \\
+{\small ** IdiomasGerenteHotel: cada gerente puede hablar varios idiomas} \\
+{\small *** NivelIdiomaGerenteHotel: indica el nivel de cada idioma que habla el gerente} \\
+
+Consideraciones:
+\begin{itemize}
+    \item Un cliente puede alojarse varias veces en distintos hoteles (en distintas fechas)
+    \item Cada hotel está ubicado en una única ciudad, y cada ciudad pertenece a un país
+    \item Cada hotel tiene un único gerente asignado
+    \item Cada reserva corresponde a un cliente, un hotel y queda registrada con su fecha de check-in y check-out
+\end{itemize}
+
+\subsection{Análisis de la Clave Primaria}
+Para la tabla de reservas de TravelPro, la clave primaria mínima debe ser:
+\begin{itemize}
+    \item IDCliente (identifica al cliente)
+    \item IDHotel (identifica el hotel)
+    \item FechaCheckIn (identifica cuándo comienza la reserva)
+\end{itemize}
+
+Esta combinación es necesaria porque:
+\begin{itemize}
+    \item Un cliente puede tener múltiples reservas
+    \item Un hotel puede tener múltiples reservas
+    \item Un cliente puede reservar en el mismo hotel en diferentes fechas
+\end{itemize}
+
+\subsection{Normalización a 3FN}
+
+\subsubsection{1FN - Eliminar atributos multivaluados}
+Tabla: Clientes\_Emails
+\begin{center}
+\begin{tabular}{ll}
+\toprule
+IDCliente & ClienteEmail \\
+\midrule
+1 & cliente1@email.com \\
+1 & cliente1@alternativo.com \\
+2 & cliente2@email.com \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Tabla: Gerentes\_Idiomas
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+IdGerenteHotel & Idioma & NivelIdioma \\
+\midrule
+G1 & Inglés & Avanzado \\
+G1 & Español & Intermedio \\
+G2 & Inglés & Básico \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsubsection{2FN - Eliminar dependencias parciales}
+Tabla: Hoteles
+\begin{center}
+\begin{tabular}{lllll}
+\toprule
+IDHotel & HotelNombre & IdCiudadHotel & IdGerenteHotel & NombreGerenteHotel \\
+\midrule
+H1 & Hotel A & C1 & G1 & Juan Pérez \\
+H2 & Hotel B & C2 & G2 & María López \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Tabla: Ciudades
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+IdCiudadHotel & CiudadHotel & IdPaisHotel \\
+\midrule
+C1 & Buenos Aires & P1 \\
+C2 & Madrid & P2 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Tabla: Paises
+\begin{center}
+\begin{tabular}{ll}
+\toprule
+IdPaisHotel & NombrePaisHotel \\
+\midrule
+P1 & Argentina \\
+P2 & España \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsubsection{3FN - Eliminar dependencias transitivas}
+Tabla: Reservas
+\begin{center}
+\begin{tabular}{lllll}
+\toprule
+IDCliente & IDHotel & FechaCheckIn & FechaCheckOut & HabitaciónTipo \\
+\midrule
+1 & H1 & 2024-01-01 & 2024-01-05 & Simple \\
+1 & H2 & 2024-02-01 & 2024-02-03 & Doble \\
+2 & H1 & 2024-03-01 & 2024-03-10 & Suite \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Tabla: Clientes
+\begin{center}
+\begin{tabular}{ll}
+\toprule
+IDCliente & ClienteNombre \\
+\midrule
+1 & Juan García \\
+2 & María López \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Explicación de la Normalización}
+\begin{itemize}
+    \item Se separaron los emails de clientes en una tabla aparte (1FN)
+    \item Se separaron los idiomas de los gerentes en una tabla aparte (1FN)
+    \item Se extrajo la información de hoteles, ciudades y países en tablas separadas (2FN)
+    \item Se eliminaron las dependencias transitivas separando la información de clientes (3FN)
+\end{itemize}
+
+\section{Ejercicio Práctico}
+Normalizar la siguiente tabla hasta 3FN:
+\begin{center}
+\begin{tabular}{lllllll}
+\toprule
+ID\_Pedido & Cliente & Ciudad\_Cliente & Producto & Categoría & Precio & Stock \\
+\midrule
+1 & Juan & CABA & Laptop & Electrónica & 1000 & 50 \\
+2 & María & CABA & Mouse & Electrónica & 20 & 100 \\
+3 & Juan & CABA & Mouse & Electrónica & 20 & 100 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Solución}
+
+\subsubsection{1FN - Eliminar atributos multivaluados}
+Ya está en 1FN (valores atómicos)
+
+\subsubsection{2FN - Eliminar dependencias parciales}
+
+Tabla: Pedidos
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+ID\_Pedido & ID\_Cliente & ID\_Producto \\
+\midrule
+1 & C1 & P1 \\
+2 & C2 & P2 \\
+3 & C1 & P2 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Tabla: Productos
+\begin{center}
+\begin{tabular}{llll}
+\toprule
+ID\_Producto & Nombre & Categoría & Precio \\
+\midrule
+P1 & Laptop & Electrónica & 1000 \\
+P2 & Mouse & Electrónica & 20 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsubsection{3FN - Eliminar dependencias transitivas}
+
+Tabla: Pedidos (igual que en 2FN)
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+ID\_Pedido & ID\_Cliente & ID\_Producto \\
+\midrule
+1 & C1 & P1 \\
+2 & C2 & P2 \\
+3 & C1 & P2 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Tabla: Productos
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+ID\_Producto & Nombre & ID\_Categoría \\
+\midrule
+P1 & Laptop & CAT1 \\
+P2 & Mouse & CAT1 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Tabla: Categorías
+\begin{center}
+\begin{tabular}{ll}
+\toprule
+ID\_Categoría & Nombre \\
+\midrule
+CAT1 & Electrónica \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Tabla: Clientes
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+ID\_Cliente & Nombre & Ciudad \\
+\midrule
+C1 & Juan & CABA \\
+C2 & María & CABA \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\end{document}

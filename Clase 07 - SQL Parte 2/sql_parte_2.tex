@@ -1,0 +1,295 @@
+\documentclass[12pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[spanish]{babel}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{forest}
+\usepackage{float}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{tikz}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+
+\sloppy
+\setlength{\parindent}{0pt}
+
+\begin{document}
+
+\begin{center}
+  {\LARGE \textbf{SQL Avanzado}}\\[0.5em]
+  {Gestión y Arquitectura de Datos, Universidad de San Andrés}
+\end{center}
+
+Si encuentran algún error en el documento o hay alguna duda, mandenmé un mail a rodriguezf@udesa.edu.ar y lo revisamos.
+
+\section{Cláusula HAVING}
+HAVING se usa para filtrar resultados de grupos, a diferencia de WHERE que filtra registros individuales.
+
+\begin{lstlisting}[language=SQL]
+SELECT departamento, COUNT(*) as cantidad_empleados
+FROM empleados
+GROUP BY departamento
+HAVING COUNT(*) > 2;
+\end{lstlisting}
+
+\begin{center}
+\begin{tabular}{cc}
+\toprule
+departamento & cantidad\_empleados \\
+\midrule
+Ventas & 3 \\
+IT & 4 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section{Subconsultas}
+Las subconsultas son consultas anidadas dentro de otras consultas.
+
+\subsection{Subconsulta en WHERE}
+\begin{lstlisting}[language=SQL]
+SELECT nombre, salario
+FROM empleados
+WHERE salario > (
+    SELECT AVG(salario)
+    FROM empleados
+);
+\end{lstlisting}
+
+\begin{center}
+\begin{tabular}{cc}
+\toprule
+nombre & salario \\
+\midrule
+María & 60000 \\
+Juan & 55000 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Subconsulta en FROM}
+\begin{lstlisting}[language=SQL]
+SELECT dept_info.departamento, 
+       dept_info.promedio_salario
+FROM (
+    SELECT departamento, 
+           AVG(salario) as promedio_salario
+    FROM empleados
+    GROUP BY departamento
+) as dept_info
+WHERE dept_info.promedio_salario > 50000;
+\end{lstlisting}
+
+\begin{center}
+\begin{tabular}{cc}
+\toprule
+departamento & promedio\_salario \\
+\midrule
+IT & 55000 \\
+Ventas & 52000 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Subconsulta con EXISTS}
+\begin{lstlisting}[language=SQL]
+SELECT nombre
+FROM empleados e
+WHERE EXISTS (
+    SELECT 1 
+    FROM ventas v
+    WHERE v.id_empleado = e.id 
+    AND v.monto > 10000
+);
+\end{lstlisting}
+
+\begin{center}
+\begin{tabular}{c}
+\toprule
+nombre \\
+\midrule
+Juan \\
+María \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section{Funciones de Ventana (Window Functions)}
+Las funciones de ventana permiten realizar cálculos a través de un conjunto de filas relacionadas con la fila actual.
+
+\subsection{RANK()}
+La función RANK() asigna un número de rango a cada fila dentro de una partición, saltando números cuando hay empates. En este ejemplo, ordenamos por salario descendente y asignamos rangos, donde el salario más alto recibe el rango 1.
+
+\begin{lstlisting}[language=SQL]
+SELECT 
+    nombre,
+    salario,
+    RANK() OVER (ORDER BY salario DESC) as ranking
+FROM empleados;
+\end{lstlisting}
+
+\begin{center}
+\begin{tabular}{ccc}
+\toprule
+nombre & salario & ranking \\
+\midrule
+María & 60000 & 1 \\
+Juan & 55000 & 2 \\
+Carlos & 55000 & 2 \\
+Pedro & 45000 & 4 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{PARTITION BY}
+PARTITION BY divide el conjunto de resultados en grupos o particiones. En este caso, calculamos el promedio de salario para cada departamento por separado, mostrando el resultado en cada fila correspondiente a ese departamento.
+
+\begin{lstlisting}[language=SQL]
+SELECT 
+    nombre,
+    departamento,
+    salario,
+    AVG(salario) OVER (
+        PARTITION BY departamento
+    ) as promedio_dept
+FROM empleados;
+\end{lstlisting}
+
+\begin{center}
+\begin{tabular}{cccc}
+\toprule
+nombre & departamento & salario & promedio\_dept \\
+\midrule
+María & IT & 60000 & 55000 \\
+Juan & IT & 50000 & 55000 \\
+Carlos & Ventas & 55000 & 50000 \\
+Pedro & Ventas & 45000 & 50000 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{ROW\_NUMBER()}
+% ROW\_NUMBER() 
+ROW\_NUMBER() asigna un número secuencial único a cada fila dentro de una partición. A diferencia de RANK(), no hay empates - cada fila recibe un número único. En este ejemplo, numeramos los empleados por departamento según su salario.
+
+\begin{lstlisting}[language=SQL]
+SELECT 
+    nombre,
+    departamento,
+    salario,
+    ROW_NUMBER() OVER (
+        PARTITION BY departamento 
+        ORDER BY salario DESC
+    ) as num_fila
+FROM empleados;
+\end{lstlisting}
+
+\begin{center}
+\begin{tabular}{cccc}
+\toprule
+nombre & departamento & salario & num\_fila \\
+\midrule
+María & IT & 60000 & 1 \\
+Juan & IT & 50000 & 2 \\
+Carlos & Ventas & 55000 & 1 \\
+Pedro & Ventas & 45000 & 2 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{LAG() y LEAD()}
+LAG() y LEAD() permiten acceder a datos de filas anteriores o siguientes respectivamente. LAG() obtiene el valor de la fila anterior, mientras que LEAD() obtiene el valor de la fila siguiente. En este ejemplo, mostramos el salario anterior y siguiente para cada empleado.
+
+\begin{lstlisting}[language=SQL]
+SELECT 
+    nombre,
+    salario,
+    LAG(salario) OVER (ORDER BY salario) as salario_anterior,
+    LEAD(salario) OVER (ORDER BY salario) as salario_siguiente
+FROM empleados;
+\end{lstlisting}
+
+\begin{center}
+\begin{tabular}{cccc}
+\toprule
+nombre & salario & salario\_anterior & salario\_siguiente \\
+\midrule
+Pedro & 45000 & NULL & 50000 \\
+Juan & 50000 & 45000 & 55000 \\
+Carlos & 55000 & 50000 & 60000 \\
+María & 60000 & 55000 & NULL \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section{Common Table Expressions (CTE)}
+Las CTEs proporcionan una forma más legible de escribir subconsultas complejas.
+
+\begin{lstlisting}[language=SQL]
+WITH salarios_dept AS (
+    SELECT 
+        departamento,
+        AVG(salario) as promedio_salario
+    FROM empleados
+    GROUP BY departamento
+)
+SELECT e.nombre,
+       e.salario,
+       s.promedio_salario
+FROM empleados e
+JOIN salarios_dept s 
+    ON e.departamento = s.departamento
+WHERE e.salario > s.promedio_salario;
+\end{lstlisting}
+
+\begin{center}
+\begin{tabular}{ccc}
+\toprule
+nombre & salario & promedio\_salario \\
+\midrule
+María & 60000 & 55000 \\
+Carlos & 55000 & 50000 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section{Optimización de Consultas}
+\begin{itemize}
+    \item Usar índices apropiadamente
+    \item Evitar SELECT *
+    \item Limitar resultados con WHERE antes de GROUP BY
+    \item Usar EXPLAIN para analizar el plan de ejecución
+    \item Preferir JOINs sobre subconsultas cuando sea posible
+    \item Usar CTEs para mejorar la legibilidad
+    \item Considerar el uso de índices compuestos para consultas frecuentes
+\end{itemize}
+
+\end{document}

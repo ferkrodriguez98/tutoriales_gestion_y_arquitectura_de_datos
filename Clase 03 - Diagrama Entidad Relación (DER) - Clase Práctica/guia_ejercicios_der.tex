@@ -1,0 +1,359 @@
+\documentclass[12pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[spanish]{babel}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{forest}
+\usepackage{float}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{positioning,shapes.multipart,calc,arrows,shapes.geometric}
+
+% Definicion de estilos para entidades
+\tikzset{
+    entity/.style={
+        rectangle split,
+        rectangle split parts=2,
+        draw,
+        align=center,
+        minimum height=1cm
+    },
+    arrow/.style={
+        ->,
+        >=latex
+    }
+}
+
+\sloppy
+\setlength{\parindent}{0pt}
+
+\begin{document}
+
+\begin{center}
+  {\LARGE \textbf{Guía de Ejercicios \\ Diagramas Entidad-Relación}}\\[0.5em]
+  {Gestión y Arquitectura de Datos, Universidad de San Andrés}
+\end{center}
+
+Para cada uno de los siguientes escenarios, diseñe un Diagrama Entidad-Relación (DER) que represente adecuadamente la situación planteada. Identifique entidades, atributos, relaciones y cardinalidades. Las soluciones se encuentran al final del documento.
+
+\section{Ejercicios}
+
+\subsection{Sistema de Biblioteca Personal}
+Juan quiere organizar su biblioteca personal. Cada libro tiene un título, autor principal, año de publicación, editorial y género. Juan organiza sus libros en estantes, donde cada estante tiene un número y una descripción (por ejemplo, "Ficción", "Historia"). Un libro solo puede estar en un estante a la vez, y cada estante puede contener múltiples libros.
+
+\subsection{Gestión de Recetas}
+Una chef necesita digitalizar su recetario. Cada receta tiene un nombre único, tiempo de preparación, nivel de dificultad y porciones. Las recetas utilizan ingredientes, y de cada ingrediente necesita registrar nombre, unidad de medida (gramos, unidades, etc.) y cantidad necesaria. Un mismo ingrediente puede aparecer en múltiples recetas, y cada receta requiere al menos un ingrediente.
+
+\subsection{Club Deportivo}
+Un club deportivo necesita gestionar sus clases. El club ofrece diferentes deportes (tenis, natación, básquet, etc.), cada uno con un nombre y descripción. Los profesores del club pueden enseñar uno o más deportes, y de cada profesor se registra su DNI, nombre, teléfono y fecha de ingreso. Los socios se inscriben en las clases, y de cada socio se guarda DNI, nombre, dirección y teléfono. Un profesor puede dar clases a múltiples socios, y un socio puede tomar clases con diferentes profesores.
+
+\subsection{Sistema de Pedidos Online}
+Una tienda online necesita gestionar sus pedidos. Los clientes realizan pedidos de productos. De cada cliente se registra su email (que lo identifica), nombre, dirección de envío y teléfono. Los productos tienen un código único, nombre, descripción, precio y stock disponible. Cada pedido tiene un número único, fecha, estado (pendiente, enviado, entregado) y puede incluir varios productos en diferentes cantidades. También se registra el precio unitario al momento de la compra.
+
+\subsection{Red Social Simplificada}
+Se requiere modelar una red social básica donde los usuarios pueden hacer publicaciones y seguir a otros usuarios. De cada usuario se guarda un nombre de usuario único, email, nombre completo y fecha de registro. Las publicaciones tienen un ID único, contenido, fecha y pueden tener hashtags. Un hashtag tiene un nombre único y fecha de primera aparición. Los usuarios pueden seguir a otros usuarios, y una publicación puede tener múltiples hashtags.
+
+\subsection{Sistema de Universidad}
+Una universidad necesita gestionar su sistema académico. Los profesores (identificados por legajo) dictan materias y los alumnos (identificados por número de estudiante) se inscriben en ellas. De los profesores se registra nombre, departamento y título. De los alumnos se guarda nombre, carrera y año de ingreso. Las materias tienen un código único, nombre, departamento y créditos. Cada materia puede ser dictada por varios profesores en diferentes cuatrimestres, y un profesor puede dictar varias materias. Los alumnos reciben una nota final en cada materia que cursan.
+
+\subsection{Gestión de Proyectos}
+Una empresa necesita gestionar sus proyectos de software. Cada proyecto tiene empleados asignados con diferentes roles (desarrollador, tester, líder). De los empleados se registra legajo, nombre, email y fecha de ingreso. Los proyectos tienen un código, nombre, fecha de inicio y fecha estimada de fin. Cada proyecto se divide en tareas, donde cada tarea tiene un ID, descripción, estado y fecha límite. Las tareas pueden depender de otras tareas (una tarea no puede empezar hasta que sus dependencias estén completas).
+
+\subsection{Sistema de Hospital}
+Un hospital necesita gestionar sus consultas médicas. Los pacientes (identificados por DNI) pueden ser atendidos por médicos en diferentes especialidades. De los médicos se registra matrícula, nombre, especialidad y horarios de atención. Las consultas tienen fecha, hora, consultorio y diagnóstico. Los pacientes tienen un historial médico que incluye alergias y enfermedades crónicas. Además, en cada consulta se pueden recetar medicamentos, de los cuales se registra código, nombre, laboratorio y dosis recomendada.
+
+\subsection{Plataforma de Streaming}
+Una plataforma de streaming necesita modelar su sistema. Los usuarios pueden crear perfiles (máximo 4 por cuenta), y cada perfil puede tener su propia lista de contenido para ver más tarde. El contenido puede ser película o serie, donde las series tienen temporadas y episodios. De cada contenido se guarda ID, título, género, año, clasificación por edad y duración. Los usuarios pueden dejar reseñas (con puntuación y comentario) en cualquier contenido, pero solo una reseña por perfil por contenido.
+
+\subsection{Sistema de Aerolínea}
+Una aerolínea necesita gestionar sus vuelos y reservas. Los vuelos tienen un número único, aeropuerto de origen, aeropuerto de destino, fecha y hora de salida y llegada. Los aeropuertos tienen código IATA (único), nombre, ciudad y país. Los pasajeros realizan reservas para vuelos específicos, y de cada pasajero se guarda DNI, nombre, pasaporte y contacto de emergencia. Cada avión (identificado por matrícula) tiene un modelo, capacidad y fecha del último mantenimiento. Los vuelos son operados por tripulaciones, donde cada miembro (piloto, copiloto, auxiliares) tiene diferentes roles y certificaciones.
+
+\newpage
+\section{Soluciones}
+
+\subsection{Sistema de Biblioteca Personal}
+\begin{center}
+\begin{tikzpicture}[node distance=2cm]
+    \node[entity] (libro) {Libro\nodepart{second}\textbf{id\_libro (PK)}\\ \underline{id\_estante (FK)} \\ titulo\\ autor\\ anio\\ editorial\\ genero};
+    \node[entity] (estante) [right=of libro] {Estante\nodepart{second}\textbf{numero (PK)}\\ descripcion};
+    
+    \coordinate (fk_estante) at ($(libro.east)+(0,1)$);
+    \coordinate (pk_estante) at ($(estante.west)+(0,0.4)$);
+    \draw[-latex] (fk_estante) to[out=0,in=180] 
+        node[pos=0.2,above] {1..N} 
+        node[pos=0.8,above] {1..1} 
+        (pk_estante);
+\end{tikzpicture}
+\end{center}
+
+\subsection{Gestión de Recetas}
+\begin{center}
+\begin{tikzpicture}[node distance=2cm]
+    \node[entity] (receta) {Receta\nodepart{second}\textbf{id\_receta (PK)}\\ nombre\\ tiempo\_prep\\ dificultad\\ porciones};
+    \node[entity] (detalle) [right=of receta] {Detalle\_Receta\nodepart{second}\textbf{id\_detalle (PK)}\\ \underline{id\_receta (FK)}\\ \underline{id\_ingrediente (FK)}\\ cantidad\\ unidad\_medida};
+    \node[entity] (ingrediente) [right=of detalle] {Ingrediente\nodepart{second}\textbf{id\_ingrediente (PK)}\\ nombre};
+    
+    \coordinate (fk_receta) at ($(detalle.west)+(0,0.1)$);
+    \coordinate (pk_receta) at ($(receta.east)+(0,0.4)$);
+    \draw[-latex] (fk_receta) to[out=180,in=0] 
+        node[pos=0.2,above] {1..N} 
+        node[pos=0.8,above] {1..1} 
+        (pk_receta);
+        
+    \coordinate (fk_ingrediente) at ($(detalle.east)+(0,-0.5)$);
+    \coordinate (pk_ingrediente) at ($(ingrediente.west)+(0,0.4)$);
+    \draw[-latex] (fk_ingrediente) to[out=0,in=180] 
+        node[pos=0.2,above] {N..1} 
+        node[pos=0.8,above] {1..1} 
+        (pk_ingrediente);
+\end{tikzpicture}
+\end{center}
+
+\subsection{Club Deportivo}
+\begin{center}
+\begin{tikzpicture}[node distance=2cm]
+    \node[entity] (profesor) {Profesor\nodepart{second}\textbf{dni (PK)}\\ nombre\\ telefono\\ fecha\_ingreso};
+    \node[entity] (clase) [right=of profesor] {Clase\nodepart{second}\textbf{id\_clase (PK)}\\ \underline{dni\_profesor (FK)}\\ \underline{id\_deporte (FK)}\\ horario\\ dia};
+    \node[entity] (deporte) [right=of clase] {Deporte\nodepart{second}\textbf{id\_deporte (PK)}\\ nombre\\ descripcion};
+    \node[entity] (inscripcion) [below=of clase] {Inscripcion\nodepart{second}\textbf{id\_inscripcion (PK)}\\ \underline{id\_clase (FK)}\\ \underline{dni\_socio (FK)}\\ fecha};
+    \node[entity] (socio) [right=of inscripcion] {Socio\nodepart{second}\textbf{dni (PK)}\\ nombre\\ direccion\\ telefono};
+    
+    % Conexiones profesor-clase
+    \coordinate (fk_profesor) at ($(clase.west)+(0,0.1)$);
+    \coordinate (pk_profesor) at ($(profesor.east)+(0,0.4)$);
+    \draw[-latex] (fk_profesor) to[out=180,in=0] 
+        node[pos=0.2,above] {1..N} 
+        node[pos=0.8,above] {1..1} 
+        (pk_profesor);
+    
+    % Conexiones clase-deporte    
+    \coordinate (fk_deporte) at ($(clase.east)+(0,-0.5)$);
+    \coordinate (pk_deporte) at ($(deporte.west)+(0,0.4)$);
+    \draw[-latex] (fk_deporte) to[out=0,in=180] 
+        node[pos=0.2,above] {N..1} 
+        node[pos=0.8,above] {1..1} 
+        (pk_deporte);
+        
+    % Conexiones inscripcion-clase
+    \coordinate (fk_clase) at ($(inscripcion.north)+(0,0.1)$);
+    \coordinate (pk_clase) at ($(clase.south)+(0,-0.1)$);
+    \draw[-latex] (fk_clase) to[out=90,in=-90] 
+        node[pos=0.2,right] {N..1} 
+        node[pos=0.8,right] {1..1} 
+        (pk_clase);
+        
+    % Conexiones inscripcion-socio
+    \coordinate (fk_socio) at ($(inscripcion.east)+(0,-0.5)$);
+    \coordinate (pk_socio) at ($(socio.west)+(0,0.4)$);
+    \draw[-latex] (fk_socio) to[out=0,in=180] 
+        node[pos=0.2,above] {N..1} 
+        node[pos=0.8,above] {1..1} 
+        (pk_socio);
+\end{tikzpicture}
+\end{center}
+
+\subsection{Sistema de Pedidos Online}
+\begin{center}
+\begin{tikzpicture}[node distance=2cm]
+    \node[entity] (cliente) {Cliente\nodepart{second}\textbf{email (PK)}\\ nombre\\ direccion\\ telefono};
+    \node[entity] (pedido) [right=of cliente] {Pedido\nodepart{second}\textbf{numero (PK)}\\ \underline{email\_cliente (FK)}\\ fecha\\ estado};
+    \node[entity] (detalle) [right=of pedido] {Detalle\_Pedido\nodepart{second}\textbf{id\_detalle (PK)}\\ \underline{numero\_pedido (FK)}\\ \underline{codigo\_producto (FK)}\\ cantidad\\ precio\_unitario};
+    \node[entity] (producto) [right=of detalle] {Producto\nodepart{second}\textbf{codigo (PK)}\\ nombre\\ descripcion\\ precio\\ stock};
+    
+    % Conexiones cliente-pedido
+    \coordinate (fk_cliente) at ($(pedido.west)+(0,0.1)$);
+    \coordinate (pk_cliente) at ($(cliente.east)+(0,0.4)$);
+    \draw[-latex] (fk_cliente) to[out=180,in=0] 
+        node[pos=0.2,above] {1..N} 
+        node[pos=0.8,above] {1..1} 
+        (pk_cliente);
+    
+    % Conexiones pedido-detalle
+    \coordinate (fk_pedido) at ($(detalle.west)+(0,0.1)$);
+    \coordinate (pk_pedido) at ($(pedido.east)+(0,0.4)$);
+    \draw[-latex] (fk_pedido) to[out=180,in=0] 
+        node[pos=0.2,above] {1..N} 
+        node[pos=0.8,above] {1..1} 
+        (pk_pedido);
+        
+    % Conexiones detalle-producto
+    \coordinate (fk_producto) at ($(detalle.east)+(0,-0.5)$);
+    \coordinate (pk_producto) at ($(producto.west)+(0,0.4)$);
+    \draw[-latex] (fk_producto) to[out=0,in=180] 
+        node[pos=0.2,above] {N..1} 
+        node[pos=0.8,above] {1..1} 
+        (pk_producto);
+\end{tikzpicture}
+\end{center}
+
+\subsection{Red Social Simplificada}
+\begin{center}
+\begin{tikzpicture}[node distance=2cm]
+    \node[entity] (usuario) {Usuario\nodepart{second}\textbf{username (PK)}\\ email\\ nombre\\ fecha\_registro};
+    \node[entity] (publicacion) [right=of usuario] {Publicacion\nodepart{second}\textbf{id\_pub (PK)}\\ \underline{username (FK)}\\ contenido\\ fecha};
+    \node[entity] (pub_hashtag) [right=of publicacion] {Publicacion\_Hashtag\nodepart{second}\textbf{id (PK)}\\ \underline{id\_pub (FK)}\\ \underline{nombre\_hashtag (FK)}};
+    \node[entity] (hashtag) [right=of pub_hashtag] {Hashtag\nodepart{second}\textbf{nombre (PK)}\\ fecha\_primera\_aparicion};
+    
+    % Relación autoreferencial (seguir)
+    \coordinate (salida) at ($(usuario.north)+(0,0)$);         
+    \coordinate (p1) at ($(salida)+(0,1)$);                      
+    \coordinate (p2) at ($(p1)+(3.5,0)$);                          
+    \coordinate (p3) at ($(p2)+(0,-2.7)$);                         
+    \coordinate (entrada) at ($(usuario.east)+(0,0)$);           
+    \coordinate (p4) at ($(entrada)+(0.8,0)$);                    
+ 
+    \draw[-latex, thick] (salida) -- (p1) -- (p2) -- (p3) -- (p4) -- (entrada);
+ 
+    % Cardinalidades
+    \node at ($(p2)+(-3,0.4)$) {0..N};
+    \node at ($(p4)+(-0.4,0.3)$) {0..1};
+    
+    % Conexiones usuario-publicacion
+    \coordinate (fk_usuario) at ($(publicacion.west)+(0,0.1)$);
+    \coordinate (pk_usuario) at ($(usuario.east)+(0,0.4)$);
+    \draw[-latex] (fk_usuario) to[out=180,in=0] 
+        node[pos=0.2,above] {1..N} 
+        node[pos=0.8,above] {1..1} 
+        (pk_usuario);
+        
+    % Conexiones publicacion-pubhashtag
+    \coordinate (fk_pub) at ($(pub_hashtag.west)+(0,0.1)$);
+    \coordinate (pk_pub) at ($(publicacion.east)+(0,0.4)$);
+    \draw[-latex] (fk_pub) to[out=180,in=0] 
+        node[pos=0.2,above] {1..N} 
+        node[pos=0.8,above] {1..1} 
+        (pk_pub);
+        
+    % Conexiones pubhashtag-hashtag
+    \coordinate (fk_hashtag) at ($(pub_hashtag.east)+(0,-0.5)$);
+    \coordinate (pk_hashtag) at ($(hashtag.west)+(0,0.4)$);
+    \draw[-latex] (fk_hashtag) to[out=0,in=180] 
+        node[pos=0.2,above] {N..1} 
+        node[pos=0.8,above] {1..1} 
+        (pk_hashtag);
+\end{tikzpicture}
+\end{center}
+
+\subsection{Sistema de Universidad}
+\begin{center}
+\begin{tikzpicture}[node distance=2cm]
+    \node[entity] (profesor) {Profesor\nodepart{second}\textbf{legajo (PK)}\\ nombre\\ departamento\\ titulo};
+    \node[entity] (materia) [right=of profesor] {Materia\nodepart{second}\textbf{codigo (PK)}\\ nombre\\ departamento\\ creditos};
+    \node[entity] (inscripcion) [below=of materia] {Inscripcion\nodepart{second}\textbf{id\_inscripcion (PK)}\\ \underline{legajo\_profesor (FK)}\\ \underline{codigo\_materia (FK)}\\ anio\\ cuatrimestre};
+    \node[entity] (alumno) [right=of inscripcion] {Alumno\nodepart{second}\textbf{numero\_estudiante (PK)}\\ nombre\\ carrera\\ anio\_ingreso};
+    
+    % Conexiones profesor-materia
+    \coordinate (fk_profesor) at ($(materia.west)+(0,0.1)$);
+    \coordinate (pk_profesor) at ($(profesor.east)+(0,0.4)$);
+    \draw[-latex] (fk_profesor) to[out=180,in=0] 
+        node[pos=0.2,above] {1..N} 
+        node[pos=0.8,above] {1..1} 
+        (pk_profesor);
+    
+    % Conexiones materia-inscripcion
+    \coordinate (fk_materia) at ($(inscripcion.west)+(0,0.1)$);
+    \coordinate (pk_materia) at ($(materia.east)+(0,0.4)$);
+    \draw[-latex] (fk_materia) to[out=180,in=0] 
+        node[pos=0.2,above] {1..N} 
+        node[pos=0.8,above] {1..1} 
+        (pk_materia);
+        
+    % Conexiones inscripcion-alumno
+    \coordinate (fk_inscripcion) at ($(inscripcion.north)+(0,0.1)$);
+    \coordinate (pk_inscripcion) at ($(alumno.south)+(0,-0.1)$);
+    \draw[-latex] (fk_inscripcion) to[out=90,in=-90] 
+        node[pos=0.2,right] {N..1} 
+        node[pos=0.8,right] {1..1} 
+        (pk_inscripcion);
+\end{tikzpicture}
+\end{center}
+
+\subsection{Sistema de Hospital}
+\begin{center}
+\begin{tikzpicture}[node distance=2cm]
+    \node[entity] (paciente) {Paciente\nodepart{second}\textbf{dni (PK)}\\ nombre\\ alergias\\ enfermedades\_cronicas};
+    \node[entity] (consulta) [right=of paciente] {Consulta\nodepart{second}\textbf{id\_consulta (PK)}\\ \underline{dni\_paciente (FK)}\\ fecha\\ hora\\ consultorio\\ diagnóstico};
+    \node[entity] (medicamento) [right=of consulta] {Medicamento\nodepart{second}\textbf{codigo (PK)}\\ nombre\\ laboratorio\\ dosis\_recomendada};
+    
+    % Conexiones paciente-consulta
+    \coordinate (fk_paciente) at ($(consulta.west)+(0,0.1)$);
+    \coordinate (pk_paciente) at ($(paciente.east)+(0,0.4)$);
+    \draw[-latex] (fk_paciente) to[out=180,in=0] 
+        node[pos=0.2,above] {1..N} 
+        node[pos=0.8,above] {1..1} 
+        (pk_paciente);
+    
+    % Conexiones consulta-medicamento
+    \coordinate (fk_consulta) at ($(medicamento.west)+(0,0.1)$);
+    \coordinate (pk_consulta) at ($(consulta.east)+(0,0.4)$);
+    \draw[-latex] (fk_consulta) to[out=180,in=0] 
+        node[pos=0.2,above] {N..1} 
+        node[pos=0.8,above] {1..1} 
+        (pk_consulta);
+\end{tikzpicture}
+\end{center}
+
+\subsection{Plataforma de Streaming}
+\begin{center}
+\begin{tikzpicture}[node distance=2cm]
+    \node[entity] (perfil) {Perfil\nodepart{second}\textbf{id\_perfil (PK)}\\ \underline{username (FK)}\\ \underline{email (FK)}\\ nombre\\ fecha\_registro};
+    \node[entity] (contenido) [right=of perfil] {Contenido\nodepart{second}\textbf{id\_contenido (PK)}\\ título\\ género\\ año\\ clasificación\\ duración};
+    \node[entity] (reseña) [right=of contenido] {Reseña\nodepart{second}\textbf{id\_reseña (PK)}\\ \underline{id\_perfil (FK)}\\ \underline{id\_contenido (FK)}\\ puntuación\\ comentario};
+    
+    % Conexiones perfil-contenido
+    \coordinate (fk_perfil) at ($(contenido.west)+(0,0.1)$);
+    \coordinate (pk_perfil) at ($(perfil.east)+(0,0.4)$);
+    \draw[-latex] (fk_perfil) to[out=180,in=0] 
+        node[pos=0.2,above] {1..N} 
+        node[pos=0.8,above] {1..1} 
+        (pk_perfil);
+    
+    % Conexiones contenido-reseña
+    \coordinate (fk_contenido) at ($(reseña.west)+(0,0.1)$);
+    \coordinate (pk_contenido) at ($(contenido.east)+(0,0.4)$);
+    \draw[-latex] (fk_contenido) to[out=180,in=0] 
+        node[pos=0.2,above] {N..1} 
+        node[pos=0.8,above] {1..1} 
+        (pk_contenido);
+\end{tikzpicture}
+\end{center}
+
+\subsection{Sistema de Aerolínea}
+\begin{center}
+\begin{tikzpicture}[node distance=2cm]
+    \node[entity] (vuelo) {Vuelo\nodepart{second}\textbf{numero (PK)}\\ \underline{id\_origen (FK)}\\ \underline{id\_destino (FK)}\\ fecha\\ hora};
+    \node[entity] (aeropuerto) [right=of vuelo] {Aeropuerto\nodepart{second}\textbf{codigo (PK)}\\ nombre\\ ciudad\\ país};
+    \node[entity] (tripulacion) [below=of vuelo] {Tripulacion\nodepart{second}\textbf{id\_tripulacion (PK)}\\ \underline{numero\_vuelo (FK)}\\ \underline{dni\_piloto (FK)}\\ \underline{dni\_copiloto (FK)}\\ \underline{dni\_auxiliar (FK)}};
+    \node[entity] (pasajero) [right=of tripulacion] {Pasajero\nodepart{second}\textbf{dni (PK)}\\ nombre\\ pasaporte\\ contacto\_emergencia};
+    
+    % Conexiones vuelo-aeropuerto
+    \coordinate (fk_vuelo) at ($(aeropuerto.west)+(0,0.1)$);
+    \coordinate (pk_vuelo) at ($(vuelo.east)+(0,0.4)$);
+    \draw[-latex] (fk_vuelo) to[out=180,in=0] 
+        node[pos=0.2,above] {1..N} 
+        node[pos=0.8,above] {1..1} 
+        (pk_vuelo);
+    
+    % Conexiones vuelo-tripulacion
+    \coordinate (fk_tripulacion) at ($(tripulacion.west)+(0,0.1)$);
+    \coordinate (pk_tripulacion) at ($(vuelo.south)+(0,-0.1)$);
+    \draw[-latex] (fk_tripulacion) to[out=90,in=-90] 
+        node[pos=0.2,right] {N..1} 
+        node[pos=0.8,right] {1..1} 
+        (pk_tripulacion);
+        
+    % Conexiones tripulacion-pasajero
+    \coordinate (fk_pasajero) at ($(pasajero.west)+(0,0.1)$);
+    \coordinate (pk_pasajero) at ($(tripulacion.east)+(0,0.4)$);
+    \draw[-latex] (fk_pasajero) to[out=0,in=180] 
+        node[pos=0.2,above] {N..1} 
+        node[pos=0.8,above] {1..1} 
+        (pk_pasajero);
+\end{tikzpicture}
+\end{center}
+
+\end{document}

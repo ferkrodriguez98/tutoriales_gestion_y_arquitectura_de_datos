@@ -1,0 +1,657 @@
+\documentclass[12pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[spanish]{babel}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{forest}
+\usepackage{float}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{tikz}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+
+\sloppy
+\setlength{\parindent}{0pt}
+
+\begin{document}
+
+\begin{center}
+  {\LARGE \textbf{Introducción a SQL}}\\[0.5em]
+  {Gestión y Arquitectura de Datos, Universidad de San Andrés}
+\end{center}
+
+Si encuentran algún error en el documento o hay alguna duda, mandenmé un mail a rodriguezf@udesa.edu.ar y lo revisamos.
+
+\section{¿Qué es SQL?}
+SQL (Structured Query Language) es el lenguaje estándar para interactuar con bases de datos relacionales. Es un lenguaje declarativo, lo que significa que especificamos qué queremos obtener en lugar de cómo obtenerlo.
+
+\vspace{1em}
+
+Las principales operaciones que podemos realizar con SQL son:
+\begin{itemize}
+    \item Consultar datos (SELECT)
+    \item Insertar datos (INSERT)
+    \item Actualizar datos (UPDATE)
+    \item Eliminar datos (DELETE)
+    \item Crear y modificar estructuras de datos (CREATE, ALTER, DROP)
+\end{itemize}
+
+\section{Estructura Básica de una Consulta}
+La estructura más básica de una consulta SQL es:
+
+\begin{lstlisting}[language=SQL]
+SELECT columna1, columna2
+FROM tabla
+WHERE condicion;
+\end{lstlisting}
+
+Resultado ejemplo:
+\begin{center}
+\begin{tabular}{ll}
+\toprule
+columna1 & columna2 \\
+\midrule
+valor1 & valor2 \\
+valor3 & valor4 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Donde:
+\begin{itemize}
+    \item SELECT especifica qué columnas queremos ver
+    \item FROM indica de qué tabla obtenemos los datos
+    \item WHERE (opcional) filtra los resultados según una condición
+\end{itemize}
+
+\section{Operadores y Funciones Básicas}
+\subsection{Operadores de Comparación}
+Los operadores de comparación nos van a servir para poder comparar valores entre dos cosas. Estos son:
+\begin{itemize}
+    \item = (igual)
+    \item < (menor que)
+    \item > (mayor que)
+    \item <= (menor o igual que)
+    \item >= (mayor o igual que)
+    \item <> o != (distinto)
+\end{itemize}
+
+\vspace{1em}
+
+Ejemplos:
+\begin{lstlisting}[language=SQL]
+-- Buscar salarios mayores a 50000
+SELECT nombre, apellido, salario
+FROM empleados
+WHERE salario > 50000;
+\end{lstlisting}
+
+\begin{center}
+\begin{tabular}{ccc}
+\toprule
+nombre & apellido & salario \\
+\midrule
+Juan & Pérez & 55000 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{lstlisting}[language=SQL]
+-- Buscar apellidos distintos a Perez
+SELECT nombre, apellido
+FROM empleados
+WHERE apellido <> 'Perez';
+\end{lstlisting}
+
+\begin{center}
+\begin{tabular}{cc}
+\toprule
+nombre & apellido \\
+\midrule
+Juan & García \\
+María & López \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Operadores Lógicos}
+Los operadores lógicos nos van a servir para poder combinar condiciones. Estos son:
+\begin{itemize}
+    \item AND
+    \item OR
+    \item NOT
+\end{itemize}
+
+\vspace{1em}
+
+Ejemplos:
+\begin{lstlisting}[language=SQL]
+-- Buscar empleados con salario mayor a 50000 y que trabajen en el departamento 1
+SELECT nombre, apellido, salario
+FROM empleados
+WHERE salario > 50000 AND nombre = 'Juan';
+\end{lstlisting}
+
+\begin{center}
+
+\begin{tabular}{ccc}
+\toprule
+nombre & apellido & salario \\
+\midrule
+Juan & García & 55000 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{lstlisting}[language=SQL]
+-- Buscar empleados con salario exactamente 42000 y que no sean de la ciudad de Buenos Aires
+SELECT nombre, apellido, salario, ciudad
+FROM empleados
+WHERE salario = 42000 AND ciudad <> 'Buenos Aires';
+\end{lstlisting}
+
+\begin{center}
+\begin{tabular}{cccc}
+\toprule
+nombre & apellido & salario & ciudad \\
+\midrule
+Marcos & Gómez & 42000 & Córdoba \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Operador IN}
+El operador IN se usa para buscar valores en una lista de valores que le damos.
+
+\vspace{1em}
+
+Ejemplos:
+\begin{lstlisting}[language=SQL]
+-- Buscar empleados que tengan de apellido Garcia o Lopez
+SELECT nombre, apellido
+FROM empleados
+WHERE apellido IN ('Garcia', 'Lopez');
+\end{lstlisting}
+
+\begin{center}
+\begin{tabular}{cc}
+\toprule
+nombre & apellido \\
+\midrule
+Juan & García \\
+María & López \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Operador BETWEEN}
+El operador BETWEEN se usa para buscar valores entre dos valores que le damos.
+
+\vspace{1em}
+
+Ejemplos:
+\begin{lstlisting}[language=SQL]
+-- Buscar empleados con salario entre 40000 y 50000
+SELECT nombre, apellido, salario
+FROM empleados
+WHERE salario BETWEEN 40000 AND 50000;
+\end{lstlisting}
+
+\begin{center}
+\begin{tabular}{ccc}
+\toprule
+nombre & apellido & salario \\
+\midrule
+Marcos & Gómez & 42000 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Operador LIKE}
+El operador LIKE se usa para buscar patrones en texto. Tenemos dos opciones, el \% y el \_. El \% representa cualquier cantidad de caracteres, mientras que el \_ representa un único caracter.
+
+Ejemplos:
+\begin{lstlisting}[language=SQL]
+-- Busca apellidos que terminan en G
+SELECT nombre, apellido
+FROM empleados
+WHERE apellido LIKE '%G';
+\end{lstlisting}
+
+\begin{center}
+\begin{tabular}{cc}
+\toprule
+nombre & apellido \\
+\midrule
+Juan & Rodriguez \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{lstlisting}[language=SQL]
+-- Busca apellidos que tienen G como segundo caracter
+SELECT nombre, apellido
+FROM empleados
+WHERE apellido LIKE '_arcia';
+\end{lstlisting}
+
+\begin{center}
+\begin{tabular}{cc}
+\toprule
+nombre & apellido \\
+\midrule
+Maria & Garcia \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{lstlisting}[language=SQL]
+-- Busca apellidos que empiezan con G
+SELECT nombre, apellido
+FROM empleados
+WHERE apellido LIKE 'G%';
+\end{lstlisting}
+
+\begin{center}
+\begin{tabular}{cc}
+\toprule
+nombre & apellido \\
+\midrule
+Maria & Garcia \\
+Carlos & Gonzalez \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{lstlisting}[language=SQL]
+-- Busca apellidos que contienen G en cualquier posicion
+SELECT nombre, apellido
+FROM empleados
+WHERE apellido LIKE '%G%';
+\end{lstlisting}
+
+\begin{center}
+\begin{tabular}{cc}
+\toprule
+nombre & apellido \\
+\midrule
+Juan & Rodriguez \\
+Maria & Garcia \\
+Carlos & Gonzalez \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{Nota:} No en todos los motores de SQL el \%G\% devolvería Rodríguez dado que es una g minúscula y no una G mayúscula como estamos pidiendo. En la mayoría sí lo devolvería.
+
+\subsection{Valores NULL}
+NULL representa la ausencia de un valor. Para trabajar con NULL usamos:
+\begin{itemize}
+    \item IS NULL
+    \item IS NOT NULL
+\end{itemize}
+
+Ejemplo:
+\begin{lstlisting}[language=SQL]
+SELECT nombre, telefono
+FROM empleados
+WHERE telefono IS NULL;
+\end{lstlisting}
+
+\begin{center}
+\begin{tabular}{cc}
+\toprule
+nombre & telefono \\
+\midrule
+Carlos & NULL \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section{Ejemplos Prácticos}
+\subsection{Seleccionar Todos los Registros}
+\begin{lstlisting}[language=SQL]
+SELECT *
+FROM empleados;
+\end{lstlisting}
+
+\begin{center}
+\begin{tabular}{llll}
+\toprule
+id & nombre & apellido & salario \\
+\midrule
+1 & Juan & Pérez & 50000 \\
+2 & María & García & 60000 \\
+3 & Carlos & López & 45000 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{Nota:} Evitar usar SELECT *, en cambio es recomendable especificar las columnas que necesitamos. Esto es para evitar problemas de performance en bases de datos gigantes.
+
+\subsection{Filtrar Registros}
+\begin{lstlisting}[language=SQL]
+SELECT nombre, apellido, salario
+FROM empleados
+WHERE salario > 50000;
+\end{lstlisting}
+
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+nombre & apellido & salario \\
+\midrule
+María & García & 60000 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Ordenar Resultados}
+\begin{lstlisting}[language=SQL]
+SELECT nombre, apellido, edad
+FROM empleados
+ORDER BY edad DESC;
+\end{lstlisting}
+
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+nombre & apellido & edad \\
+\midrule
+Carlos & López & 45 \\
+María & García & 35 \\
+Juan & Pérez & 30 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section{Alias}
+Los alias nos permiten dar nombres temporales a tablas o columnas para hacer las consultas más legibles.
+
+\subsection{Alias de Tablas}
+\begin{lstlisting}[language=SQL]
+SELECT e.nombre, d.nombre_departamento
+FROM empleados AS e
+JOIN departamentos AS d ON e.id_departamento = d.id;
+\end{lstlisting}
+
+\begin{center}
+\begin{tabular}{cc}
+\toprule
+nombre & nombre\_departamento \\
+\midrule
+Juan & Ventas \\
+María & IT \\
+Carlos & Ventas \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Alias de Columnas}
+\begin{lstlisting}[language=SQL]
+SELECT 
+    nombre AS nombre_empleado,
+    salario AS sueldo_mensual
+FROM empleados;
+\end{lstlisting}
+
+\begin{center}
+\begin{tabular}{cc}
+\toprule
+nombre\_empleado & sueldo\_mensual \\
+\midrule
+Juan & 50000 \\
+María & 60000 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section{Funciones de Agregación}
+Las funciones de agregación nos permiten realizar cálculos sobre grupos de registros.
+
+\subsection{COUNT()}
+Cuenta el número de registros que cumplen con una condición.
+
+\begin{lstlisting}[language=SQL]
+SELECT COUNT(*) as total_empleados
+FROM empleados;
+\end{lstlisting}
+
+\begin{center}
+\begin{tabular}{c}
+\toprule
+total\_empleados \\
+\midrule
+3 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{SUM()}
+Suma los valores de una columna numérica.
+
+\begin{lstlisting}[language=SQL]
+SELECT SUM(salario) as total_salarios
+FROM empleados;
+\end{lstlisting}
+
+\begin{center}
+\begin{tabular}{c}
+\toprule
+total\_salarios \\
+\midrule
+155000 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{AVG()}
+Calcula el promedio de los valores en una columna.
+
+\begin{lstlisting}[language=SQL]
+SELECT AVG(salario) as salario_promedio
+FROM empleados;
+\end{lstlisting}
+
+\begin{center}
+\begin{tabular}{c}
+\toprule
+salario\_promedio \\
+\midrule
+51666.67 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{MAX()}
+Encuentra el valor máximo en una columna.
+
+\begin{lstlisting}[language=SQL]
+SELECT MAX(salario) as salario_maximo
+FROM empleados;
+\end{lstlisting}
+
+\begin{center}
+\begin{tabular}{c}
+\toprule
+salario\_maximo \\
+\midrule
+60000 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{MIN()}
+Encuentra el valor mínimo en una columna.
+
+\begin{lstlisting}[language=SQL]
+SELECT MIN(salario) as salario_minimo
+FROM empleados;
+\end{lstlisting}
+
+\begin{center}
+\begin{tabular}{c}
+\toprule
+salario\_minimo \\
+\midrule
+45000 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Agrupación con GROUP BY}
+Podemos combinar estas funciones con GROUP BY para obtener estadísticas por grupo:
+
+\begin{lstlisting}[language=SQL]
+SELECT 
+    departamento,
+    COUNT(*) as cantidad_empleados,
+    AVG(salario) as salario_promedio
+FROM empleados
+GROUP BY departamento;
+\end{lstlisting}
+
+\begin{center}
+\begin{tabular}{ccc}
+\toprule
+departamento & cantidad\_empleados & salario\_promedio \\
+\midrule
+Ventas & 2 & 55000 \\
+IT & 1 & 45000 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{lstlisting}[language=SQL]
+SELECT nombre, edad
+FROM empleados
+WHERE edad IS NOT NULL AND nombre LIKE '%er%'
+\end{lstlisting}
+
+\begin{center}
+\begin{tabular}{cc}
+\toprule
+nombre & edad \\
+\midrule
+Fermín & 26 \\
+Hernán & 42 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section{Joins}
+Los JOINs nos permiten combinar filas de dos o más tablas basándonos en una condición de relación entre ellas.
+
+\subsection{INNER JOIN}
+Devuelve solo los registros que coinciden en ambas tablas. Ejemplo:
+\begin{lstlisting}[language=SQL]
+SELECT e.nombre, d.nombre_departamento
+FROM empleados e
+INNER JOIN departamentos d ON e.id_departamento = d.id;
+\end{lstlisting}
+
+\begin{center}
+\begin{tabular}{cc}
+\toprule
+nombre & nombre\_departamento \\
+\midrule
+Juan & Ventas \\
+María & IT \\
+Carlos & Ventas \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{LEFT JOIN}
+Devuelve todos los registros de la tabla izquierda y los coincidentes de la derecha. Ejemplo:
+\begin{lstlisting}[language=SQL]
+SELECT e.nombre, d.nombre_departamento
+FROM empleados e
+LEFT JOIN departamentos d ON e.id_departamento = d.id;
+\end{lstlisting}
+
+\begin{center}
+\begin{tabular}{cc}
+\toprule
+nombre & nombre\_departamento \\
+\midrule
+Juan & Ventas \\
+María & IT \\
+Carlos & Ventas \\
+Pedro & NULL \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{RIGHT JOIN}
+Devuelve todos los registros de la tabla derecha y los coincidentes de la izquierda. Ejemplo:
+\begin{lstlisting}[language=SQL]
+SELECT e.nombre, d.nombre_departamento
+FROM empleados e
+RIGHT JOIN departamentos d ON e.id_departamento = d.id;
+\end{lstlisting}
+
+\begin{center}
+\begin{tabular}{cc}
+\toprule
+nombre & nombre\_departamento \\
+\midrule
+Juan & Ventas \\
+María & IT \\
+Carlos & Ventas \\
+NULL & Marketing \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{FULL JOIN}
+Devuelve todos los registros cuando hay coincidencia en cualquiera de las tablas. Ejemplo:
+\begin{lstlisting}[language=SQL]
+SELECT e.nombre, d.nombre_departamento
+FROM empleados e
+FULL JOIN departamentos d ON e.id_departamento = d.id;
+\end{lstlisting}
+
+\begin{center}
+\begin{tabular}{cc}
+\toprule
+nombre & nombre\_departamento \\
+\midrule
+Juan & Ventas \\
+María & IT \\
+Carlos & Ventas \\
+Pedro & NULL \\
+NULL & Marketing \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\end{document}

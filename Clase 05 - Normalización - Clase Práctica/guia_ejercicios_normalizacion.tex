@@ -1,0 +1,727 @@
+\documentclass[12pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[spanish]{babel}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{forest}
+\usepackage{float}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{array}
+\usepackage{multirow}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+
+\sloppy
+\setlength{\parindent}{0pt}
+
+\begin{document}
+
+\begin{center}
+  {\LARGE \textbf{Guía de Ejercicios \\ Normalización de Bases de Datos}}\\[0.5em]
+  {Gestión y Arquitectura de Datos, Universidad de San Andrés}
+\end{center}
+
+Si encuentran algún error en el documento o hay alguna duda, mandenmé un mail a rodriguezf@udesa.edu.ar y lo revisamos.
+
+\section{Ejercicios}
+
+A continuación se presentan 10 ejercicios de normalización, ordenados por dificultad creciente. Para cada ejercicio:
+\begin{itemize}
+    \item Identifique las dependencias funcionales
+    \item Determine la forma normal actual
+    \item Normalice hasta alcanzar la 3FN
+\end{itemize}
+
+Intenten resolver los ejercicios por su cuenta. Las respuestas se encuentran al final del documento.
+
+\subsection{Ejercicio 1: Club de Tenis}
+Se tiene la siguiente tabla para un club de tenis:
+\vspace{0.5em}
+\begin{center}
+\begin{tabular}{|l|l|l|l|l|}
+\hline
+ID\_Socio & Nombre & Teléfono & Cancha & Horario\_Reserva \\
+\hline
+\end{tabular}
+\end{center}
+
+Donde:
+\begin{itemize}
+    \item Cada socio tiene un ID único, nombre y teléfono
+    \item Un socio puede reservar múltiples canchas en diferentes horarios
+    \item Una cancha solo puede ser reservada por un socio en un horario específico
+\end{itemize}
+
+\subsection{Ejercicio 2: Biblioteca Musical}
+Para una biblioteca de música se almacena:
+\vspace{0.5em}
+\begin{center}
+\begin{tabular}{|l|l|l|l|l|l|}
+\hline
+ID\_Canción & Título & Artista & Álbum & Año\_Álbum & Género \\
+\hline
+\end{tabular}
+\end{center}
+
+Donde:
+\begin{itemize}
+    \item Cada canción tiene un ID único
+    \item Un artista puede tener múltiples álbumes
+    \item Un álbum pertenece a un único artista y tiene un año de lanzamiento
+    \item Una canción pertenece a un único álbum
+\end{itemize}
+
+\subsection{Ejercicio 3: Torneo de Fútbol}
+Se tiene los siguientes datos de una base de datos de un torneo de fútbol:
+
+\vspace{0.5em}
+
+\begin{minipage}[t]{0.48\textwidth}
+\begin{itemize}
+    \item ID\_Partido
+    \item Equipo\_Local
+    \item Ciudad\_Local
+    \item Equipo\_Visitante
+\end{itemize}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.48\textwidth}
+\begin{itemize}
+    \item Ciudad\_Visitante
+    \item Fecha
+    \item Resultado
+\end{itemize}
+\end{minipage}
+
+\vspace{1em}
+
+Donde:
+\begin{itemize}
+    \item Cada partido tiene un ID único
+    \item Cada equipo pertenece a una única ciudad
+    \item Un partido se juega entre dos equipos diferentes en una fecha específica
+    \item El resultado registra el marcador final
+\end{itemize}
+
+\subsection{Ejercicio 4: Empresa de Ventas}
+Para una empresa se registran las ventas en los siguientes datos:
+
+\vspace{0.5em}
+
+\begin{minipage}[t]{0.48\textwidth}
+\begin{itemize}
+    \item ID\_Venta
+    \item Vendedor
+    \item Departamento
+    \item Supervisor
+\end{itemize}
+\end{minipage}
+\begin{minipage}[t]{0.48\textwidth}
+\begin{itemize}
+    \item Producto
+    \item Cantidad
+    \item Precio\_Unit
+\end{itemize}
+\end{minipage}
+
+\vspace{1em}
+
+Donde:
+\begin{itemize}
+    \item Cada venta tiene un ID único
+    \item Cada vendedor pertenece a un único departamento
+    \item Cada departamento tiene un único supervisor
+    \item Cada producto tiene un precio unitario fijo
+\end{itemize}
+
+\subsection{Ejercicio 5: Local de Computadoras}
+Se tiene los siguientes datos de una base de datos de un local de computadoras:
+
+\vspace{0.5em}
+
+\begin{minipage}[t]{0.48\textwidth}
+\begin{itemize}
+    \item ID\_PC
+    \item Marca
+    \item Modelo
+    \item Procesador
+\end{itemize}
+\end{minipage}
+\begin{minipage}[t]{0.48\textwidth}
+\begin{itemize}
+    \item Velocidad\_Proc
+    \item RAM
+    \item Precio
+\end{itemize}
+\end{minipage}
+
+\vspace{1em}
+
+Donde:
+\begin{itemize}
+    \item Cada PC tiene un ID único
+    \item Cada modelo de PC pertenece a una única marca
+    \item Un procesador tiene una velocidad específica
+    \item El precio depende del modelo
+\end{itemize}
+
+\subsection{Ejercicio 6: Sistema de Cursos}
+Para un sistema educativo se tiene los siguientes datos:
+\vspace{0.5em}
+
+\begin{minipage}[t]{0.48\textwidth}
+\begin{itemize}
+    \item ID\_Curso 
+    \item Nombre\_Curso
+    \item Profesor
+    \item Departamento\_Prof
+\end{itemize}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.48\textwidth}
+\begin{itemize}
+    \item Aula
+    \item Capacidad\_Aula
+    \item Horario
+\end{itemize}
+\end{minipage}
+
+\vspace{1em}
+
+Donde:
+\begin{itemize}
+    \item Cada curso tiene un ID único y nombre
+    \item Cada profesor pertenece a un único departamento
+    \item Cada aula tiene una capacidad fija
+    \item Un curso se dicta en un aula específica en un horario específico
+\end{itemize}
+
+\subsection{Ejercicio 7: Biblioteca de Películas}
+Se tiene los siguientes datos de una base de datos de una biblioteca de películas:
+
+\vspace{0.5em}
+
+\begin{minipage}[t]{0.48\textwidth}
+\begin{itemize}
+    \item ID\_Película
+    \item Título
+    \item Director
+    \item País\_Director
+\end{itemize}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.48\textwidth}
+\begin{itemize}
+    \item Año
+    \item Género
+    \item Duración
+    \item Clasificación
+\end{itemize}
+\end{minipage}
+
+\vspace{1em}
+
+Donde:
+\begin{itemize}
+    \item Cada película tiene un ID único
+    \item Cada director es de un país específico
+    \item Una película tiene un único director
+    \item La clasificación depende del contenido de la película
+\end{itemize}
+
+\subsection{Ejercicio 8: Gestión de Proyectos}
+Para gestionar proyectos se usa los siguientes datos:
+
+\vspace{0.5em}
+
+\begin{minipage}[t]{0.48\textwidth}
+\begin{itemize}
+    \item ID\_Proyecto
+    \item Nombre\_Proyecto
+    \item Líder
+    \item Departamento\_Líder
+\end{itemize}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.48\textwidth}
+\begin{itemize}
+    \item Presupuesto
+    \item Fecha\_Inicio
+    \item Cliente
+    \item Ciudad\_Cliente
+\end{itemize}
+\end{minipage}
+
+\vspace{1em}
+
+Donde:
+\begin{itemize}
+    \item Cada proyecto tiene un ID único
+    \item Cada líder pertenece a un departamento
+    \item Cada cliente está en una ciudad específica
+    \item Un proyecto tiene un único líder y un único cliente
+\end{itemize}
+
+\subsection{Ejercicio 9: Local de Instrumentos}
+Para un local de música se registra:
+
+\vspace{0.5em}
+
+\begin{minipage}[t]{0.48\textwidth}
+\begin{itemize}
+    \item ID\_Instrumento
+    \item Tipo
+    \item Marca
+    \item País\_Fabricación
+\end{itemize}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.48\textwidth}
+\begin{itemize}
+    \item Modelo
+    \item Material
+    \item Precio
+    \item Stock
+\end{itemize}
+\end{minipage}
+
+\vspace{1em}
+
+Donde:
+\begin{itemize}
+    \item Cada instrumento tiene un ID único
+    \item Cada modelo pertenece a una marca específica
+    \item Cada marca tiene un país de fabricación principal
+    \item El precio y stock son específicos para cada modelo
+\end{itemize}
+
+\subsection{Ejercicio 10: Sistema de Hospital}
+Se tiene los siguientes datos de una base de datos de un sistema de hospital:
+
+\vspace{0.5em}
+
+\begin{minipage}[t]{0.48\textwidth}
+\begin{itemize}
+    \item ID\_Consulta
+    \item Paciente
+    \item Obra\_Social
+    \item Doctor
+    \item Especialidad
+\end{itemize}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.48\textwidth}
+\begin{itemize}
+    \item Consultorio
+    \item Fecha
+    \item Diagnóstico
+    \item Tratamiento
+\end{itemize}
+\end{minipage}
+
+\vspace{1em}
+Donde:
+\begin{itemize}
+    \item Cada consulta tiene un ID único
+    \item Cada paciente tiene una obra social
+    \item Cada doctor tiene una especialidad
+    \item Cada consultorio está asignado a una especialidad
+    \item Una consulta genera un diagnóstico y un tratamiento
+\end{itemize}
+
+\newpage
+
+\section{Anexo: Respuestas}
+
+\subsection{Respuesta Ejercicio 1: Club de Tenis}
+
+Dependencias Funcionales:
+\begin{itemize}
+    \item ID\_Socio → Nombre, Teléfono
+    \item Cancha, Horario\_Reserva → ID\_Socio
+\end{itemize}
+
+La tabla no está en 2FN porque hay dependencias parciales. Normalización:
+
+\textbf{Socios (1FN → 2FN, 3FN)}
+\begin{center}
+\begin{tabular}{|l|l|l|}
+\hline
+ID\_Socio & Nombre & Teléfono \\
+\hline
+\end{tabular}
+\end{center}
+
+\textbf{Reservas (2FN → 3FN)}
+\begin{center}
+\begin{tabular}{|l|l|l|}
+\hline
+ID\_Socio & Cancha & Horario\_Reserva \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Respuesta Ejercicio 2: Biblioteca Musical}
+
+Dependencias Funcionales:
+\begin{itemize}
+    \item ID\_Canción → Título, Álbum, Artista, Género
+    \item Álbum → Artista, Año\_Álbum
+\end{itemize}
+
+\textbf{Artistas (3FN)}
+\begin{center}
+\begin{tabular}{|l|l|}
+\hline
+ID\_Artista & Nombre\_Artista \\
+\hline
+\end{tabular}
+\end{center}
+
+\textbf{Álbumes (3FN)}
+\begin{center}
+\begin{tabular}{|l|l|l|}
+\hline
+ID\_Álbum & ID\_Artista & Año\_Álbum \\
+\hline
+\end{tabular}
+\end{center}
+
+\textbf{Canciones (3FN)}
+\begin{center}
+\begin{tabular}{|l|l|l|l|}
+\hline
+ID\_Canción & Título & ID\_Álbum & Género \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Respuesta Ejercicio 3: Torneo de Fútbol}
+
+Dependencias Funcionales:
+\begin{itemize}
+    \item ID\_Partido → Equipo\_Local, Equipo\_Visitante, Fecha, Resultado
+    \item Equipo\_Local → Ciudad\_Local
+    \item Equipo\_Visitante → Ciudad\_Visitante
+\end{itemize}
+
+\textbf{Equipos (3FN)}
+\begin{center}
+\begin{tabular}{|l|l|}
+\hline
+ID\_Equipo & Ciudad \\
+\hline
+\end{tabular}
+\end{center}
+
+\textbf{Partidos (3FN)}
+\begin{center}
+\begin{tabular}{|l|l|l|l|l|}
+\hline
+ID\_Partido & ID\_Local & ID\_Visitante & Fecha & Resultado \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Respuesta Ejercicio 4: Empresa de Ventas}
+
+Dependencias Funcionales:
+\begin{itemize}
+    \item ID\_Venta → Vendedor, Producto, Cantidad
+    \item Vendedor → Departamento
+    \item Departamento → Supervisor
+    \item Producto → Precio\_Unit
+\end{itemize}
+
+\textbf{Departamentos (3FN)}
+\begin{center}
+\begin{tabular}{|l|l|}
+\hline
+ID\_Departamento & Supervisor \\
+\hline
+\end{tabular}
+\end{center}
+
+\textbf{Vendedores (3FN)}
+\begin{center}
+\begin{tabular}{|l|l|}
+\hline
+ID\_Vendedor & ID\_Departamento \\
+\hline
+\end{tabular}
+\end{center}
+
+\textbf{Productos (3FN)}
+\begin{center}
+\begin{tabular}{|l|l|}
+\hline
+ID\_Producto & Precio\_Unit \\
+\hline
+\end{tabular}
+\end{center}
+
+\textbf{Ventas (3FN)}
+\begin{center}
+\begin{tabular}{|l|l|l|l|}
+\hline
+ID\_Venta & ID\_Vendedor & ID\_Producto & Cantidad \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Respuesta Ejercicio 5: Local de Computadoras}
+
+Dependencias Funcionales:
+\begin{itemize}
+    \item ID\_PC → Marca, Modelo, Procesador, RAM
+    \item Modelo → Marca, Precio
+    \item Procesador → Velocidad\_Proc
+\end{itemize}
+
+\textbf{Marcas (3FN)}
+\begin{center}
+\begin{tabular}{|l|l|}
+\hline
+ID\_Marca & Nombre\_Marca \\
+\hline
+\end{tabular}
+\end{center}
+
+\textbf{Modelos (3FN)}
+\begin{center}
+\begin{tabular}{|l|l|l|}
+\hline
+ID\_Modelo & ID\_Marca & Precio \\
+\hline
+\end{tabular}
+\end{center}
+
+\textbf{Procesadores (3FN)}
+\begin{center}
+\begin{tabular}{|l|l|}
+\hline
+ID\_Procesador & Velocidad\_Proc \\
+\hline
+\end{tabular}
+\end{center}
+
+\textbf{Computadoras (3FN)}
+\begin{center}
+\begin{tabular}{|l|l|l|l|}
+\hline
+ID\_PC & ID\_Modelo & ID\_Procesador & RAM \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Respuesta Ejercicio 6: Sistema de Cursos}
+
+Dependencias Funcionales:
+\begin{itemize}
+    \item ID\_Curso → Nombre\_Curso, Profesor, Aula, Horario
+    \item Profesor → Departamento\_Prof
+    \item Aula → Capacidad\_Aula
+\end{itemize}
+
+\textbf{Profesores (3FN)}
+\begin{center}
+\begin{tabular}{|l|l|}
+\hline
+ID\_Profesor & Departamento\_Prof \\
+\hline
+\end{tabular}
+\end{center}
+
+\textbf{Aulas (3FN)}
+\begin{center}
+\begin{tabular}{|l|l|}
+\hline
+ID\_Aula & Capacidad\_Aula \\
+\hline
+\end{tabular}
+\end{center}
+
+\textbf{Cursos (3FN)}
+\begin{center}
+\begin{tabular}{|l|l|l|l|l|}
+\hline
+ID\_Curso & Nombre\_Curso & ID\_Profesor & ID\_Aula & Horario \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Respuesta Ejercicio 7: Biblioteca de Películas}
+
+Dependencias Funcionales:
+\begin{itemize}
+    \item ID\_Película → Título, Director, Año, Género, Duración, Clasificación
+    \item Director → País\_Director
+\end{itemize}
+
+\textbf{Directores (3FN)}
+\begin{center}
+\begin{tabular}{|l|l|}
+\hline
+ID\_Director & País\_Director \\
+\hline
+\end{tabular}
+\end{center}
+
+\textbf{Películas (3FN)}
+\begin{center}
+\begin{tabular}{|l|l|l|l|l|l|l|}
+\hline
+ID\_Película & Título & ID\_Director & Año & Género & Duración & Clasificación \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Respuesta Ejercicio 8: Gestión de Proyectos}
+
+Dependencias Funcionales:
+\begin{itemize}
+    \item ID\_Proyecto → Nombre\_Proyecto, Líder, Presupuesto, Fecha\_Inicio, Cliente
+    \item Líder → Departamento\_Líder
+    \item Cliente → Ciudad\_Cliente
+\end{itemize}
+
+\textbf{Líderes (3FN)}
+\begin{center}
+\begin{tabular}{|l|l|}
+\hline
+ID\_Líder & Departamento\_Líder \\
+\hline
+\end{tabular}
+\end{center}
+
+\textbf{Clientes (3FN)}
+\begin{center}
+\begin{tabular}{|l|l|}
+\hline
+ID\_Cliente & Ciudad\_Cliente \\
+\hline
+\end{tabular}
+\end{center}
+
+\textbf{Proyectos (3FN)}
+\begin{center}
+\begin{tabular}{|l|l|l|l|l|l|}
+\hline
+ID\_Proyecto & Nombre\_Proyecto & ID\_Líder & Presupuesto & Fecha\_Inicio & ID\_Cliente \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Respuesta Ejercicio 9: Local de Instrumentos}
+
+Dependencias Funcionales:
+\begin{itemize}
+    \item ID\_Instrumento → Tipo, Marca, Modelo, Material
+    \item Marca → País\_Fabricación
+    \item Modelo → Precio, Stock
+\end{itemize}
+
+\textbf{Marcas (3FN)}
+\begin{center}
+\begin{tabular}{|l|l|}
+\hline
+ID\_Marca & País\_Fabricación \\
+\hline
+\end{tabular}
+\end{center}
+
+\textbf{Modelos (3FN)}
+\begin{center}
+\begin{tabular}{|l|l|l|}
+\hline
+ID\_Modelo & Precio & Stock \\
+\hline
+\end{tabular}
+\end{center}
+
+\textbf{Instrumentos (3FN)}
+\begin{center}
+\begin{tabular}{|l|l|l|l|l|}
+\hline
+ID\_Instrumento & Tipo & ID\_Marca & ID\_Modelo & Material \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Respuesta Ejercicio 10: Sistema de Hospital}
+
+Dependencias Funcionales:
+\begin{itemize}
+    \item ID\_Consulta → Paciente, Doctor, Consultorio, Fecha, Diagnóstico, Tratamiento
+    \item Paciente → Obra\_Social
+    \item Doctor → Especialidad
+    \item Consultorio → Especialidad
+\end{itemize}
+
+\textbf{Pacientes (3FN)}
+\begin{center}
+\begin{tabular}{|l|l|}
+\hline
+ID\_Paciente & Obra\_Social \\
+\hline
+\end{tabular}
+\end{center}
+
+\textbf{Doctores (3FN)}
+\begin{center}
+\begin{tabular}{|l|l|}
+\hline
+ID\_Doctor & Especialidad \\
+\hline
+\end{tabular}
+\end{center}
+
+\textbf{Consultorios (3FN)}
+\begin{center}
+\begin{tabular}{|l|l|}
+\hline
+ID\_Consultorio & Especialidad \\
+\hline
+\end{tabular}
+\end{center}
+
+\textbf{Consultas (3FN)}
+{\small
+\begin{center}
+\begin{tabular}{|l|l|l|l|l|l|l|}
+\hline
+ID\_Consulta & ID\_Paciente & ID\_Doctor & ID\_Consultorio & Fecha & Diagnóstico & Tratamiento \\
+\hline
+\end{tabular}
+\end{center}
+}
+\end{document}

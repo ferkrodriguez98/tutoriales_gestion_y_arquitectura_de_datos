@@ -1,0 +1,164 @@
+\documentclass[12pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[spanish]{babel}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{forest}
+\usepackage{float}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{tabularx}
+\usetikzlibrary{shapes,arrows,positioning,calc}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+
+\sloppy
+\setlength{\parindent}{0pt}
+
+\begin{document}
+
+\begin{center}
+  {\LARGE \textbf{Gestión de Datos}}\\[0.5em]
+  {Gestión y Arquitectura de Datos, Universidad de San Andrés}
+\end{center}
+
+Si encuentran algún error en el documento o hay alguna duda, mandenmé un mail a rodriguezf@udesa.edu.ar y lo revisamos.
+
+\section{Introducción}
+La gestión de datos es el proceso de recolectar, almacenar, organizar, proteger, recuperar y mantener datos dentro de una organización. Es fundamental para garantizar que los datos sean precisos, accesibles y utilizables para la toma de decisiones.
+
+\section{Ciclo de Vida de los Datos}
+
+\subsection{Creación y Captura}
+La creación y captura de datos es el proceso de obtener datos de fuentes internas o externas y almacenarlos en el sistema de información. Estos pueden venir por distintos medios:
+\begin{itemize}
+    \item Ingreso manual de datos
+    \item Captura automática
+    \item Integración de sistemas
+    \item Sensores y dispositivos IoT
+\end{itemize}
+
+\subsection{Almacenamiento}
+El almacenamiento de datos es la forma en que se guardan los datos para su posterior uso. Puede ser guardados en distintos contenedores, todos ellos los veremos más adelante en la materia:
+\begin{itemize}
+    \item Bases de datos relacionales
+    \item Bases de datos NoSQL
+    \item Data Lakes
+    \item Sistemas de archivos distribuidos
+\end{itemize}
+
+\subsection{Procesamiento}
+El procesamiento de datos es el proceso de transformar los datos para que sean más útiles. Puede ser procesados de distintas maneras:
+\begin{itemize}
+    \item ETL (Extract, Transform, Load)
+    \item Limpieza de datos
+    \item Validación
+    \item Enriquecimiento
+\end{itemize}
+
+\subsection{Análisis}
+El análisis de los datos es importantísimo para poder tomar decisiones informadas. Esto se puede hacer de disintas maneras y formas, pero podemos mencionar algunas:
+\begin{itemize}
+    \item Business Intelligence
+    \item Analytics
+    \item Machine Learning
+    \item Visualización
+\end{itemize}
+
+\subsection{Archivado y Eliminación}
+El archivado y eliminación de datos es el proceso de guardar los datos para su posterior uso o eliminarlos cuando ya no son necesarios. Esto se puede hacer de distintas maneras:
+\begin{itemize}
+    \item Políticas de retención: La empresa debe tener políticas claras sobre cuánto tiempo se deben mantener los datos.
+    \item Cumplimiento regulatorio: La empresa debe cumplir con las leyes y regulaciones aplicables.
+    \item Backup y recuperación: La empresa debe tener un plan de backup y recuperación de datos en caso de un desastre.
+    \item Eliminación segura: La empresa debe tener un proceso de eliminación de datos que sea seguro y eficiente.
+\end{itemize}
+
+\section{Calidad de Datos}
+
+\subsection{Dimensiones de Calidad}
+Las dimensiones de calidad de los datos son las características que deben tener los datos para ser considerados de calidad. Estas dimensiones son:
+
+\begin{itemize}
+    \item Precisión: La precisión de los datos es la medida de qué tan cercanos son los datos a la realidad.
+    \item Completitud: La completitud de los datos es la medida de qué tan completos son los datos.
+    \item Consistencia: La consistencia de los datos es la medida de qué tan coherentes son los datos.
+    \item Actualidad: La actualidad de los datos es la medida de qué tan recientes son los datos.
+    \item Unicidad: La unicidad de los datos es la medida de qué tan únicos son los datos.
+    \item Accesibilidad: La accesibilidad de los datos es la medida de qué tan fácil es acceder a los datos.
+    \item Seguridad: La seguridad de los datos es la medida de qué tan seguros son los datos.
+\end{itemize}
+
+\subsection{Métricas de Calidad}
+Las métricas de calidad son las medidas que se utilizan para evaluar la calidad de los datos. Estas métricas son:
+
+\begin{itemize}
+    \item Tasa de error: La tasa de error es la medida de qué tan frecuentes son los errores en los datos.
+    \item Tasa de duplicación: La tasa de duplicación es la medida de qué tan frecuentes son los duplicados en los datos.
+    \item Tasa de actualización: La tasa de actualización es la medida de qué tan frecuentes son las actualizaciones en los datos.
+\end{itemize}
+
+\section{Gobierno de Datos}
+El gobierno de datos es el proceso de gestionar los datos dentro de una organización. Existen distintos roles y responsabilidades dentro de lo que es el gobierno de datos, cada uno con sus responsabilidades y objetivos.
+
+\subsection{Roles y Responsabilidades}
+\begin{itemize}
+    \item Chief Data Officer (CDO): Es el encargado de la dirección y gestión de los datos dentro de la organización.
+    \item Data Owner: Responsable de un conjunto de datos, generalmente un gerente de área.
+    \item Data Steward: Es el responsable operativo de los datos, manteniendolos actualizados y consistentes.
+\end{itemize}
+
+\subsection{Políticas y Procedimientos}
+Las políticas y procedimientos son los documentos que regulan el uso y la gestión de los datos dentro de la organización. Estos documentos son:
+\begin{itemize}
+    \item Políticas de seguridad
+    \item Políticas de privacidad
+    \item Políticas de retención
+    \item Políticas de uso
+    \item Políticas de acceso
+\end{itemize}
+
+\section{Arquitectura de Datos}
+La arquitectura de datos moderna se compone de cuatro capas principales que trabajan en conjunto para manejar el ciclo de vida completo de los datos.
+
+\subsection{Fuentes de Datos}
+La primera capa son las \textbf{fuentes de Datos}, que incluyen sistemas operacionales como ERPs y CRMs, APIs externas que nos permiten obtener datos de terceros, y fuentes de datos no estructurados como documentos, imágenes y videos.
+
+\subsection{Almacenamiento}
+Para el \textbf{almacenamiento}, las organizaciones utilizan diferentes tipos de repositorios según sus necesidades. El Data Warehouse es ideal para datos estructurados y análisis histórico, mientras que el Data Lake permite almacenar datos en su formato original. Los Data Marts son subconjuntos especializados del Data Warehouse para áreas específicas del negocio.
+
+\subsection{Procesamiento}
+El \textbf{procesamiento} de datos puede realizarse de diferentes maneras. El procesamiento por lotes (Batch) es adecuado para grandes volúmenes de datos que no requieren tiempo real. El procesamiento en streaming es ideal para datos que necesitan ser procesados inmediatamente. La arquitectura Lambda combina ambos enfoques para ofrecer flexibilidad.
+
+\subsection{Consumo}
+Finalmente, la capa de \textbf{consumo} permite que los datos sean accesibles para los usuarios finales a través de reportes estructurados, dashboards interactivos y APIs que permiten la integración con otros sistemas.
+
+\end{document}

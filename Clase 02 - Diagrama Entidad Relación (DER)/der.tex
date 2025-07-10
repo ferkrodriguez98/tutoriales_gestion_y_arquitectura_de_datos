@@ -1,0 +1,215 @@
+\documentclass[12pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[spanish]{babel}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{forest}
+\usepackage{float}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{positioning,shapes.multipart,calc,arrows,shapes.geometric}
+
+% Definicion de estilos para entidades
+\tikzset{
+    entity/.style={
+        rectangle split,
+        rectangle split parts=2,
+        draw,
+        align=center,
+        minimum height=1cm
+    },
+    arrow/.style={
+        ->,
+        >=latex
+    }
+}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+
+\sloppy
+\setlength{\parindent}{0pt}
+
+\begin{document}
+
+\begin{center}
+  {\LARGE \textbf{Diagramas Entidad-Relación (DER)}}\\[0.5em]
+  {Gestión y Arquitectura de Datos, Universidad de San Andrés}
+\end{center}
+
+Si encuentran algún error en el documento o hay alguna duda, mandenmé un mail a rodriguezf@udesa.edu.ar y lo revisamos.
+
+\section{Conceptos Básicos}
+Un Diagrama Entidad-Relación (DER) es una herramienta para el modelado de datos que permite representar las entidades relevantes de un sistema de información así como sus interrelaciones.
+
+\subsection{Elementos Básicos}
+\begin{itemize}
+    \item \textbf{Entidad}: Objeto o concepto del mundo real
+    \item \textbf{Atributos}: Propiedades que describen a la entidad
+    \item \textbf{Relación}: Asociación entre entidades
+    \item \textbf{Cardinalidad}: Indica cuántas instancias de una entidad pueden estar relacionadas con otra
+\end{itemize}
+
+\section{Relación Uno a Muchos}
+Consideremos un sistema donde cada cliente puede tener múltiples pedidos, pero cada pedido pertenece a un único cliente.
+
+\begin{center}
+\begin{tikzpicture}[node distance=4cm]
+    % Entidades
+    \node[entity] (cliente) {Cliente\nodepart{second}\textbf{id\_cliente (PK)}\\ nombre\\ email\\ telefono};
+    \node[entity] (pedido) [right=of cliente] {Pedido\nodepart{second}\textbf{id\_pedido (PK)}\\ \underline{id\_cliente (FK)}\\ fecha\\ total\\ estado};
+    
+    % Conexión con cardinalidades y flecha FK->PK
+    \coordinate (fk_cliente) at ($(pedido.west)+(0,0.1)$);
+    \coordinate (pk_cliente) at ($(cliente.east)+(0,0.4)$);
+    \draw[-latex] (fk_cliente) to[out=180,in=0] 
+        node[pos=0.1,above] {1..N} 
+        node[pos=0.9,above] {1..1} 
+        (pk_cliente);
+\end{tikzpicture}
+\end{center}
+
+En este ejemplo simple podemos ver:
+\begin{itemize}
+    \item Dos entidades con sus atributos
+    \item Una relación uno a muchos (1..1 : 1..N)
+    \item Claves primarias en negrita con (PK)
+    \item Clave foránea subrayada con (FK)
+    \item Flecha que conecta la FK con su PK correspondiente
+\end{itemize}
+
+\section{Relación Muchos a Muchos}
+Ahora veamos un sistema donde los productos pueden estar en múltiples pedidos y cada pedido puede tener múltiples productos.
+
+\begin{center}
+\begin{tikzpicture}[node distance=2cm]
+    % Entidades principales
+    \node[entity] (pedido) {Pedido\nodepart{second}\textbf{id\_pedido (PK)}\\ fecha\\ total};
+    \node[entity] (detalle) [right=of pedido] {Detalle\_Pedido\nodepart{second}\textbf{id\_detalle (PK)}\\ \underline{id\_pedido (FK)}\\ \underline{id\_producto (FK)}\\ cantidad\\ precio\_unitario};
+    \node[entity] (producto) [right=of detalle] {Producto\nodepart{second}\textbf{id\_producto (PK)}\\ nombre\\ precio\\ stock};
+    
+    % Conexiones con flechas FK->PK
+    \coordinate (fk_pedido) at ($(detalle.west)+(0,0.1)$);
+    \coordinate (pk_pedido) at ($(pedido.east)+(0,0.1)$);
+    \draw[-latex] (fk_pedido) to[out=180,in=0] 
+        node[pos=0.2,above] {1..N} 
+        node[pos=0.8,above] {1..1} 
+        (pk_pedido);
+        
+    \coordinate (fk_producto) at ($(detalle.east)+(0,-0.5)$);
+    \coordinate (pk_producto) at ($(producto.west)+(0,0.5)$);
+    \draw[-latex] (fk_producto) to[out=0,in=180] 
+        node[pos=0.2,above] {N..1} 
+        node[pos=0.8,above] {1..1} 
+        (pk_producto);
+\end{tikzpicture}
+\end{center}
+
+Este ejemplo muestra:
+\begin{itemize}
+    \item Una relación muchos a muchos (N:M)
+    \item Una tabla pivot con sus propios atributos
+    \item Múltiples FKs en la tabla pivot
+    \item Flechas conectando cada FK con su PK correspondiente
+\end{itemize}
+
+\section{Herencia (Subtipo-Supertipo)}
+Veamos un sistema donde tenemos diferentes tipos de usuarios.
+
+\begin{center}
+\begin{tikzpicture}[node distance=4cm]
+    % Entidad padre
+    \node[entity] (usuario) {Usuario\nodepart{second}\textbf{id\_usuario (PK)}\\ nombre\\ email\\ password};
+    
+    % Entidades hijas
+    \node[entity] (cliente) [below left=2cm of usuario] {Cliente\nodepart{second}\underline{\textbf{id\_usuario (PK,FK)}}\\ direccion\\ telefono\\ nivel\_membresia};
+    \node[entity] (empleado) [below right=2cm of usuario] {Empleado\nodepart{second}\underline{\textbf{id\_usuario (PK,FK)}}\\ salario\\ departamento\\ fecha\_ingreso};
+    
+    % Relación de herencia con flecha compartida
+    \coordinate (pk_usuario) at ($(usuario.south)+(0,-0.1)$);
+    \coordinate (fk_cliente) at ($(cliente.north)+(0,0.1)$);
+    \coordinate (fk_empleado) at ($(empleado.north)+(0,0.1)$);
+    \coordinate (union) at ($(fk_cliente)!0.5!(fk_empleado)$);
+    
+    \draw[arrow] (union) -- (pk_usuario);
+    \draw (fk_cliente) -- (union);
+    \draw (fk_empleado) -- (union);
+\end{tikzpicture}
+\end{center}
+
+Este ejemplo ilustra:
+\begin{itemize}
+    \item Una jerarquía de herencia con flecha unificada
+    \item Atributos heredados (la PK del padre se convierte en PK y FK en los hijos)
+    \item Atributos específicos en cada subtipo
+\end{itemize}
+
+\section{Relación Autoreferencial TEST}
+Por último, veamos un ejemplo de una estructura jerárquica donde los empleados tienen supervisores.
+
+\begin{center}
+\begin{tikzpicture}[node distance=4cm]
+    % Entidad
+    \node[entity] (empleado) {Empleado\nodepart{second}\textbf{id\_empleado (PK)}\\ \underline{id\_supervisor (FK)}\\ nombre\\ cargo\\ departamento};
+    
+    \coordinate (salida) at ($(empleado.north)+(0,0)$);         
+    \coordinate (p1) at ($(salida)+(0,1)$);                      
+    \coordinate (p2) at ($(p1)+(3.5,0)$);                          
+    \coordinate (p3) at ($(p2)+(0,-2.7)$);                         
+    \coordinate (entrada) at ($(empleado.east)+(0,0)$);           
+    \coordinate (p4) at ($(entrada)+(0.8,0)$);                    
+
+    \draw[-latex, thick] (salida) -- (p1) -- (p2) -- (p3) -- (p4) -- (entrada);
+
+    % Cardinalidades
+    \node at ($(p2)+(-3,0.4)$) {0..N};
+    \node at ($(p4)+(-0.4,0.3)$) {0..1};
+
+\end{tikzpicture}
+\end{center}
+
+Este ejemplo muestra:
+\begin{itemize}
+    \item Una relación de una entidad consigo misma
+    \item FK que referencia a la PK de la misma tabla
+    \item Cardinalidad 0..N porque un empleado puede no tener subordinados
+    \item Cardinalidad 1..1 porque un empleado tiene exactamente un supervisor
+\end{itemize}
+
+\section{Consideraciones Importantes}
+\begin{itemize}
+    \item \textbf{Claves Primarias (PK)}: Identificador único, mostrado en negrita
+    \item \textbf{Claves Foráneas (FK)}: Referencias a PKs, mostradas subrayadas
+    \item \textbf{Cardinalidades}: Siempre indicar en ambos extremos (min..max)
+    \item \textbf{Herencia}: Las PKs se heredan como PK,FK en las tablas hijas
+    \item \textbf{Relaciones N:M}: Requieren tabla pivot con sus propias FKs
+\end{itemize}
+
+\end{document}
