@@ -1,0 +1,243 @@
+% Diapositivas DER - Basado en apunte y template UdeSA
+
+\documentclass{beamer}
+\usetheme{metropolis}
+
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{xcolor}
+\usepackage{amsmath}
+\usepackage{fontawesome5}
+
+% Definición de estilos para entidades (copiado del apunte)
+\usetikzlibrary{positioning,shapes.multipart,calc,arrows,shapes.geometric}
+\tikzset{
+    entity/.style={
+        rectangle split,
+        rectangle split parts=2,
+        draw,
+        align=center,
+        minimum height=1cm
+    },
+    arrow/.style={
+        ->,
+        >=latex
+    }
+}
+
+% Colores y configuración del template
+\definecolor{primary}{RGB}{46, 204, 113}
+\definecolor{secondary}{RGB}{52, 152, 219}
+\definecolor{accent}{RGB}{231, 76, 60}
+\definecolor{background}{RGB}{236, 240, 241}
+\setbeamercolor{normal text}{fg=black,bg=background}
+\setbeamercolor{structure}{fg=primary}
+\setbeamercolor{alerted text}{fg=accent}
+
+% Título
+\title{Diagramas Entidad-Relación (DER)}
+\author{Gestión y Arquitectura de Datos}
+\date{}
+
+\begin{document}
+
+% Portada
+\begin{frame}
+    \titlepage
+    \begin{tikzpicture}[remember picture,overlay]
+        \node[anchor=south west,inner sep=30pt] at (current page.south west) {
+            \includegraphics[height=1cm]{../misc/UdeSA.png}
+        };
+    \end{tikzpicture}
+\end{frame}
+
+% Conceptos basicos
+\begin{frame}{Conceptos basicos}
+    \begin{columns}[c]
+        \column{0.7\textwidth}
+            \begin{center}
+                Un DER es una herramienta para el modelado de datos que permite representar entidades relevantes de un sistema y sus interrelaciones
+            \end{center}
+        \column{0.3\textwidth}
+            \begin{center}
+                {\fontsize{40pt}{48pt}\selectfont\faDatabase}
+            \end{center}
+        
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Elementos básicos - Entidad}
+    \begin{center}
+        \begin{tikzpicture}[node distance=4cm]
+            % Entidades
+            \node[entity] (cliente) {Cliente\nodepart{second}\phantom{\textbf{id\_cliente (PK)}}\\ \phantom{nombre}\\ \phantom{email}\\ \phantom{telefono}};
+        \end{tikzpicture}
+    \end{center}
+\end{frame}
+
+\begin{frame}{Elementos básicos - Atributos}
+    \begin{center}
+        \begin{tikzpicture}[node distance=4cm]
+            % Entidades
+            \node[entity] (cliente) {Cliente\nodepart{second}\textbf{id\_cliente (PK)}\\ nombre\\ email\\ telefono};
+        \end{tikzpicture}
+    \end{center}
+\end{frame}
+
+\begin{frame}{Elementos básicos - Relación}
+    \begin{center}
+        \begin{tikzpicture}[node distance=4cm]
+            % Entidades
+            \node[entity] (cliente) {Cliente\nodepart{second}\textbf{id\_cliente (PK)}\\ nombre\\ email\\ telefono};
+            \node[entity] (pedido) [right=of cliente] {Pedido\nodepart{second}\textbf{id\_pedido (PK)}\\ \underline{id\_cliente (FK)}\\ fecha\\ total\\ estado};
+            
+            % Conexión con cardinalidades y flecha FK->PK
+            \coordinate (fk_cliente) at ($(pedido.west)+(0,0.1)$);
+            \coordinate (pk_cliente) at ($(cliente.east)+(0,0.4)$);
+            \draw[-latex] (fk_cliente) to[out=180,in=0] 
+                node[pos=0.1,above] {\phantom{1..N}} 
+                node[pos=0.9,above] {\phantom{1..1}} 
+                (pk_cliente);
+        \end{tikzpicture}
+    \end{center}
+\end{frame}
+
+\begin{frame}{Elementos básicos - Cardinalidad}
+    \begin{center}
+        \begin{tikzpicture}[node distance=4cm]
+            % Entidades
+            \node[entity] (cliente) {Cliente\nodepart{second}\textbf{id\_cliente (PK)}\\ nombre\\ email\\ telefono};
+            \node[entity] (pedido) [right=of cliente] {Pedido\nodepart{second}\textbf{id\_pedido (PK)}\\ \underline{id\_cliente (FK)}\\ fecha\\ total\\ estado};
+            
+            % Conexión con cardinalidades y flecha FK->PK
+            \coordinate (fk_cliente) at ($(pedido.west)+(0,0.1)$);
+            \coordinate (pk_cliente) at ($(cliente.east)+(0,0.4)$);
+            \draw[-latex] (fk_cliente) to[out=180,in=0] 
+                node[pos=0.1,above] {1..N} 
+                node[pos=0.9,above] {1..1} 
+                (pk_cliente);
+        \end{tikzpicture}
+    \end{center}
+\end{frame}
+
+\begin{frame}{Tipos de relaciones}
+    \begin{itemize}
+        \item Relacion Uno a Uno (1..1)
+        \item Relacion Uno a Muchos (1..N)
+        \item Relacion Muchos a Muchos (N..M)
+        \item Herencia (Tipo-Subtipo)
+        \item Autoreferencial
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Relación Uno a Uno}
+    \begin{center}
+        \begin{tikzpicture}[node distance=4cm]
+            \node[entity] (persona) {Persona\nodepart{second}\textbf{id\_persona (PK)}\\ nombre\\ apellido\\ fecha\_nacimiento};
+            \node[entity] (pasaporte) [right=of persona] {Pasaporte\nodepart{second}\textbf{id\_pasaporte (PK)}\\ \underline{id\_persona (FK)}\\ numero\\ fecha\_vencimiento};
+        
+            \coordinate (fk_persona) at ($(pasaporte.west)+(0,-0.1)$);
+            \coordinate (pk_persona) at ($(persona.east)+(0,0.4)$);
+            \draw[-latex] (fk_persona) to[out=180,in=0] 
+                node[pos=0.1,above] {1..1} 
+                node[pos=0.9,above] {1..1} 
+                (pk_persona);
+        \end{tikzpicture}
+    \end{center}
+\end{frame}
+
+% Relación Uno a Muchos
+\begin{frame}{Relación Uno a Muchos}
+    \begin{center}
+    \begin{tikzpicture}[node distance=4cm]
+        \node[entity] (cliente) {Cliente\nodepart{second}\textbf{id\_cliente (PK)}\\ nombre\\ email\\ telefono};
+        \node[entity] (pedido) [right=of cliente] {Pedido\nodepart{second}\textbf{id\_pedido (PK)}\\ \underline{id\_cliente (FK)}\\ fecha\\ total\\ estado};
+        \coordinate (fk_cliente) at ($(pedido.west)+(0,0.1)$);
+        \coordinate (pk_cliente) at ($(cliente.east)+(0,0.4)$);
+        \draw[-latex] (fk_cliente) to[out=180,in=0] node[pos=0.1,above] {1..N} node[pos=0.9,above] {1..1} (pk_cliente);
+    \end{tikzpicture}
+    \end{center}
+\end{frame}
+
+% Relación Muchos a Muchos
+\begin{frame}{Relación Muchos a Muchos}
+    \begin{center}
+    \resizebox{0.95\textwidth}{!}{
+    \begin{tikzpicture}[node distance=2cm]
+        \node[entity] (pedido) {Pedido\nodepart{second}\textbf{id\_pedido (PK)}\\ fecha\\ total};
+        \node[entity] (detalle) [right=of pedido] {Detalle\_Pedido\nodepart{second}\textbf{id\_detalle (PK)}\\ \underline{id\_pedido (FK)}\\ \underline{id\_producto (FK)}\\ cantidad\\ precio\_unitario};
+        \node[entity] (producto) [right=of detalle] {Producto\nodepart{second}\textbf{id\_producto (PK)}\\ nombre\\ precio\\ stock};
+        \coordinate (fk_pedido) at ($(detalle.west)+(0,0.1)$);
+        \coordinate (pk_pedido) at ($(pedido.east)+(0,0.1)$);
+        \draw[-latex] (fk_pedido) to[out=180,in=0] node[pos=0.2,above] {1..N} node[pos=0.8,above] {1..1} (pk_pedido);
+        \coordinate (fk_producto) at ($(detalle.east)+(0,-0.5)$);
+        \coordinate (pk_producto) at ($(producto.west)+(0,0.5)$);
+        \draw[-latex] (fk_producto) to[out=0,in=180] node[pos=0.2,above] {N..1} node[pos=0.8,above] {1..1} (pk_producto);
+    \end{tikzpicture}
+    }
+    \end{center}
+\end{frame}
+
+% Herencia (Subtipo-Supertipo)
+\begin{frame}{Herencia (Subtipo-Supertipo)}
+    \begin{center}
+    \resizebox{0.95\textwidth}{!}{
+    \begin{tikzpicture}[node distance=4cm]
+        \node[entity] (usuario) {Usuario\nodepart{second}\textbf{id\_usuario (PK)}\\ nombre\\ email\\ password};
+        \node[entity] (cliente) [below left=2cm of usuario] {Cliente\nodepart{second}\underline{\textbf{id\_usuario (PK,FK)}}\\ direccion\\ telefono\\ nivel\_membresia};
+        \node[entity] (empleado) [below right=2cm of usuario] {Empleado\nodepart{second}\underline{\textbf{id\_usuario (PK,FK)}}\\ salario\\ departamento\\ fecha\_ingreso};
+        \coordinate (pk_usuario) at ($(usuario.south)+(0,-0.1)$);
+        \coordinate (fk_cliente) at ($(cliente.north)+(0,0.1)$);
+        \coordinate (fk_empleado) at ($(empleado.north)+(0,0.1)$);
+        \coordinate (union) at ($(fk_cliente)!0.5!(fk_empleado)$);
+        \draw[arrow] (union) -- (pk_usuario);
+        \draw (fk_cliente) -- (union);
+        \draw (fk_empleado) -- (union);
+    \end{tikzpicture}
+    }
+    \end{center}
+\end{frame}
+
+% Relación Autoreferencial
+\begin{frame}{Relación Autoreferencial}
+    \begin{center}
+    \begin{tikzpicture}[node distance=4cm]
+        \node[entity] (empleado) {Empleado\nodepart{second}\textbf{id\_empleado (PK)}\\ \underline{id\_supervisor (FK)}\\ nombre\\ cargo\\ departamento};
+        \coordinate (salida) at ($(empleado.north)+(0,0)$);         
+        \coordinate (p1) at ($(salida)+(0,1)$);                      
+        \coordinate (p2) at ($(p1)+(3.5,0)$);                          
+        \coordinate (p3) at ($(p2)+(0,-2.7)$);                         
+        \coordinate (entrada) at ($(empleado.east)+(0,0)$);           
+        \coordinate (p4) at ($(entrada)+(0.8,0)$);                    
+        \draw[-latex, thick] (salida) -- (p1) -- (p2) -- (p3) -- (p4) -- (entrada);
+        \node at ($(p2)+(-3,0.4)$) {0..N};
+        \node at ($(p4)+(-0.4,0.3)$) {0..1};
+    \end{tikzpicture}
+    \end{center}
+\end{frame}
+
+% Consideraciones importantes (una sola slide, ítems secuenciales)
+\begin{frame}{Consideraciones importantes}
+    \begin{itemize}
+        \item<1-> \textbf{Claves Primarias (PK)}: Identificador único, mostrado en negrita.
+        \item<2-> \textbf{Claves Foráneas (FK)}: Referencias a PKs, mostradas subrayadas.
+        \item<3-> \textbf{Cardinalidades}: Siempre indicar en ambos extremos (min..max).
+        \item<4-> \textbf{Herencia}: Las PKs se heredan como PK,FK en las tablas hijas.
+        \item<5-> \textbf{Relaciones N:M}: Requieren tabla pivot con sus propias FKs.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Terminamos}
+    \begin{center}
+        \Large{\textbf{¿Dudas?\\¿Consultas?}}
+    \end{center}
+    \begin{tikzpicture}[remember picture,overlay]
+        \node[anchor=south,inner sep=30pt] at (current page.south) {
+            \includegraphics[height=1cm]{../misc/UdeSA.png}
+        };
+    \end{tikzpicture}
+\end{frame}
+
+\end{document}

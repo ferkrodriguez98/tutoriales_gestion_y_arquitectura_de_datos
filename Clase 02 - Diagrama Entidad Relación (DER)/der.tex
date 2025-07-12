@@ -77,6 +77,24 @@ Un Diagrama Entidad-Relación (DER) es una herramienta para el modelado de datos
     \item \textbf{Cardinalidad}: Indica cuántas instancias de una entidad pueden estar relacionadas con otra
 \end{itemize}
 
+\section{Relacion Uno a Uno}
+
+Hay casos en donde una cosa solo pertenece a algo, y ese algo solo puede tener una cosa. Por ejemplo, una persona solo puede tener un pasaporte, y un pasaporte solo puede pertenecer a una persona.
+
+\begin{center}
+\begin{tikzpicture}[node distance=4cm]
+    \node[entity] (persona) {Persona\nodepart{second}\textbf{id\_persona (PK)}\\ nombre\\ apellido\\ fecha\_nacimiento};
+    \node[entity] (pasaporte) [right=of persona] {Pasaporte\nodepart{second}\textbf{id\_pasaporte (PK)}\\ \underline{id\_persona (FK)}\\ numero\\ fecha\_vencimiento};
+
+    \coordinate (fk_persona) at ($(pasaporte.west)+(0,-0.1)$);
+    \coordinate (pk_persona) at ($(persona.east)+(0,0.4)$);
+    \draw[-latex] (fk_persona) to[out=180,in=0] 
+        node[pos=0.1,above] {1..1} 
+        node[pos=0.9,above] {1..1} 
+        (pk_persona);
+\end{tikzpicture}
+\end{center}
+
 \section{Relación Uno a Muchos}
 Consideremos un sistema donde cada cliente puede tener múltiples pedidos, pero cada pedido pertenece a un único cliente.
 
@@ -109,6 +127,7 @@ En este ejemplo simple podemos ver:
 Ahora veamos un sistema donde los productos pueden estar en múltiples pedidos y cada pedido puede tener múltiples productos.
 
 \begin{center}
+\resizebox{\textwidth}{!}{
 \begin{tikzpicture}[node distance=2cm]
     % Entidades principales
     \node[entity] (pedido) {Pedido\nodepart{second}\textbf{id\_pedido (PK)}\\ fecha\\ total};
@@ -130,6 +149,7 @@ Ahora veamos un sistema donde los productos pueden estar en múltiples pedidos y
         node[pos=0.8,above] {1..1} 
         (pk_producto);
 \end{tikzpicture}
+}
 \end{center}
 
 Este ejemplo muestra:
@@ -140,10 +160,11 @@ Este ejemplo muestra:
     \item Flechas conectando cada FK con su PK correspondiente
 \end{itemize}
 
-\section{Herencia (Subtipo-Supertipo)}
+\section{Herencia (Tipo-Subtipo)}
 Veamos un sistema donde tenemos diferentes tipos de usuarios.
 
 \begin{center}
+\resizebox{\textwidth}{!}{
 \begin{tikzpicture}[node distance=4cm]
     % Entidad padre
     \node[entity] (usuario) {Usuario\nodepart{second}\textbf{id\_usuario (PK)}\\ nombre\\ email\\ password};
@@ -162,6 +183,7 @@ Veamos un sistema donde tenemos diferentes tipos de usuarios.
     \draw (fk_cliente) -- (union);
     \draw (fk_empleado) -- (union);
 \end{tikzpicture}
+}
 \end{center}
 
 Este ejemplo ilustra:
@@ -171,7 +193,7 @@ Este ejemplo ilustra:
     \item Atributos específicos en cada subtipo
 \end{itemize}
 
-\section{Relación Autoreferencial TEST}
+\section{Relación Autoreferencial}
 Por último, veamos un ejemplo de una estructura jerárquica donde los empleados tienen supervisores.
 
 \begin{center}

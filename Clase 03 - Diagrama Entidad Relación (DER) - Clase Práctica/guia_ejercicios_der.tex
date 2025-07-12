@@ -38,6 +38,10 @@
   {Gestión y Arquitectura de Datos, Universidad de San Andrés}
 \end{center}
 
+Si encuentran algún error en el documento o hay alguna duda, mandenmé un mail a rodriguezf@udesa.edu.ar y lo revisamos.
+
+\vspace{1em}
+
 Para cada uno de los siguientes escenarios, diseñe un Diagrama Entidad-Relación (DER) que represente adecuadamente la situación planteada. Identifique entidades, atributos, relaciones y cardinalidades. Las soluciones se encuentran al final del documento.
 
 \section{Ejercicios}
@@ -92,6 +96,7 @@ Una aerolínea necesita gestionar sus vuelos y reservas. Los vuelos tienen un n�
 
 \subsection{Gestión de Recetas}
 \begin{center}
+\resizebox{1\textwidth}{!}{
 \begin{tikzpicture}[node distance=2cm]
     \node[entity] (receta) {Receta\nodepart{second}\textbf{id\_receta (PK)}\\ nombre\\ tiempo\_prep\\ dificultad\\ porciones};
     \node[entity] (detalle) [right=of receta] {Detalle\_Receta\nodepart{second}\textbf{id\_detalle (PK)}\\ \underline{id\_receta (FK)}\\ \underline{id\_ingrediente (FK)}\\ cantidad\\ unidad\_medida};
@@ -111,10 +116,12 @@ Una aerolínea necesita gestionar sus vuelos y reservas. Los vuelos tienen un n�
         node[pos=0.8,above] {1..1} 
         (pk_ingrediente);
 \end{tikzpicture}
+}
 \end{center}
 
 \subsection{Club Deportivo}
 \begin{center}
+\resizebox{1\textwidth}{!}{
 \begin{tikzpicture}[node distance=2cm]
     \node[entity] (profesor) {Profesor\nodepart{second}\textbf{dni (PK)}\\ nombre\\ telefono\\ fecha\_ingreso};
     \node[entity] (clase) [right=of profesor] {Clase\nodepart{second}\textbf{id\_clase (PK)}\\ \underline{dni\_profesor (FK)}\\ \underline{id\_deporte (FK)}\\ horario\\ dia};
@@ -154,10 +161,12 @@ Una aerolínea necesita gestionar sus vuelos y reservas. Los vuelos tienen un n�
         node[pos=0.8,above] {1..1} 
         (pk_socio);
 \end{tikzpicture}
+}
 \end{center}
 
 \subsection{Sistema de Pedidos Online}
 \begin{center}
+\resizebox{1\textwidth}{!}{
 \begin{tikzpicture}[node distance=2cm]
     \node[entity] (cliente) {Cliente\nodepart{second}\textbf{email (PK)}\\ nombre\\ direccion\\ telefono};
     \node[entity] (pedido) [right=of cliente] {Pedido\nodepart{second}\textbf{numero (PK)}\\ \underline{email\_cliente (FK)}\\ fecha\\ estado};
@@ -188,10 +197,12 @@ Una aerolínea necesita gestionar sus vuelos y reservas. Los vuelos tienen un n�
         node[pos=0.8,above] {1..1} 
         (pk_producto);
 \end{tikzpicture}
+}
 \end{center}
 
 \subsection{Red Social Simplificada}
 \begin{center}
+\resizebox{1\textwidth}{!}{
 \begin{tikzpicture}[node distance=2cm]
     \node[entity] (usuario) {Usuario\nodepart{second}\textbf{username (PK)}\\ email\\ nombre\\ fecha\_registro};
     \node[entity] (publicacion) [right=of usuario] {Publicacion\nodepart{second}\textbf{id\_pub (PK)}\\ \underline{username (FK)}\\ contenido\\ fecha};
@@ -236,10 +247,12 @@ Una aerolínea necesita gestionar sus vuelos y reservas. Los vuelos tienen un n�
         node[pos=0.8,above] {1..1} 
         (pk_hashtag);
 \end{tikzpicture}
+}
 \end{center}
 
 \subsection{Sistema de Universidad}
 \begin{center}
+\resizebox{1\textwidth}{!}{
 \begin{tikzpicture}[node distance=2cm]
     \node[entity] (profesor) {Profesor\nodepart{second}\textbf{legajo (PK)}\\ nombre\\ departamento\\ titulo};
     \node[entity] (materia) [right=of profesor] {Materia\nodepart{second}\textbf{codigo (PK)}\\ nombre\\ departamento\\ creditos};
@@ -270,10 +283,12 @@ Una aerolínea necesita gestionar sus vuelos y reservas. Los vuelos tienen un n�
         node[pos=0.8,right] {1..1} 
         (pk_inscripcion);
 \end{tikzpicture}
+}
 \end{center}
 
 \subsection{Sistema de Hospital}
 \begin{center}
+\resizebox{1\textwidth}{!}{
 \begin{tikzpicture}[node distance=2cm]
     \node[entity] (paciente) {Paciente\nodepart{second}\textbf{dni (PK)}\\ nombre\\ alergias\\ enfermedades\_cronicas};
     \node[entity] (consulta) [right=of paciente] {Consulta\nodepart{second}\textbf{id\_consulta (PK)}\\ \underline{dni\_paciente (FK)}\\ fecha\\ hora\\ consultorio\\ diagnóstico};
@@ -295,10 +310,12 @@ Una aerolínea necesita gestionar sus vuelos y reservas. Los vuelos tienen un n�
         node[pos=0.8,above] {1..1} 
         (pk_consulta);
 \end{tikzpicture}
+}
 \end{center}
 
 \subsection{Plataforma de Streaming}
 \begin{center}
+\resizebox{1\textwidth}{!}{
 \begin{tikzpicture}[node distance=2cm]
     \node[entity] (perfil) {Perfil\nodepart{second}\textbf{id\_perfil (PK)}\\ \underline{username (FK)}\\ \underline{email (FK)}\\ nombre\\ fecha\_registro};
     \node[entity] (contenido) [right=of perfil] {Contenido\nodepart{second}\textbf{id\_contenido (PK)}\\ título\\ género\\ año\\ clasificación\\ duración};
@@ -320,10 +337,12 @@ Una aerolínea necesita gestionar sus vuelos y reservas. Los vuelos tienen un n�
         node[pos=0.8,above] {1..1} 
         (pk_contenido);
 \end{tikzpicture}
+}
 \end{center}
 
 \subsection{Sistema de Aerolínea}
 \begin{center}
+\resizebox{1\textwidth}{!}{
 \begin{tikzpicture}[node distance=2cm]
     \node[entity] (vuelo) {Vuelo\nodepart{second}\textbf{numero (PK)}\\ \underline{id\_origen (FK)}\\ \underline{id\_destino (FK)}\\ fecha\\ hora};
     \node[entity] (aeropuerto) [right=of vuelo] {Aeropuerto\nodepart{second}\textbf{codigo (PK)}\\ nombre\\ ciudad\\ país};
@@ -354,6 +373,7 @@ Una aerolínea necesita gestionar sus vuelos y reservas. Los vuelos tienen un n�
         node[pos=0.8,above] {1..1} 
         (pk_pasajero);
 \end{tikzpicture}
+}
 \end{center}
 
 \end{document}

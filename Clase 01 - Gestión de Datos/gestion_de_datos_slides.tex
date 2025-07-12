@@ -1,0 +1,379 @@
+% Diapositivas Gestión de Datos - UdeSA
+
+\documentclass{beamer}
+\usetheme{metropolis}
+
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{xcolor}
+\usepackage{amsmath}
+\usepackage{fontawesome}
+
+\usetikzlibrary{positioning,shapes.multipart,calc,arrows,shapes.geometric}
+
+% Colores y configuración del template
+\definecolor{primary}{RGB}{46, 204, 113}
+\definecolor{secondary}{RGB}{52, 152, 219}
+\definecolor{accent}{RGB}{231, 76, 60}
+\definecolor{background}{RGB}{236, 240, 241}
+\setbeamercolor{normal text}{fg=black,bg=background}
+\setbeamercolor{structure}{fg=primary}
+\setbeamercolor{alerted text}{fg=accent}
+
+% Título
+\title{Gestión de Datos}
+\author{Gestión y Arquitectura de Datos}
+\date{}
+
+\begin{document}
+
+% Portada
+\begin{frame}
+    \titlepage
+    \begin{tikzpicture}[remember picture,overlay]
+        \node[anchor=south west,inner sep=30pt] at (current page.south west) {
+            \includegraphics[height=1cm]{../misc/UdeSA.png}
+        };
+    \end{tikzpicture}
+\end{frame}
+
+% Introducción
+\begin{frame}{Introducción}
+    \begin{center}
+        La gestión de datos dentro de una organización es el proceso de:
+        
+        \vspace{0.8cm}
+        
+        \begin{tabular}{cccc}
+            \begin{minipage}{2.2cm}
+                \centering
+                {\Large \faSitemap}\\[0.2cm]
+                \textbf{Organizar}\\[0.1cm]
+            \end{minipage} &
+            \begin{minipage}{2.2cm}
+                \centering
+                {\Large \faShield}\\[0.2cm]
+                \textbf{Proteger}\\[0.1cm]
+            \end{minipage} &
+            \begin{minipage}{2.2cm}
+                \centering
+                {\Large \faSearch}\\[0.2cm]
+                \textbf{Recuperar}\\[0.1cm]
+            \end{minipage} &
+            \begin{minipage}{2.2cm}
+                \centering
+                {\Large \faWrench}\\[0.2cm]
+                \textbf{Mantener}\\[0.1cm]
+            \end{minipage}
+        \end{tabular}
+    \end{center}
+\end{frame}
+
+% Ciclo de Vida de los Datos (slide general)
+\begin{frame}{Ciclo de vida de los datos}
+    \begin{center}
+    \begin{tikzpicture}[node distance=0.6cm]
+        \node (c1) [rectangle, draw, fill=white, minimum width=4cm, minimum height=0.8cm, rounded corners] {\only<1->{Creación y captura}};
+        \node (c2) [rectangle, draw, fill=white, below=of c1, minimum width=4cm, minimum height=0.8cm, rounded corners] {\only<2->{Almacenamiento}};
+        \node (c3) [rectangle, draw, fill=white, below=of c2, minimum width=4cm, minimum height=0.8cm, rounded corners] {\only<3->{Procesamiento}};
+        \node (c4) [rectangle, draw, fill=white, below=of c3, minimum width=4cm, minimum height=0.8cm, rounded corners] {\only<4->{Análisis}};
+        \node (c5) [rectangle, draw, fill=white, below=of c4, minimum width=4cm, minimum height=0.8cm, rounded corners] {\only<5->{Archivado y eliminación}};
+        \draw[->, thick] (c1) -- (c2);
+        \draw[->, thick] (c2) -- (c3);
+        \draw[->, thick] (c3) -- (c4);
+        \draw[->, thick] (c4) -- (c5);
+    \end{tikzpicture}
+    \end{center}
+    % FOTO: ciclo de vida de los datos (poner diagrama o imagen)
+\end{frame}
+
+% Creación y Captura
+\begin{frame}{Creación y captura de datos}
+    \begin{itemize}
+        \item<1->[{\makebox[1em][c]{\textcolor{black}{\faDesktop}}}] Ingreso manual de datos
+        \item<2->[{\makebox[1em][c]{\textcolor{black}{\faCog}}}] Captura automática
+        \item<3->[{\makebox[1em][c]{\textcolor{black}{\faLink}}}] Integración de sistemas
+        \item<4->[{\makebox[1em][c]{\textcolor{black}{\faWifi}}}] Sensores y dispositivos IoT
+    \end{itemize}
+    % ICONO: entrada de datos
+\end{frame}
+
+% Almacenamiento
+\begin{frame}{Almacenamiento de datos}
+    \begin{itemize}
+        \raggedleft
+        \item<1->[{\makebox[1em][c]{\textcolor{black}{\faDatabase}}}] Bases de datos relacionales
+        \item<2->[{\makebox[1em][c]{\textcolor{black}{\faServer}}}] Bases de datos NoSQL
+        \item<3->[{\makebox[1em][c]{\textcolor{black}{\faCloud}}}] Data Lakes
+        \item<4->[{\makebox[1em][c]{\textcolor{black}{\faArchive}}}] Sistemas de archivos distribuidos
+    \end{itemize}
+    % ICONO: base de datos o almacenamiento
+\end{frame}
+
+% Procesamiento
+\begin{frame}{Procesamiento de datos}
+    \begin{itemize}
+        \item<1->[{\makebox[1em][c]{\textcolor{black}{\faCogs}}}] ETL (Extract, Transform, Load)
+        \item<2->[{\makebox[1em][c]{\textcolor{black}{\faBug}}}] Limpieza de datos
+        \item<3->[{\makebox[1em][c]{\textcolor{black}{\faCheck}}}] Validación
+        \item<4->[{\makebox[1em][c]{\textcolor{black}{\faPlus}}}] Enriquecimiento
+    \end{itemize}
+    % ICONO: engranaje o proceso
+\end{frame}
+
+% Análisis
+\begin{frame}{Análisis de datos}
+    \begin{itemize}
+        \raggedleft
+        \item<1->[{\makebox[1em][c]{\textcolor{black}{\faBarChart}}}] Business Intelligence
+        \item<2->[{\makebox[1em][c]{\textcolor{black}{\faLineChart}}}] Analytics
+        \item<3->[{\makebox[1em][c]{\textcolor{black}{\faCogs}}}] Machine Learning
+        \item<4->[{\makebox[1em][c]{\textcolor{black}{\faPieChart}}}] Visualización
+    \end{itemize}
+    % ICONO: grafico o dashboard
+\end{frame}
+
+% Archivado y Eliminación
+\begin{frame}{Archivado y eliminación de datos}
+    \begin{itemize}
+        \item<1->[{\makebox[1em][c]{\textcolor{black}{\faArchive}}}] Políticas de retención
+        \item<2->[{\makebox[1em][c]{\textcolor{black}{\faGavel}}}] Cumplimiento regulatorio
+        \item<3->[{\makebox[1em][c]{\textcolor{black}{\faSave}}}] Backup y recuperación
+        \item<4->[{\makebox[1em][c]{\textcolor{black}{\faTrash}}}] Eliminación segura
+    \end{itemize}
+    % ICONO: caja de archivo o papelera
+\end{frame}
+
+% Calidad de Datos - Dimensiones (1)
+\begin{frame}{Dimensiones de la calidad de los datos (I)}
+    \begin{itemize}
+        \item Precisión: grado en que los datos son exactos y libres de errores.
+        \item Completitud: grado en que los datos cubren todas las partes relevantes de la información.
+        \item Consistencia: grado en que los datos son coherentes y no contienen contradicciones.
+        \item Actualidad: grado en que los datos reflejan la situación actual.
+    \end{itemize}
+    % ICONO: check o medalla
+\end{frame}
+
+% Calidad de Datos - Dimensiones (2)
+\begin{frame}{Dimensiones de la calidad de los datos (II)}
+    \begin{itemize}
+        \item Unicidad: grado en que los datos son únicos y no duplicados.
+        \item Accesibilidad: grado en que los datos son faciles de encontrar y usar.
+        \item Seguridad: grado en que los datos estan protegidos contra accesos no autorizados.
+    \end{itemize}
+    % ICONO: check o medalla
+\end{frame}
+
+% Calidad de Datos - Métricas
+\begin{frame}{Métricas de la calidad de los datos}
+    \begin{itemize}
+        \item [{\makebox[1em][c]{\textcolor{black}{\faExclamationTriangle}}}] Tasa de error: proporción de datos que contienen errores.
+        \item [{\makebox[1em][c]{\textcolor{black}{\faClone}}}] Tasa de duplicación: proporción de datos que son duplicados.
+        \item [{\makebox[1em][c]{\textcolor{black}{\faRefresh}}}] Tasa de actualización: proporción de datos que se actualizan regularmente.
+    \end{itemize}
+    % ICONO: estadistica o metrica
+\end{frame}
+
+% Gobierno de Datos - Roles
+\begin{frame}{Gobierno de datos: roles y responsabilidades}
+    \begin{center}
+        \begin{tabular}{ccc}
+            \begin{minipage}{2.8cm}
+                \centering
+                \fbox{\begin{minipage}[t][3.5cm]{2.6cm}
+                    \centering
+                    \vspace{0.2cm}
+                    {\Large \faUserSecret}\\[0.3cm]
+                    \textbf{CDO}\\[0.2cm]
+                    {\scriptsize Dirección y gestión de todos los datos de la organización}
+                \end{minipage}}
+            \end{minipage} &
+            \begin{minipage}{2.8cm}
+                \centering
+                \fbox{\begin{minipage}[t][3.5cm]{2.6cm}
+                    \centering
+                    \vspace{0.2cm}
+                    {\Large \faUser}\\[0.3cm]
+                    \textbf{Data Owner}\\[0.2cm]
+                    {\scriptsize Responsable de un conjunto de datos específico}
+                \end{minipage}}
+            \end{minipage} &
+            \begin{minipage}{2.8cm}
+                \centering
+                \fbox{\begin{minipage}[t][3.5cm]{2.6cm}
+                    \centering
+                    \vspace{0.2cm}
+                    {\Large \faWrench}\\[0.3cm]
+                    \textbf{Data Steward}\\[0.2cm]
+                    {\scriptsize Responsable operativo, mantiene datos actualizados}
+                \end{minipage}}
+            \end{minipage}
+        \end{tabular}
+    \end{center}
+    % ICONO: personas o jerarquía
+\end{frame}
+
+% Gobierno de Datos - Políticas
+\begin{frame}{Gobierno de datos: políticas y procedimientos}
+    \begin{center}
+        \begin{tabular}{ccc}
+            \begin{minipage}{2.5cm}
+                \centering
+                {\Large \faShield}\\[0.1cm]
+                \textbf{Seguridad}\\[0.1cm]
+                {\scriptsize Protección de datos}
+            \end{minipage} &
+            \begin{minipage}{2.5cm}
+                \centering
+                {\Large \faEyeSlash}\\[0.1cm]
+                \textbf{Privacidad}\\[0.1cm]
+                {\scriptsize Control de acceso}
+            \end{minipage} &
+            \begin{minipage}{2.5cm}
+                \centering
+                {\Large \faCalendar}\\[0.1cm]
+                \textbf{Retención}\\[0.1cm]
+                {\scriptsize Tiempo de vida}
+            \end{minipage}
+        \end{tabular}
+        
+        \vspace{0.8cm}
+        
+        \begin{tabular}{cc}
+            \begin{minipage}{2.5cm}
+                \centering
+                {\Large \faUsers}\\[0.1cm]
+                \textbf{Uso}\\[0.1cm]
+                {\scriptsize Normas}
+            \end{minipage} &
+            \begin{minipage}{2.5cm}
+                \centering
+                {\Large \faKey}\\[0.1cm]
+                \textbf{Acceso}\\[0.1cm]
+                {\scriptsize Permisos y roles}
+            \end{minipage}
+        \end{tabular}
+    \end{center}
+    % ICONO: documento o candado
+\end{frame}
+
+% Arquitectura de Datos - General
+\begin{frame}{Arquitectura de datos}
+    \begin{center}
+        \begin{tabular}{c}
+            \fbox{\begin{minipage}[c][1.2cm]{8cm}
+                \centering
+                \textbf{Capa de Fuentes}\\
+                {\scriptsize Sistemas operacionales, APIs externas, archivos}
+            \end{minipage}}\\[0.2cm]
+
+            \fbox{\begin{minipage}[c][1.2cm]{8cm}
+                \centering
+                \textbf{Capa de Procesamiento}\\
+                {\scriptsize ETL, transformaciones, análisis}
+            \end{minipage}}\\[0.2cm]
+            
+            \fbox{\begin{minipage}[c][1.2cm]{8cm}
+                \centering
+                \textbf{Capa de Almacenamiento}\\
+                {\scriptsize Data warehouses, data lakes, bases de datos}
+            \end{minipage}}\\[0.2cm]
+
+            \fbox{\begin{minipage}[c][1.2cm]{8cm}
+                \centering
+                \textbf{Capa de Consumo}\\
+                {\scriptsize Reportes, dashboards, APIs}
+            \end{minipage}}
+        \end{tabular}
+    \end{center}
+    % FOTO: arquitectura de datos (poner diagrama de capas)
+\end{frame}
+
+% Arquitectura de Datos - Fuentes
+\begin{frame}{Arquitectura de datos: fuentes de datos}
+    \begin{columns}
+        \begin{column}{0.6\textwidth}
+            \textbf{Fuentes de datos:}
+            \begin{itemize}
+                \item Sistemas operacionales (ERP, CRM)
+                \item APIs externas
+                \item Datos no estructurados (documentos, imagenes, videos)
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.4\textwidth}
+            \centering
+            {\fontsize{60}{60}\selectfont \faCubes}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% Arquitectura de Datos - Almacenamiento
+\begin{frame}{Arquitectura de datos: almacenamiento}
+    \begin{columns}
+        \begin{column}{0.6\textwidth}
+            \textbf{Almacenamiento:}
+            \begin{itemize}
+                \item Data Warehouse: datos estructurados y análisis histórico
+                \item Data Lake: datos en formato original
+        \item Data Mart: subconjuntos especializados
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.4\textwidth}
+            \centering
+            {\fontsize{60}{60}\selectfont \faDatabase}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% Arquitectura de Datos - Procesamiento
+\begin{frame}{Arquitectura de datos: procesamiento}
+    \begin{columns}
+        \begin{column}{0.6\textwidth}
+            \textbf{Procesamiento:}
+            \begin{itemize}
+                \item Procesamiento por lotes (Batch)
+        \item Procesamiento en streaming
+        \item Arquitectura Lambda (combinación de ambos)
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.4\textwidth}
+            \centering
+            {\fontsize{60}{60}\selectfont \faCogs}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% Arquitectura de Datos - Consumo
+\begin{frame}{Arquitectura de datos: consumo}
+    \begin{columns}
+        \begin{column}{0.6\textwidth}
+            \textbf{Consumo:}
+            \begin{itemize}
+                \item Reportes estructurados
+                \item Dashboards interactivos
+                \item APIs para integración
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.4\textwidth}
+            \centering
+            {\fontsize{60}{60}\selectfont \faDesktop}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% Cierre
+\begin{frame}{Terminamos}
+    \begin{center}
+        \Large{\textbf{¿Dudas?\\¿Consultas?}}
+    \end{center}
+    \begin{tikzpicture}[remember picture,overlay]
+        \node[anchor=south,inner sep=30pt] at (current page.south) {
+            \includegraphics[height=1cm]{../misc/UdeSA.png}
+        };
+    \end{tikzpicture}
+\end{frame}
+
+\end{document}

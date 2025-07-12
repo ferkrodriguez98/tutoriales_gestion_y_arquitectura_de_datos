@@ -14,38 +14,40 @@
   {Gestión y Arquitectura de Datos, Universidad de San Andrés}
 \end{center}
 
+Si encuentran algún error en el documento o hay alguna duda, mandenmé un mail a rodriguezf@udesa.edu.ar y lo revisamos.
+
 \section*{Preguntas}
 
 \begin{enumerate}[label=\arabic*.]
 
 \item En el contexto de calidad de datos, ¿cuál de las siguientes afirmaciones sobre la dimensión de ``Consistencia'' es correcta?
 \begin{enumerate}
+    \item Significa que los datos son coherentes a través de diferentes sistemas y representaciones
     \item Se refiere únicamente a que los datos estén completos
     \item Implica que los datos sean coherentes solo dentro de una misma base de datos
-    \item Significa que los datos son coherentes a través de diferentes sistemas y representaciones
     \item Solo se aplica a datos numéricos
 \end{enumerate}
 
 \item Una empresa implementa una arquitectura de datos moderna. ¿Cuál de las siguientes combinaciones de componentes sería la más apropiada para procesamiento en tiempo real y batch?
 \begin{enumerate}
     \item Data Lake + Data Warehouse
-    \item Lambda Architecture + Stream Processing
     \item Solo Data Warehouse
+    \item Lambda Architecture + Stream Processing
     \item Data Mart + Batch Processing
 \end{enumerate}
 
 \item En el rol de Data Steward, ¿cuál de las siguientes NO es una responsabilidad principal?
 \begin{enumerate}
-    \item Definir la estrategia general de datos de la empresa
     \item Mantener los metadatos actualizados
     \item Asegurar la calidad de los datos
     \item Verificar el cumplimiento de políticas de datos
+    \item Definir la estrategia general de datos de la empresa
 \end{enumerate}
 
 \item ¿Qué desafío principal resuelve la arquitectura Data Mesh?
 \begin{enumerate}
-    \item La necesidad de procesamiento batch exclusivamente
     \item La centralización excesiva en equipos de datos
+    \item La necesidad de procesamiento batch exclusivamente
     \item La falta de seguridad en los datos
     \item La imposibilidad de usar machine learning
 \end{enumerate}
@@ -53,31 +55,31 @@
 \item En el ciclo de vida de los datos, ¿qué fase debería incluir necesariamente validación de calidad?
 \begin{enumerate}
     \item Solo en la fase de Archivado
-    \item Solo en la fase de Análisis
     \item En la fase de Procesamiento (ETL)
+    \item Solo en la fase de Análisis
     \item Solo en la fase de Creación
 \end{enumerate}
 
 \item Para implementar una política efectiva de gobierno de datos, ¿qué combinación de elementos es más crítica?
 \begin{enumerate}
     \item Solo tecnología y herramientas
-    \item Roles definidos + Políticas claras + Procesos documentados
     \item Únicamente automatización
+    \item Roles definidos + Políticas claras + Procesos documentados
     \item Solo documentación técnica
 \end{enumerate}
 
 \item En el contexto de protección de datos, ¿qué estrategia es más efectiva para datos sensibles en uso?
 \begin{enumerate}
     \item Solo encriptación en reposo
-    \item Encriptación en tránsito + Enmascaramiento dinámico
     \item Únicamente control de acceso
     \item Backup diario
+    \item Encriptación en tránsito + Enmascaramiento dinámico
 \end{enumerate}
 
 \item Para mejorar la calidad de datos en tiempo real, ¿qué enfoque es más efectivo?
 \begin{enumerate}
-    \item Validación manual periódica
     \item Reglas automatizadas + Monitoreo continuo + Alertas
+    \item Validación manual periódica
     \item Solo documentación
     \item Revisión mensual
 \end{enumerate}
@@ -93,8 +95,8 @@
 \item Para implementar DataOps efectivamente, ¿qué conjunto de prácticas es más importante?
 \begin{enumerate}
     \item Solo testing manual
-    \item Autom
     \item Únicamente documentación
+    \item Automatización + CI/CD + Monitoreo + Colaboración
     \item Reuniones diarias
 \end{enumerate}
 
@@ -107,75 +109,75 @@
 
 \item En el contexto de calidad de datos, ¿cuál de las siguientes afirmaciones sobre la dimensión de ``Consistencia'' es correcta?
 \begin{enumerate}
+    \item \textbf{Significa que los datos son coherentes a través de diferentes sistemas y representaciones}
     \item Se refiere únicamente a que los datos estén completos
     \item Implica que los datos sean coherentes solo dentro de una misma base de datos
-    \item \textbf{Significa que los datos son coherentes a través de diferentes sistemas y representaciones}
     \item Solo se aplica a datos numéricos
 \end{enumerate}
-La consistencia implica que los datos sean coherentes a través de diferentes sistemas y representaciones. Esto es fundamental para mantener la integridad de la información en toda la organización.
+La consistencia NO es completitud (b) ni se limita a una base (c). Requiere coherencia entre múltiples sistemas y representaciones, no solo datos numéricos (d).
 
 \item Una empresa implementa una arquitectura de datos moderna. ¿Cuál de las siguientes combinaciones de componentes sería la más apropiada para procesamiento en tiempo real y batch?
 \begin{enumerate}
     \item Data Lake + Data Warehouse
-    \item \textbf{Lambda Architecture + Stream Processing}
     \item Solo Data Warehouse
+    \item \textbf{Lambda Architecture + Stream Processing}
     \item Data Mart + Batch Processing
 \end{enumerate}
-La Lambda Architecture combinada con Stream Processing permite manejar tanto procesamiento batch como en tiempo real, ofreciendo una solución completa para diferentes necesidades de procesamiento.
+Data Lake/Warehouse (a) o solo Warehouse (b) NO manejan tiempo real eficientemente. Lambda Architecture sí combina ambos procesamientos, no solo batch (d).
 
 \item En el rol de Data Steward, ¿cuál de las siguientes NO es una responsabilidad principal?
 \begin{enumerate}
-    \item \textbf{Definir la estrategia general de datos de la empresa}
     \item Mantener los metadatos actualizados
     \item Asegurar la calidad de los datos
     \item Verificar el cumplimiento de políticas de datos
+    \item \textbf{Definir la estrategia general de datos de la empresa}
 \end{enumerate}
-Definir la estrategia general de datos es responsabilidad del Chief Data Officer (CDO), no del Data Steward, quien se enfoca en la calidad, metadatos y cumplimiento de políticas.
+Data Steward SÍ hace metadatos (a), calidad (b) y cumplimiento (c). Estrategia general (d) es responsabilidad del CDO, no del Steward.
 
 \item ¿Qué desafío principal resuelve la arquitectura Data Mesh?
 \begin{enumerate}
-    \item La necesidad de procesamiento batch exclusivamente
     \item \textbf{La centralización excesiva en equipos de datos}
+    \item La necesidad de procesamiento batch exclusivamente
     \item La falta de seguridad en los datos
     \item La imposibilidad de usar machine learning
 \end{enumerate}
-Data Mesh aborda el problema de la centralización excesiva al proponer una arquitectura descentralizada basada en dominios, permitiendo mayor autonomía y escalabilidad.
+Data Mesh NO resuelve batch (b), seguridad (c) o ML (d). Su foco es descentralizar equipos de datos mediante dominios autónomos.
 
 \item En el ciclo de vida de los datos, ¿qué fase debería incluir necesariamente validación de calidad?
 \begin{enumerate}
     \item Solo en la fase de Archivado
-    \item Solo en la fase de Análisis
     \item \textbf{En la fase de Procesamiento (ETL)}
+    \item Solo en la fase de Análisis
     \item Solo en la fase de Creación
 \end{enumerate}
-La fase de Procesamiento (ETL) es crítica para la validación de calidad, ya que es donde se transforman y limpian los datos antes de su uso.
+Archivado (a), Análisis (c) y Creación (d) NO transforman datos. ETL es donde se valida y limpia antes del uso final.
 
 \item Para implementar una política efectiva de gobierno de datos, ¿qué combinación de elementos es más crítica?
 \begin{enumerate}
     \item Solo tecnología y herramientas
-    \item \textbf{Roles definidos + Políticas claras + Procesos documentados}
     \item Únicamente automatización
+    \item \textbf{Roles definidos + Políticas claras + Procesos documentados}
     \item Solo documentación técnica
 \end{enumerate}
-La combinación de roles definidos, políticas claras y procesos documentados es esencial para un gobierno de datos efectivo, ya que abarca tanto el aspecto humano como el organizacional.
+Solo tecnología (a), automatización (b) o documentación (d) NO bastan. Gobierno necesita roles, políticas y procesos integrados para funcionar.
 
 \item En el contexto de protección de datos, ¿qué estrategia es más efectiva para datos sensibles en uso?
 \begin{enumerate}
     \item Solo encriptación en reposo
-    \item \textbf{Encriptación en tránsito + Enmascaramiento dinámico}
     \item Únicamente control de acceso
     \item Backup diario
+    \item \textbf{Encriptación en tránsito + Enmascaramiento dinámico}
 \end{enumerate}
-La combinación de encriptación en tránsito y enmascaramiento dinámico proporciona una protección completa para datos sensibles mientras están siendo utilizados.
+Encriptación en reposo (a), control de acceso (b) o backup (c) NO protegen datos EN USO. Tránsito + enmascaramiento sí.
 
 \item Para mejorar la calidad de datos en tiempo real, ¿qué enfoque es más efectivo?
 \begin{enumerate}
-    \item Validación manual periódica
     \item \textbf{Reglas automatizadas + Monitoreo continuo + Alertas}
+    \item Validación manual periódica
     \item Solo documentación
     \item Revisión mensual
 \end{enumerate}
-Las reglas automatizadas, el monitoreo continuo y las alertas permiten detectar y corregir problemas de calidad en tiempo real de manera eficiente.
+Validación manual (b), documentación (c) o revisión mensual (d) NO detectan problemas en tiempo real. Automatización + monitoreo sí.
 
 \item En una arquitectura moderna de datos, ¿qué característica es esencial para garantizar el linaje de datos?
 \begin{enumerate}
@@ -184,16 +186,16 @@ Las reglas automatizadas, el monitoreo continuo y las alertas permiten detectar 
     \item Únicamente documentación
     \item Backup semanal
 \end{enumerate}
-La metadata activa combinada con el tracking de transformaciones permite mantener un registro completo del origen y las transformaciones de los datos.
+Logs (a), documentación (c) o backup (d) NO rastrean transformaciones. Metadata activa + tracking sí registra origen y cambios.
 
 \item Para implementar DataOps efectivamente, ¿qué conjunto de prácticas es más importante?
 \begin{enumerate}
     \item Solo testing manual
-    \item \textbf{Automatización + CI/CD + Monitoreo + Colaboración}
     \item Únicamente documentación
+    \item \textbf{Automatización + CI/CD + Monitoreo + Colaboración}
     \item Reuniones diarias
 \end{enumerate}
-La combinación de automatización, CI/CD, monitoreo y colaboración es fundamental para una implementación efectiva de DataOps, permitiendo una gestión ágil y confiable de los datos.
+Testing manual (a), documentación (b) o reuniones (d) NO escalan. DataOps requiere automatización, CI/CD y monitoreo para agilidad.
 
 \end{enumerate}
 
