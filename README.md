@@ -5,8 +5,8 @@ Este repositorio contiene los materiales, notebooks, apuntes y recursos de las c
 ## Clases y contenido
 
 - [Clase 01 - Gestión de Datos](/Clase%2001%20-%20Gestión%20de%20Datos/): Manejo eficiente de los datos. Roles en la gestión de datos.
-- [Clase 02 - Diagrama Entidad Relación (DER)](/Clase%2002%20-%20Diagrama%20Entidad%20Relación%20(DER)/): Qué es un DER. Entidades, atributos y relaciones. Cardinalidad.
-- [Clase 03 - Diagrama Entidad Relación (DER) - Clase Práctica](/Clase%2003%20-%20Diagrama%20Entidad%20Relación%20(DER)%20-%20Clase%20Práctica/): Resolución de casos prácticos de la guía. 
+- [Clase 02 - DER](/Clase%2002%20-%20DER/): Qué es un Diagrama Entidad-Relación. Entidades, atributos y relaciones. Cardinalidad.
+- [Clase 03 - DER - Clase Práctica](/Clase%2003%20-%20DER%20-%20Clase%20Práctica/): Resolución de casos prácticos de la guía. 
 - [Clase 04 - Normalización](/Clase%2004%20-%20Normalización/): Normalización de datos. Pasar de 1FN a 3FN.
 - [Clase 05 - Normalización - Clase Práctica](/Clase%2005%20-%20Normalización%20-%20Clase%20Práctica/): Resolución de casos prácticos de la guía.
 - [Clase 06 - SQL Parte 1](/Clase%2006%20-%20SQL%20Parte%201/): Introducción a SQL. Data Definition Language y Data Manipulation Language.
@@ -20,21 +20,21 @@ Este repositorio contiene los materiales, notebooks, apuntes y recursos de las c
 
 ## Cronograma
 
-| # Clase | Sapoznik (Mar 9hs) | Rodríguez del Castillo (Mié 10.40hs) | Giacchetta (Jue 12.20hs) | Apicella (Jue 12.20hs) | Lapidus (Jue 19hs) | Rodríguez del Castillo (Vie 10.40hs) |
+| # Clase | Rodríguez del Castillo (Mié 10.40hs) | Giacchetta (Jue 12.20hs) | Apicella (Jue 12.20hs) | Sapoznik (Jue 12.20hs) | Lapidus (Jue 19hs) | Rodríguez del Castillo (Vie 10.40hs) |
 |:------:|:-----------------:|:------------------------------------:|:------------------------:|:----------------------:|:-----------------:|:------------------------------------:|
-|   1    | 12/08 | 13/08 | 14/08 | 14/08 | 14/08 | 08/08 |
-|   2    | 19/08 | 20/08 | 21/08 | 21/08 | 21/08 | 22/08 |
-|   3    | 26/08 | 27/08 | 28/08 | 28/08 | 28/08 | 29/08 |
-|   4    | 02/09 | 03/09 | 04/09 | 04/09 | 04/09 | 05/09 |
-|   5    | 09/09 | 10/09 | 11/09 | 11/09 | 11/09 | 12/09 |
-|   6    | 16/09 | 17/09 | 18/09 | 18/09 | 18/09 | 19/09 |
-|   7    | 23/09 | 24/09 | 25/09 | 25/09 | 25/09 | 26/09 |
+|   1    | 13/08 | 14/08 | 14/08 | 14/08 | 14/08 | 08/08 |
+|   2    | 20/08 | 21/08 | 21/08 | 21/08 | 21/08 | 22/08 |
+|   3    | 27/08 | 28/08 | 28/08 | 28/08 | 28/08 | 29/08 |
+|   4    | 03/09 | 04/09 | 04/09 | 04/09 | 04/09 | 05/09 |
+|   5    | 10/09 | 11/09 | 11/09 | 11/09 | 11/09 | 12/09 |
+|   6    | 17/09 | 18/09 | 18/09 | 18/09 | 18/09 | 19/09 |
+|   7    | 24/09 | 25/09 | 25/09 | 25/09 | 25/09 | 26/09 |
 |   -    |       |       | **PARCIALES** |       |       |
-|   8    | 21/10 | 22/10 | 23/10 | 23/10 | 23/10 | 17/10 |
-|   9    | 28/10 | 29/10 | 30/10 | 30/10 | 30/10 | 24/10 |
-|   10   | 04/11 | 05/11 | 06/11 | 06/11 | 06/11 | 31/10 |
-|   11   | 11/11 | 12/11 | 13/11 | 13/11 | 13/11 | 07/11 |
-|   12   | 18/11 | 19/11 | 20/11 | 20/11 | 20/11 | 14/11 |
-|   13   | 25/11 | 26/11 | 27/11 | 27/11 | 27/11 | 28/11 |
+|   8    | 22/10 | 23/10 | 23/10 | 23/10 | 23/10 | 17/10 |
+|   9    | 29/10 | 30/10 | 30/10 | 30/10 | 30/10 | 24/10 |
+|   10   | 05/11 | 06/11 | 06/11 | 06/11 | 06/11 | 31/10 |
+|   11   | 12/11 | 13/11 | 13/11 | 13/11 | 13/11 | 07/11 |
+|   12   | 19/11 | 20/11 | 20/11 | 20/11 | 20/11 | 14/11 |
+|   13   | 26/11 | 27/11 | 27/11 | 27/11 | 27/11 | 28/11 |
 
-Nota: La tutorial de los viernes sí tiene clase la primera semana para compensar con el feriado del 15/08. Ídem para post-parciales con el feriado del 21/11.
+Nota: No hay tutoriales la primera semana de clases ni la primera después de los parciales. La tutorial de los viernes sí tiene clase la primera semana para compensar con el feriado del 15/08. Ídem para post-parciales con el feriado del 21/11.

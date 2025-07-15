@@ -1,0 +1,533 @@
+% Diapositivas Normalizacion - Basado en template UdeSA
+
+\documentclass{beamer}
+\usetheme{metropolis}
+
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{xcolor}
+\usepackage{amsmath}
+\usepackage{fontawesome5}
+
+\usetikzlibrary{positioning,shapes.multipart,calc,arrows,shapes.geometric}
+
+% Colores y configuración del template
+\definecolor{primary}{RGB}{46, 204, 113}
+\definecolor{secondary}{RGB}{52, 152, 219}
+\definecolor{accent}{RGB}{231, 76, 60}
+\definecolor{background}{RGB}{236, 240, 241}
+\setbeamercolor{normal text}{fg=black,bg=background}
+\setbeamercolor{structure}{fg=primary}
+\setbeamercolor{alerted text}{fg=accent}
+
+% Título
+\title{Normalización de Bases de Datos}
+\author{Gestión y Arquitectura de Datos}
+\date{}
+
+\begin{document}
+
+% Portada
+\begin{frame}
+    \titlepage
+    \begin{tikzpicture}[remember picture,overlay]
+        \node[anchor=south west,inner sep=30pt] at (current page.south west) {
+            \includegraphics[height=1cm]{../misc/UdeSA.png}
+        };
+    \end{tikzpicture}
+\end{frame}
+
+% Introducción
+\begin{frame}{¿Qué es la normalización?}
+    \begin{center}
+        Proceso sistemático que busca:
+        \vspace{0.6cm}
+        \begin{tabular}{ccc}
+            \begin{minipage}{2.4cm}
+                \centering
+                {\Large \faClone}\\[0.2cm]
+                \textbf{Reducir}\\[0.1cm]
+                \textbf{redundancia}
+            \end{minipage} &
+            \begin{minipage}{2.4cm}
+                \centering
+                {\Large \faTools}\\[0.2cm]
+                \textbf{Evitar}\\[0.1cm]
+                \textbf{anomalías}
+            \end{minipage} &
+            \begin{minipage}{2.4cm}
+                \centering
+                {\Large \faDatabase}\\[0.2cm]
+                \textbf{Mejorar}\\[0.1cm]
+                \textbf{integridad}
+            \end{minipage}
+        \end{tabular}
+    \end{center}
+\end{frame}
+
+% Formas normales overview
+\begin{frame}{Formas normales}
+    \begin{itemize}
+        \item<1-> Primera Forma Normal (1FN): valores atómicos, sin grupos repetitivos.
+        \item<2-> Segunda Forma Normal (2FN): en 1FN y sin dependencias parciales respecto de la clave.
+        \item<3-> Tercera Forma Normal (3FN): en 2FN y sin dependencias transitivas entre atributos no clave.
+    \end{itemize}
+\end{frame}
+
+% 1FN definición
+\begin{frame}{Primera Forma Normal (1FN)}
+    Una tabla está en 1FN si:
+    \begin{itemize}
+        \item Cada columna contiene \textbf{un único valor atómico}.
+        \item No existen grupos de columnas repetitivas.
+        \item Cuenta con una clave primaria definida.
+    \end{itemize}
+\end{frame}
+
+% 1FN ejemplo
+\begin{frame}{Ejemplo de violacion de 1FN}
+    \small
+    \begin{center}
+    \begin{tabular}{cccc}
+        \hline
+        ID & Nombre & Telefonos & Materias \\
+        \hline
+        1 & Juan & 1234567, 7654321 & Matemática, Física \\
+        2 & Maria & 2345678 & Química, Biología, Física \\
+        \hline
+    \end{tabular}
+    \end{center}
+\end{frame}
+
+% 1FN solución
+\begin{frame}{Cómo llevar a 1FN}
+    \small
+    \begin{columns}
+        \column{0.5\textwidth}
+            \begin{center}
+            \textbf{Estudiantes}\\[0.1cm]
+            \begin{tabular}{ccc}
+                \hline
+                ID & Nombre & Teléfono \\
+                \hline
+                1 & Juan & 1234567 \\
+                1 & Juan & 7654321 \\
+                2 & Maria & 2345678 \\
+                \hline
+            \end{tabular}
+            \end{center}
+        \column{0.5\textwidth}
+            \begin{center}
+            \textbf{EstudiantesMaterias}\\[0.1cm]
+            \begin{tabular}{cc}
+                \hline
+                ID\_Estudiante & Materia \\
+                \hline
+                1 & Matemática \\
+                1 & Física \\
+                2 & Química \\
+                2 & Biología \\
+                2 & Física \\
+                \hline
+            \end{tabular}
+            \end{center}
+    \end{columns}
+\end{frame}
+
+% 2FN definición
+\begin{frame}{Segunda Forma Normal (2FN)}
+    Requisitos:
+    \begin{itemize}
+        \item Estar en 1FN.
+        \item Todos los atributos no clave dependen \textbf{de toda la clave primaria}, no de una parte de ella.
+    \end{itemize}
+\end{frame}
+
+% 2FN ejemplo
+\begin{frame}{Ejemplo de violación de 2FN}
+    \small
+    \begin{center}
+    \begin{tabular}{ccccc}
+        \hline
+        ID\_Venta & ID\_Producto & Cantidad & Precio & Categoría \\
+        \hline
+        1 & P1 & 2 & 100 & Electrónica \\
+        1 & P2 & 1 & 200 & Hogar \\
+        2 & P1 & 3 & 100 & Electrónica \\
+        \hline
+    \end{tabular}
+    \end{center}
+
+    \vspace{0.4cm}
+    \begin{center}
+    \begin{itemize}
+        \item Cantidad depende de \textit{ID\_Venta} y \textit{ID\_Producto}
+        \item Precio y Categoría dependen de \textit{ID\_Producto}
+    \end{itemize}
+    \end{center}
+\end{frame}
+
+% 2FN solucion
+\begin{frame}{Como llevar a 2FN}
+    \begin{center}
+        \textbf{Ventas}\\[0.1cm]
+        \small
+        \begin{tabular}{ccc}
+            \hline
+            ID\_Venta & ID\_Producto & Cantidad \\
+            \hline
+            1 & P1 & 2 \\
+            1 & P2 & 1 \\
+            2 & P1 & 3 \\
+            \hline
+        \end{tabular}
+        \vspace{0.5cm}
+
+        \textbf{Productos}\\[0.1cm]
+        \small
+        \begin{tabular}{ccc}
+            \hline
+            ID\_Producto & Precio & Categoría \\
+            \hline
+            P1 & 100 & Electrónica \\
+            P2 & 200 & Hogar \\
+            \hline
+        \end{tabular}
+    \end{center}
+\end{frame}
+
+% 3FN definición
+\begin{frame}{Tercera Forma Normal (3FN)}
+    Requisitos:
+    \begin{itemize}
+        \item Estar en 2FN.
+        \item No existen \textbf{dependencias transitivas}: ningún atributo no clave depende de otro atributo no clave.
+    \end{itemize}
+\end{frame}
+
+% 3FN ejemplo
+\begin{frame}{Ejemplo de violación de 3FN}
+    \small
+    \begin{center}
+    \begin{tabular}{cccc}
+        \hline
+        ID\_Empleado & Departamento & ID\_Jefe & Nombre\_Jefe \\
+        \hline
+        1 & Ventas & J1 & Ana López \\
+        2 & IT & J2 & Pedro Gómez \\
+        3 & Ventas & J1 & Ana López \\
+        \hline
+    \end{tabular}
+    \end{center}
+    \vspace{0.4cm}
+    \begin{center}
+        \begin{itemize}
+            \item Nombre\_Jefe depende transitivamente de ID\_Empleado vía ID\_Jefe.
+        \end{itemize}
+    \end{center}
+\end{frame}
+
+% 3FN solución
+\begin{frame}{Cómo llevar a 3FN}
+    \begin{columns}
+        \column{0.55\textwidth}
+            \begin{center}
+            \textbf{Empleados}\\[0.1cm]
+            \small
+            \begin{tabular}{ccc}
+                \hline
+                ID\_Empleado & Departamento & ID\_Jefe \\
+                \hline
+                1 & Ventas & J1 \\
+                2 & IT & J2 \\
+                3 & Ventas & J1 \\
+                \hline
+            \end{tabular}
+            \end{center}
+        \column{0.45\textwidth}
+            \begin{center}
+            \textbf{Jefes}\\[0.1cm]
+            \small
+            \begin{tabular}{cc}
+                \hline
+                ID\_Jefe & Nombre \\
+                \hline
+                J1 & Ana Lopez \\
+                J2 & Pedro Gomez \\
+                \hline
+            \end{tabular}
+            \end{center}
+    \end{columns}
+\end{frame}
+
+% Consigna
+\begin{frame}{TravelPro - Consigna}
+    \small
+    La empresa \textbf{TravelPro} gestiona reservas de clientes en hoteles internacionales. Actualmente toda la información se almacena en una única tabla, lo cual genera redundancia y anomalías. \\
+    \vspace{0.4cm}
+    \textbf{Consideraciones:}
+    \begin{itemize}
+        \item Un cliente puede alojarse varias veces en distintos hoteles.
+        \item Cada hotel pertenece a una única ciudad y cada ciudad a un país.
+        \item Cada hotel tiene un único gerente asignado.
+        \item Cada reserva se identifica por cliente, hotel y fecha de check-in.
+    \end{itemize}
+\end{frame}
+
+% Datos originales
+\begin{frame}{TravelPro - Datos originales}
+    \small
+    \begin{columns}
+        \column{0.5\textwidth}
+            \begin{itemize}
+                \item IDCliente
+                \item ClienteNombre
+                \item ClienteEmail (multivaluado)
+                \item IDHotel
+                \item HotelNombre
+                \item IdCiudadHotel
+                \item CiudadHotel
+                \item IdPaisHotel
+            \end{itemize}
+        \column{0.5\textwidth}
+            \begin{itemize}
+                \item NombrePaisHotel
+                \item FechaCheckIn / FechaCheckOut
+                \item HabitacionTipo
+                \item IdGerenteHotel
+                \item NombreGerenteHotel
+                \item IdiomasGerenteHotel (multivaluado)
+                \item NivelIdiomaGerenteHotel
+            \end{itemize}
+    \end{columns}
+\end{frame}
+
+% Clave primaria
+\begin{frame}{TravelPro - Clave primaria}
+    \small
+    Para identificar unívocamente cada reserva se necesita la combinación:
+    \begin{center}
+        \textbf{IDCliente \quad + \quad IDHotel \quad + \quad FechaCheckIn}
+    \end{center}
+    \vspace{0.4cm}
+    \begin{itemize}
+        \item Un mismo cliente puede mantener varias reservas.
+        \item Un hotel tiene muchas reservas.
+        \item El mismo cliente puede reservar el mismo hotel en fechas distintas.
+    \end{itemize}
+\end{frame}
+
+% Paso 1 1FN
+\begin{frame}{TravelPro - Paso 1: llevar a 1FN}
+    \begin{center}
+    \textbf{Clientes\_Emails}\\[0.1cm]
+    \begin{tabular}{cc}
+        \hline
+        IDCliente & ClienteEmail \\
+        \hline
+        1 & cliente1@email.com \\
+        1 & cliente1@alternativo.com \\
+        2 & cliente2@email.com \\
+        \hline
+    \end{tabular}
+    \vspace{0.6cm}
+    \textbf{\\Gerentes\_Idiomas}\\[0.1cm]
+    \begin{tabular}{ccc}
+        \hline
+        IdGerenteHotel & Idioma & Nivel \\
+        \hline
+        G1 & Ingles & Avanzado \\
+        G1 & Espanol & Intermedio \\
+        G2 & Ingles & Basico \\
+        \hline
+    \end{tabular}
+    \end{center}
+\end{frame}
+
+% Paso 2 2FN
+\begin{frame}{TravelPro - Paso 2: llevar a 2FN}
+    \begin{center}
+    \textbf{Hoteles}\\[0.1cm]
+    \resizebox{\textwidth}{!}{
+    \begin{tabular}{ccccc}
+        \hline
+        IDHotel & HotelNombre & IdCiudadHotel & IdGerenteHotel & NombreGerenteHotel \\
+        \hline
+        H1 & Hotel A & C1 & G1 & Juan Perez \\
+        H2 & Hotel B & C2 & G2 & Maria Lopez \\
+        \hline
+    \end{tabular}
+    }
+    \vspace{0.4cm}
+
+    \textbf{Ciudades}\\[0.1cm]
+    \begin{tabular}{ccc}
+        \hline
+        IdCiudadHotel & CiudadHotel & IdPaisHotel \\
+        \hline
+        C1 & Buenos Aires & P1 \\
+        C2 & Madrid & P2 \\
+        \hline
+    \end{tabular}
+    \vspace{0.4cm}
+
+    \textbf{Paises}\\[0.1cm]
+    \begin{tabular}{cc}
+        \hline
+        IdPaisHotel & NombrePaisHotel \\
+        \hline
+        P1 & Argentina \\
+        P2 & España \\
+        \hline
+    \end{tabular}
+    \end{center}
+\end{frame}
+
+% Paso 3 3FN
+\begin{frame}{TravelPro - Paso 3: llevar a 3FN}
+    \begin{center}
+    \textbf{Reservas}\\[0.1cm]
+    \resizebox{\textwidth}{!}{
+    \begin{tabular}{ccccc}
+        \hline
+        IDCliente & IDHotel & FechaCheckIn & FechaCheckOut & HabitacionTipo \\
+        \hline
+        1 & H1 & 2024-01-01 & 2024-01-05 & Simple \\
+        1 & H2 & 2024-02-01 & 2024-02-03 & Doble \\
+        2 & H1 & 2024-03-01 & 2024-03-10 & Suite \\
+        \hline
+    \end{tabular}
+    }
+    \vspace{0.6cm}
+    \textbf{\\Clientes}\\[0.1cm]
+    \begin{tabular}{cc}
+        \hline
+        IDCliente & ClienteNombre \\
+        \hline
+        1 & Juan Garcia \\
+        2 & Maria Lopez \\
+        \hline
+    \end{tabular}
+    \end{center}
+\end{frame}
+
+% Resumen pasos
+\begin{frame}{Pasos para normalizar}
+    \begin{enumerate}
+        \item Identificar la clave primaria.
+        \item Eliminar atributos multivaluados (1FN).
+        \item Dividir dependencias parciales (2FN).
+        \item Eliminar dependencias transitivas (3FN).
+    \end{enumerate}
+\end{frame}
+
+% Ejercicio práctico
+\begin{frame}{Ejercicio práctico - Ventas de productos}
+    \small
+    \begin{center}
+    \begin{tabular}{ccccccc}
+        \hline
+        ID\_Pedido & Cliente & Ciudad & Producto & Categoría & Precio & Stock \\
+        \hline
+        1 & Juan & CABA & Laptop & Electrónica & 1000 & 50 \\
+        2 & Maria & CABA & Mouse & Electrónica & 20 & 100 \\
+        3 & Juan & CABA & Mouse & Electrónica & 20 & 100 \\
+        \hline
+    \end{tabular}
+    \end{center}
+\end{frame}
+
+% Paso 2FN
+\begin{frame}{Ejercicio práctico - Paso 2: 2FN}
+    \small
+    \begin{center}
+    \textbf{Pedidos}\\[0.1cm]
+    \begin{tabular}{ccc}
+        \hline
+        ID\_Pedido & ID\_Cliente & ID\_Producto \\
+        \hline
+        1 & C1 & P1 \\
+        2 & C2 & P2 \\
+        3 & C1 & P2 \\
+        \hline
+    \end{tabular}
+    \vspace{0.6cm}
+    \textbf{\\Productos}\\[0.1cm]
+    \begin{tabular}{cccc}
+        \hline
+        ID\_Producto & Nombre & Categoria & Precio \\
+        \hline
+        P1 & Laptop & Electrónica & 1000 \\
+        P2 & Mouse & Electrónica & 20 \\
+        \hline
+    \end{tabular}
+    \end{center}
+\end{frame}
+
+% Paso 3FN (1)
+\begin{frame}{Ejercicio práctico - Paso 3: 3FN (1)}
+    \small
+    \begin{center}
+    \textbf{Productos}\\[0.1cm]
+    \begin{tabular}{ccc}
+        \hline
+        ID\_Producto & Nombre & ID\_Categoria \\
+        \hline
+        P1 & Laptop & CAT1 \\
+        P2 & Mouse & CAT1 \\
+        \hline
+    \end{tabular}
+    \vspace{0.6cm}
+    \textbf{\\Categorias}\\[0.1cm]
+    \begin{tabular}{cc}
+        \hline
+        ID\_Categoria & Nombre \\
+        \hline
+        CAT1 & Electrónica \\
+        \hline
+    \end{tabular}
+    \end{center}
+\end{frame}
+
+% Paso 3FN (2)
+\begin{frame}{Ejercicio práctico - Paso 3: 3FN (2)}
+    \small
+    \begin{center}
+    \textbf{Pedidos}\\[0.1cm]
+    \begin{tabular}{ccc}
+        \hline
+        ID\_Pedido & ID\_Cliente & ID\_Producto \\
+        \hline
+        1 & C1 & P1 \\
+        2 & C2 & P2 \\
+        3 & C1 & P2 \\
+        \hline
+    \end{tabular}
+    \vspace{0.6cm}
+    \textbf{\\Clientes}\\[0.1cm]
+    \begin{tabular}{ccc}
+        \hline
+        ID\_Cliente & Nombre & Ciudad \\
+        \hline
+        C1 & Juan & CABA \\
+        C2 & Maria & CABA \\
+        \hline
+    \end{tabular}
+    \end{center}
+\end{frame}
+
+% Cierre
+\begin{frame}{Terminamos}
+    \begin{center}
+        \Large{\textbf{¿Dudas?\\¿Consultas?}}
+    \end{center}
+    \begin{tikzpicture}[remember picture,overlay]
+        \node[anchor=south,inner sep=30pt] at (current page.south) {
+            \includegraphics[height=1cm]{../misc/UdeSA.png}
+        };
+    \end{tikzpicture}
+\end{frame}
+
+\end{document}
