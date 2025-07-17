@@ -15,13 +15,14 @@ Este repositorio contiene los materiales, notebooks, apuntes y recursos de las c
 - [Clase 09 - NoSQL - Clase Práctica](/Clase%2009%20-%20NoSQL%20-%20Clase%20Práctica/): Resolución de casos prácticos de la guía.
 - [Clase 10 - Arquitecturas Analíticas](/Clase%2010%20-%20Arquitecturas%20Analíticas/): Data Lakes, Data Warehouses & Data Marts
 - [Clase 11 - Casos Integradores](/Clase%2011%20-%20Casos%20Integradores/): Presentación por parte de los tutores de lo que será el trabajo integrador de tutoriales.
-- [Clase 12 - Presentación de Casos Integradores]: Presentación de los casos resueltos por los alumnos.
-- [Clase 13 - Repaso]: Repaso para el final. Cierre de las tutoriales.
+- Clase 12 - Presentación de Casos Integradores: Presentación de los casos resueltos por los alumnos.
+- Clase 13 - Repaso: Repaso para el final. Cierre de las tutoriales.
 
 ## Cronograma
 
-| # Clase | Rodríguez del Castillo (Mié 10.40hs) | Giacchetta (Jue 12.20hs) | Apicella (Jue 12.20hs) | Sapoznik (Jue 12.20hs) | Lapidus (Jue 19hs) | Rodríguez del Castillo (Vie 10.40hs) |
+| # Clase | Rodríguez del Castillo | Giacchetta & Cappelloni | Apicella | Sapoznik | Lapidus & Marinelli | Rodríguez del Castillo |
 |:------:|:-----------------:|:------------------------------------:|:------------------------:|:----------------------:|:-----------------:|:------------------------------------:|
+| Horario | Mié 10:40 | Jue 12:20 | Jue 12:20 | Jue 12:20 | Jue 19:00 | Vie 10:40 |
 |   1    | 13/08 | 14/08 | 14/08 | 14/08 | 14/08 | 08/08 |
 |   2    | 20/08 | 21/08 | 21/08 | 21/08 | 21/08 | 22/08 |
 |   3    | 27/08 | 28/08 | 28/08 | 28/08 | 28/08 | 29/08 |
