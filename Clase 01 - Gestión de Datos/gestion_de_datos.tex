@@ -108,22 +108,22 @@ El archivado y eliminación de datos es el proceso de guardar los datos para su 
 Las dimensiones de calidad de los datos son las características que deben tener los datos para ser considerados de calidad. Estas dimensiones son:
 
 \begin{itemize}
-    \item Precisión: La precisión de los datos es la medida de qué tan cercanos son los datos a la realidad.
-    \item Completitud: La completitud de los datos es la medida de qué tan completos son los datos.
-    \item Consistencia: La consistencia de los datos es la medida de qué tan coherentes son los datos.
-    \item Actualidad: La actualidad de los datos es la medida de qué tan recientes son los datos.
-    \item Unicidad: La unicidad de los datos es la medida de qué tan únicos son los datos.
-    \item Accesibilidad: La accesibilidad de los datos es la medida de qué tan fácil es acceder a los datos.
-    \item Seguridad: La seguridad de los datos es la medida de qué tan seguros son los datos.
+    \item Precisión: Qué tan cercanos son los datos a la realidad.
+    \item Completitud: Qué tan completos son los datos.
+    \item Consistencia: Qué tan coherentes son los datos.
+    \item Actualidad: Qué tan recientes son los datos.
+    \item Unicidad: Qué tan únicos son los datos.
+    \item Accesibilidad: Qué tan fácil es acceder a los datos.
+    \item Seguridad: Qué tan seguros son los datos.
 \end{itemize}
 
 \subsection{Métricas de Calidad}
 Las métricas de calidad son las medidas que se utilizan para evaluar la calidad de los datos. Estas métricas son:
 
 \begin{itemize}
-    \item Tasa de error: La tasa de error es la medida de qué tan frecuentes son los errores en los datos.
-    \item Tasa de duplicación: La tasa de duplicación es la medida de qué tan frecuentes son los duplicados en los datos.
-    \item Tasa de actualización: La tasa de actualización es la medida de qué tan frecuentes son las actualizaciones en los datos.
+    \item Tasa de error: Qué tan frecuentes son los errores en los datos.
+    \item Tasa de duplicación: Qué tan frecuentes son los duplicados en los datos.
+    \item Tasa de actualización: Qué tan frecuentes son las actualizaciones en los datos.
 \end{itemize}
 
 \section{Gobierno de Datos}
@@ -147,16 +147,16 @@ Las políticas y procedimientos son los documentos que regulan el uso y la gesti
 \end{itemize}
 
 \section{Arquitectura de Datos}
-La arquitectura de datos moderna se compone de cuatro capas principales que trabajan en conjunto para manejar el ciclo de vida completo de los datos.
+La arquitectura de datos se compone de cuatro capas principales que trabajan en conjunto para manejar el ciclo de vida completo de los datos.
 
 \subsection{Fuentes de Datos}
-La primera capa son las \textbf{fuentes de Datos}, que incluyen sistemas operacionales como ERPs y CRMs, APIs externas que nos permiten obtener datos de terceros, y fuentes de datos no estructurados como documentos, imágenes y videos.
+La primera capa son las \textbf{fuentes de datos}, que incluyen sistemas operacionales como ERPs y CRMs, APIs externas que nos permiten obtener datos de terceros, y fuentes de datos no estructurados como documentos, imágenes y videos.
 
 \subsection{Almacenamiento}
 Para el \textbf{almacenamiento}, las organizaciones utilizan diferentes tipos de repositorios según sus necesidades. El Data Warehouse es ideal para datos estructurados y análisis histórico, mientras que el Data Lake permite almacenar datos en su formato original. Los Data Marts son subconjuntos especializados del Data Warehouse para áreas específicas del negocio.
 
 \subsection{Procesamiento}
-El \textbf{procesamiento} de datos puede realizarse de diferentes maneras. El procesamiento por lotes (Batch) es adecuado para grandes volúmenes de datos que no requieren tiempo real. El procesamiento en streaming es ideal para datos que necesitan ser procesados inmediatamente. La arquitectura Lambda combina ambos enfoques para ofrecer flexibilidad.
+El \textbf{procesamiento} de datos puede realizarse de diferentes maneras. El procesamiento por lotes (Batch) es adecuado para grandes volúmenes de datos que no requieren tiempo real, como puede ser por ejemplo datos de ventas. El procesamiento en streaming es ideal para datos que necesitan ser procesados inmediatamente, como puede ser por ejemplo datos de sensores. La arquitectura Lambda combina ambos enfoques para ofrecer flexibilidad.
 
 \subsection{Consumo}
 Finalmente, la capa de \textbf{consumo} permite que los datos sean accesibles para los usuarios finales a través de reportes estructurados, dashboards interactivos y APIs que permiten la integración con otros sistemas.

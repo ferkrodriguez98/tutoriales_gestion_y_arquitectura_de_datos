@@ -95,6 +95,8 @@ Hay casos en donde una cosa solo pertenece a algo, y ese algo solo puede tener u
 \end{tikzpicture}
 \end{center}
 
+Por un lado tenemos a la persona con sus atributos y por otro lado el pasaporte con los suyos. Estas dos entidades se unen a través del hecho de que ese pasaporte le pertenece a una persona. En el caso de las relaciones 1..1 la FK va en la tabla que más sentido haga. En este caso si la pusieramos en el lado de la persona, y nos imaginamos que la persona puede tener miles de cosas entonces la entidad persona se llena de atributos. Lo lógico es ponerlo entonces del lado del pasaporte.
+
 \section{Relación Uno a Muchos}
 Consideremos un sistema donde cada cliente puede tener múltiples pedidos, pero cada pedido pertenece a un único cliente.
 
@@ -114,14 +116,7 @@ Consideremos un sistema donde cada cliente puede tener múltiples pedidos, pero 
 \end{tikzpicture}
 \end{center}
 
-En este ejemplo simple podemos ver:
-\begin{itemize}
-    \item Dos entidades con sus atributos
-    \item Una relación uno a muchos (1..1 : 1..N)
-    \item Claves primarias en negrita con (PK)
-    \item Clave foránea subrayada con (FK)
-    \item Flecha que conecta la FK con su PK correspondiente
-\end{itemize}
+Acá tambien, vemos cada caja por separado con sus atributos. En una relación de uno a muchos para saber donde poner la FK podemos seguir la siguiente regla: ¿Un cliente tiene pedidos? ¿O un pedido tiene clientes? Una de esas dos cosas tiene que ser verdad. Buscamos la pregunta que es verdadera y nos fijamos que entidad tiene la letra ``s'' al final. En este caso la pregunta que es verdadera es ``un cliente tiene pedidos'' entonces la FK va en el lado del pedido. En el caso de que ambas respuestas sean verdaderas estamos ante un caso de una relación de muchos a muchos, la cual explicaremos a continuación.
 
 \section{Relación Muchos a Muchos}
 Ahora veamos un sistema donde los productos pueden estar en múltiples pedidos y cada pedido puede tener múltiples productos.
@@ -152,13 +147,7 @@ Ahora veamos un sistema donde los productos pueden estar en múltiples pedidos y
 }
 \end{center}
 
-Este ejemplo muestra:
-\begin{itemize}
-    \item Una relación muchos a muchos (N:M)
-    \item Una tabla pivot con sus propios atributos
-    \item Múltiples FKs en la tabla pivot
-    \item Flechas conectando cada FK con su PK correspondiente
-\end{itemize}
+Acá necesitamos una tabla intermedia porque de lo contrario no podríamos poner el atributo de la FK en ningún lado. Ponerlo en ambas entidades sería un error y nos obligaría a tener un atributo multivariado (por ejemplo en Pedido un atributo que sea ``id\_producto'' y otro que sea ``id\_producto2'' y así sucesivamente, o bien un solo atributo con un valor que sea una lista de ids de productos) lo cual es un error. La tabla intermedia además nos va a servir para poder tener atributos que dependan de eso mismo, como puede ser la cantidad de un producto.
 
 \section{Herencia (Tipo-Subtipo)}
 Veamos un sistema donde tenemos diferentes tipos de usuarios.
@@ -186,12 +175,7 @@ Veamos un sistema donde tenemos diferentes tipos de usuarios.
 }
 \end{center}
 
-Este ejemplo ilustra:
-\begin{itemize}
-    \item Una jerarquía de herencia con flecha unificada
-    \item Atributos heredados (la PK del padre se convierte en PK y FK en los hijos)
-    \item Atributos específicos en cada subtipo
-\end{itemize}
+Este tipo de relación nos sirve para los casos en donde una entidad tiene atributos que son comunes a todas sus subentidades. En este caso el id\_usuario es común a todos los tipos de usuarios. Por ejemplo, si tuviéramos un sistema de gestión de empleados, podríamos tener un tipo de usuario para los administradores, otro para los empleados y otro para los clientes. Todos estos tipos de usuarios tendrían una entidad padre en la cual se define el id\_usuario.
 
 \section{Relación Autoreferencial}
 Por último, veamos un ejemplo de una estructura jerárquica donde los empleados tienen supervisores.
@@ -217,13 +201,7 @@ Por último, veamos un ejemplo de una estructura jerárquica donde los empleados
 \end{tikzpicture}
 \end{center}
 
-Este ejemplo muestra:
-\begin{itemize}
-    \item Una relación de una entidad consigo misma
-    \item FK que referencia a la PK de la misma tabla
-    \item Cardinalidad 0..N porque un empleado puede no tener subordinados
-    \item Cardinalidad 1..1 porque un empleado tiene exactamente un supervisor
-\end{itemize}
+Esta es capaz la relación mas díficil de entender. En este caso tenemos una entidad que se refiere a un empleado y que tiene un supervisor. El supervisor es otro empleado. En este caso la FK va en el lado del empleado que tiene supervisor. La cardinalidad 0..N porque un empleado puede no tener supervisor y la cardinalidad 0..1 porque un empleado tiene exactamente un supervisor.
 
 \section{Consideraciones Importantes}
 \begin{itemize}
@@ -233,5 +211,237 @@ Este ejemplo muestra:
     \item \textbf{Herencia}: Las PKs se heredan como PK,FK en las tablas hijas
     \item \textbf{Relaciones N:M}: Requieren tabla pivot con sus propias FKs
 \end{itemize}
+
+\section{Ejemplos Prácticos}
+
+\subsection{Ejemplo 1: Sistema de Mascotas y Veterinarios}
+Imaginate que tenés que diseñar un sistema para una veterinaria. Los dueños llevan sus mascotas a consultas con veterinarios. Cada mascota tiene un dueño, y un dueño puede tener varias mascotas. Los veterinarios atienden a las mascotas en consultas. Del dueño tenés que guardar su nombre, teléfono y dirección. De la mascota tenés que guardar su nombre, especie y edad. De la consulta tenés que guardar la fecha, el diagnóstico y el tratamiento. De los veterinarios tenés que guardar su nombre, especialidad y matrícula.
+
+\textbf{\\Paso a paso:}
+\begin{enumerate}
+    \item \textbf{Identifico las entidades principales:} Dueño, Mascota, Veterinario, Consulta
+    \item \textbf{Pienso en las relaciones:} Un dueño puede tener varias mascotas (1:N), un veterinario puede atender varias mascotas (N:M), y necesito registrar información de cada consulta
+    \item \textbf{Decido dónde van las FKs:} La FK de dueño va en mascota porque ``un dueño tiene mascotas'' es verdadero y ``una mascota tiene dueños'' es falso. En el caso de Veterinario y Mascotas necesitamos una pivot porque un veterinario puede atender a varias mascotas y una mascota puede ser atendida por varios veterinarios.
+\end{enumerate}
+
+\begin{center}
+\resizebox{\textwidth}{!}{
+\begin{tikzpicture}[node distance=3cm]
+    \node[entity] (dueno) {Dueño\nodepart{second}\textbf{id\_dueno (PK)}\\ nombre\\ telefono\\ direccion};
+    \node[entity] (mascota) [right=of dueno] {Mascota\nodepart{second}\textbf{id\_mascota (PK)}\\ \underline{id\_dueno (FK)}\\ nombre\\ especie\\ edad};
+    \node[entity] (consulta) [right=of mascota] {Consulta\nodepart{second}\textbf{id\_consulta (PK)}\\ \underline{id\_mascota (FK)}\\ \underline{id\_veterinario (FK)}\\ fecha\\ diagnostico\\ tratamiento};
+    \node[entity] (veterinario) [right=of consulta] {Veterinario\nodepart{second}\textbf{id\_veterinario (PK)}\\ nombre\\ especialidad\\ matricula};
+    
+    % Conexiones
+    \coordinate (fk_dueno) at ($(mascota.west)+(0,0.1)$);
+    \coordinate (pk_dueno) at ($(dueno.east)+(0,0.1)$);
+    \draw[-latex] (fk_dueno) to[out=180,in=0] 
+        node[pos=0.2,above] {1..N} 
+        node[pos=0.8,above] {1..1} 
+        (pk_dueno);
+        
+    \coordinate (fk_mascota) at ($(consulta.west)+(0,0.1)$);
+    \coordinate (pk_mascota) at ($(mascota.east)+(0,0.1)$);
+    \draw[-latex] (fk_mascota) to[out=180,in=0] 
+        node[pos=0.2,above] {1..N} 
+        node[pos=0.8,above] {1..1} 
+        (pk_mascota);
+        
+    \coordinate (fk_veterinario) at ($(consulta.east)+(0,-0.5)$);
+    \coordinate (pk_veterinario) at ($(veterinario.west)+(0,0.5)$);
+    \draw[-latex] (fk_veterinario) to[out=0,in=180] 
+        node[pos=0.2,above] {1..N} 
+        node[pos=0.8,above] {1..1} 
+        (pk_veterinario);
+\end{tikzpicture}
+}
+\end{center}
+
+\textbf{Explicación:} Acá tenemos una relación 1:N entre dueños y mascotas (un dueño puede tener varias mascotas), y una relación N:M entre mascotas y veterinarios a través de la tabla Consulta. La tabla Consulta nos permite guardar información específica de cada visita como el diagnóstico y tratamiento.
+
+\subsection{Ejemplo 2: Sistema de Eventos y Organizadores}
+Tenés que diseñar un sistema para gestionar eventos. Los organizadores crean eventos, y los participantes se inscriben a estos eventos. Cada evento tiene un organizador principal, pero puede tener varios organizadores colaboradores. De los organizadores tenés que guardar su nombre, email y teléfono. De los eventos tenés que guardar su nombre, fecha, lugar y capacidad. De las inscripciones tenés que guardar la fecha de inscripción y el estado. De los participantes tenés que guardar su nombre, email y teléfono.
+
+\textbf{\\Paso a paso:}
+\begin{enumerate}
+    \item \textbf{Identifico las entidades:} Organizador, Evento, Participante, Inscripcion
+    \item \textbf{Analizo las relaciones:} Un organizador puede crear varios eventos (1:N), un evento puede tener varios participantes (N:M), y necesito registrar información de cada inscripción
+    \item \textbf{Pienso en las cardinalidades:} Un participante puede ir a varios eventos, y un evento puede tener muchos participantes
+\end{enumerate}
+
+\begin{center}
+\resizebox{\textwidth}{!}{
+\begin{tikzpicture}[node distance=2.5cm]
+    \node[entity] (organizador) {Organizador\nodepart{second}\textbf{id\_organizador (PK)}\\ nombre\\ email\\ telefono};
+    \node[entity] (evento) [right=of organizador] {Evento\nodepart{second}\textbf{id\_evento (PK)}\\ \underline{id\_organizador (FK)}\\ nombre\\ fecha\\ lugar\\ capacidad};
+    \node[entity] (inscripcion) [right=of evento] {Inscripcion\nodepart{second}\textbf{id\_inscripcion (PK)}\\ \underline{id\_evento (FK)}\\ \underline{id\_participante (FK)}\\ fecha\_inscripcion\\ estado};
+    \node[entity] (participante) [right=of inscripcion] {Participante\nodepart{second}\textbf{id\_participante (PK)}\\ nombre\\ email\\ telefono};
+    
+    % Conexiones
+    \coordinate (fk_organizador) at ($(evento.west)+(0,0.1)$);
+    \coordinate (pk_organizador) at ($(organizador.east)+(0,0.1)$);
+    \draw[-latex] (fk_organizador) to[out=180,in=0] 
+        node[pos=0.2,above] {1..N} 
+        node[pos=0.8,above] {1..1} 
+        (pk_organizador);
+        
+    \coordinate (fk_evento) at ($(inscripcion.west)+(0,0.1)$);
+    \coordinate (pk_evento) at ($(evento.east)+(0,0.1)$);
+    \draw[-latex] (fk_evento) to[out=180,in=0] 
+        node[pos=0.2,above] {1..N} 
+        node[pos=0.8,above] {1..1} 
+        (pk_evento);
+        
+    \coordinate (fk_participante) at ($(inscripcion.east)+(0,-0.5)$);
+    \coordinate (pk_participante) at ($(participante.west)+(0,0.5)$);
+    \draw[-latex] (fk_participante) to[out=0,in=180] 
+        node[pos=0.2,above] {1..N} 
+        node[pos=0.8,above] {1..1} 
+        (pk_participante);
+\end{tikzpicture}
+}
+\end{center}
+
+\textbf{Explicación:} Un organizador puede crear varios eventos (1:N), y los participantes se pueden inscribir a varios eventos (N:M). La tabla Inscripcion nos permite saber quién se inscribió a qué evento y cuándo.
+
+\subsection{Ejemplo 3: Sistema de Cursos Online}
+Pensá en una plataforma de cursos online donde hay personas que se encargan de armar y dictar los cursos, y otras que se suman como estudiantes. Cada curso está pensado y gestionado por un instructor, tiene su propio nombre, una descripción que lo presenta y un precio que lo diferencia. Los cursos se componen de varias lecciones, cada una con su propio contenido, un título que la identifica y una duración que indica cuánto tiempo lleva completarla. Los estudiantes pueden anotarse en los cursos que les interesan y, a medida que avanzan, ir marcando qué lecciones ya terminaron. En el sistema, cada vez que alguien se suma a un curso queda registrado cuándo lo hizo, y también se guarda cuándo completó cada lección. Tanto los instructores como los estudiantes tienen su información personal y de contacto, y en el caso de los instructores, también se sabe en qué área se especializan. Los estudiantes, además, tienen registrada la fecha en que se unieron a la plataforma.
+
+\textbf{\\Paso a paso:}
+\begin{enumerate}
+    \item \textbf{Identifico las entidades:} Instructor, Curso, Leccion, Estudiante, Inscripcion, Progreso
+    \item \textbf{Analizo las relaciones:} Un instructor puede crear varios cursos (1:N), un curso tiene varias lecciones (1:N), los estudiantes se inscriben a cursos (N:M), y marcan lecciones como completadas (N:M)
+    \item \textbf{Pienso en las tablas intermedias:} Necesito Inscripcion para curso-estudiante y Progreso para leccion-estudiante
+\end{enumerate}
+
+\vspace{0.1em}
+
+\begin{center}
+\resizebox{\textwidth}{!}{
+\begin{tikzpicture}[node distance=2cm]
+    \node[entity] (instructor) {Instructor\nodepart{second}\textbf{id\_instructor (PK)}\\ nombre\\ email\\ especialidad};
+    \node[entity] (curso) [right=of instructor] {Curso\nodepart{second}\textbf{id\_curso (PK)}\\ \underline{id\_instructor (FK)}\\ titulo\\ descripcion\\ precio};
+    \node[entity] (leccion) [right=of curso] {Leccion\nodepart{second}\textbf{id\_leccion (PK)}\\ \underline{id\_curso (FK)}\\ titulo\\ contenido\\ duracion};
+    \node[entity] (inscripcion) [below=of curso] {Inscripcion\nodepart{second}\textbf{id\_inscripcion (PK)}\\ \underline{id\_curso (FK)}\\ \underline{id\_estudiante (FK)}\\ fecha\_inscripcion};
+    \node[entity] (estudiante) [right=of inscripcion] {Estudiante\nodepart{second}\textbf{id\_estudiante (PK)}\\ nombre\\ email\\ fecha\_registro};
+    \node[entity] (progreso) [right=of estudiante] {Progreso\nodepart{second}\textbf{id\_progreso (PK)}\\ \underline{id\_leccion (FK)}\\ \underline{id\_estudiante (FK)}\\ fecha\_completado};
+    
+    % Conexiones instructor-curso
+    \coordinate (fk_instructor) at ($(curso.west)+(0,0.1)$);
+    \coordinate (pk_instructor) at ($(instructor.east)+(0,0.1)$);
+    \draw[-latex] (fk_instructor) to[out=180,in=0] 
+        node[pos=0.2,above] {1..N} 
+        node[pos=0.8,above] {1..1} 
+        (pk_instructor);
+        
+    % Conexiones curso-leccion
+    \coordinate (fk_curso) at ($(leccion.west)+(0,0.1)$);
+    \coordinate (pk_curso) at ($(curso.east)+(0,0.1)$);
+    \draw[-latex] (fk_curso) to[out=180,in=0] 
+        node[pos=0.2,above] {1..N} 
+        node[pos=0.8,above] {1..1} 
+        (pk_curso);
+        
+    % Conexiones inscripcion-curso
+    \coordinate (fk_curso_insc) at ($(inscripcion.north)+(0,0.1)$);
+    \coordinate (pk_curso_insc) at ($(curso.south)+(0,-0.1)$);
+    \draw[-latex] (fk_curso_insc) to[out=90,in=-90] 
+        node[pos=0.2,right] {1..N} 
+        node[pos=0.8,right] {1..1} 
+        (pk_curso_insc);
+        
+    % Conexiones inscripcion-estudiante
+    \coordinate (fk_estudiante_insc) at ($(inscripcion.east)+(0,-0.5)$);
+    \coordinate (pk_estudiante_insc) at ($(estudiante.west)+(0,0.5)$);
+    \draw[-latex] (fk_estudiante_insc) to[out=0,in=180] 
+        node[pos=0.2,above] {1..N} 
+        node[pos=0.8,above] {1..1} 
+        (pk_estudiante_insc);
+        
+    % Conexiones progreso-leccion
+    \coordinate (fk_leccion_prog) at ($(progreso.west)+(0,0.1)$);
+    \coordinate (pk_leccion_prog) at ($(leccion.east)+(0,-0.1)$);
+    \draw[-latex] (fk_leccion_prog) to[out=180,in=0] 
+        node[pos=0.2,right] {1..N} 
+        node[pos=0.8,right] {1..1} 
+        (pk_leccion_prog);
+        
+    % Conexiones progreso-estudiante
+    \coordinate (fk_estudiante_prog) at ($(progreso.west)+(0,-0.5)$);
+    \coordinate (pk_estudiante_prog) at ($(estudiante.east)+(0,0.5)$);
+    \draw[-latex] (fk_estudiante_prog) to[out=90,in=-90] 
+        node[pos=0.3,below] {1..N} 
+        node[pos=0.7,below] {1..1} 
+        (pk_estudiante_prog);
+\end{tikzpicture}
+}
+\end{center}
+
+\textbf{Explicación:} Un instructor puede crear varios cursos (1:N), cada curso tiene varias lecciones (1:N), los estudiantes se inscriben a cursos (N:M), y pueden marcar lecciones como completadas (N:M). Las tablas Inscripcion y Progreso nos permiten rastrear tanto las inscripciones como el progreso individual de cada estudiante.
+
+\subsection{Ejemplo 4: Sistema de Gestión de Inventario}
+Queremos modelar un sistema para una tienda que maneja inventario. La tienda tiene distintas categorias, y de cada categoria vamos a guardar su nombre y descripcion. Cada producto pertenece a una categoria, y de cada producto necesitamos guardar su nombre, precio y stock. Los proveedores suministran productos; de cada proveedor guardamos su nombre, telefono y direccion. Tambien necesitamos registrar los suministros, donde para cada suministro se guarda la fecha y la cantidad de productos suministrados. Por otro lado, hay ventas: de cada venta guardamos la fecha y el total, y para cada producto vendido en una venta registramos la cantidad y el precio unitario.
+
+\textbf{\\Paso a paso:}
+\begin{enumerate}
+    \item \textbf{Identifico las entidades:} Categoria, Producto, Proveedor, Venta, DetalleVenta
+    \item \textbf{Analizo las relaciones:} Una categoría tiene varios productos (1:N), un proveedor puede suministrar varios productos (N:M), una venta puede incluir varios productos (N:M)
+    \item \textbf{Pienso en las tablas intermedias:} Necesito una tabla para proveedor-producto y otra para venta-producto
+\end{enumerate}
+
+\begin{center}
+\resizebox{\textwidth}{!}{
+\begin{tikzpicture}[node distance=2cm]
+    \node[entity] (categoria) {Categoria\nodepart{second}\textbf{id\_categoria (PK)}\\ nombre\\ descripcion};
+    \node[entity] (producto) [right=of categoria] {Producto\nodepart{second}\textbf{id\_producto (PK)}\\ \underline{id\_categoria (FK)}\\ nombre\\ precio\\ stock};
+    \node[entity] (suministro) [right=of producto] {Suministro\nodepart{second}\textbf{id\_suministro (PK)}\\ \underline{id\_proveedor (FK)}\\ \underline{id\_producto (FK)}\\ fecha\\ cantidad};
+    \node[entity] (proveedor) [right=of suministro] {Proveedor\nodepart{second}\textbf{id\_proveedor (PK)}\\ nombre\\ telefono\\ direccion};
+    \node[entity] (venta) [below=of producto] {Venta\nodepart{second}\textbf{id\_venta (PK)}\\ fecha\\ total};
+    \node[entity] (detalle) [right=of venta] {DetalleVenta\nodepart{second}\textbf{id\_detalle (PK)}\\ \underline{id\_venta (FK)}\\ \underline{id\_producto (FK)}\\ cantidad\\ precio\_unitario};
+    
+    % Conexiones categoria-producto
+    \coordinate (fk_categoria) at ($(producto.west)+(0,0.1)$);
+    \coordinate (pk_categoria) at ($(categoria.east)+(0,0.1)$);
+    \draw[-latex] (fk_categoria) to[out=180,in=0] 
+        node[pos=0.2,above] {1..N} 
+        node[pos=0.8,above] {1..1} 
+        (pk_categoria);
+        
+    % Conexiones producto-suministro
+    \coordinate (fk_producto_sup) at ($(suministro.west)+(0,0.1)$);
+    \coordinate (pk_producto_sup) at ($(producto.east)+(0,0.1)$);
+    \draw[-latex] (fk_producto_sup) to[out=180,in=0] 
+        node[pos=0.2,above] {1..N} 
+        node[pos=0.8,above] {1..1} 
+        (pk_producto_sup);
+        
+    % Conexiones suministro-proveedor
+    \coordinate (fk_proveedor) at ($(suministro.east)+(0,0.1)$);
+    \coordinate (pk_proveedor) at ($(proveedor.west)+(0,0.1)$);
+    \draw[-latex] (fk_proveedor) to[out=0,in=180] 
+        node[pos=0.2,above] {1..N} 
+        node[pos=0.8,above] {1..1} 
+        (pk_proveedor);
+        
+    % Conexiones venta-detalle
+    \coordinate (fk_venta) at ($(detalle.west)+(0,0.1)$);
+    \coordinate (pk_venta) at ($(venta.east)+(0,0.1)$);
+    \draw[-latex] (fk_venta) to[out=180,in=0] 
+        node[pos=0.2,above] {1..N} 
+        node[pos=0.8,above] {1..1} 
+        (pk_venta);
+        
+    % Conexiones detalle-producto
+    \coordinate (fk_producto_det) at ($(detalle.west)+(0,-0.5)$);
+    \coordinate (pk_producto_det) at ($(producto.east)+(0,0.7)$);
+    \draw[-latex] (fk_producto_det) to[out=125,in=40] 
+        node[pos=0.3,left] {1..N} 
+        node[pos=0.6,left] {1..1} 
+        (pk_producto_det);
+\end{tikzpicture}
+}
+\end{center}
+
+\textbf{Explicación:} Una categoría puede tener varios productos (1:N), un proveedor puede suministrar varios productos (N:M), y una venta puede incluir varios productos (N:M). Las tablas Suministro y DetalleVenta nos permiten rastrear tanto qué proveedores suministran qué productos como qué productos se vendieron en cada venta.
 
 \end{document}

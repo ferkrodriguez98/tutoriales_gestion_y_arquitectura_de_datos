@@ -2,10 +2,47 @@
 
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
+\usepackage{lmodern}
 \usepackage[spanish]{babel}
-\usepackage{enumitem}
-\usepackage{amsmath}
 \usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{forest}
+\usepackage{float}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{tabularx}
+\usepackage{enumitem}
+\usetikzlibrary{shapes,arrows,positioning,calc}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+
+\sloppy
+\setlength{\parindent}{0pt}
 
 \begin{document}
 
@@ -44,12 +81,12 @@ Si encuentran algún error en el documento o hay alguna duda, mandenmé un mail 
     \item Definir la estrategia general de datos de la empresa
 \end{enumerate}
 
-\item ¿Qué desafío principal resuelve la arquitectura Data Mesh?
+\item En el ciclo de vida de los datos, ¿cuál es el objetivo principal de la fase de archivado y eliminación?
 \begin{enumerate}
-    \item La centralización excesiva en equipos de datos
-    \item La necesidad de procesamiento batch exclusivamente
-    \item La falta de seguridad en los datos
-    \item La imposibilidad de usar machine learning
+    \item Garantizar que los datos se conserven solo el tiempo necesario y se eliminen de forma segura
+    \item Mejorar la visualización de los datos
+    \item Aumentar la velocidad de procesamiento en tiempo real
+    \item Automatizar la captura de datos desde sensores
 \end{enumerate}
 
 \item En el ciclo de vida de los datos, ¿qué fase debería incluir necesariamente validación de calidad?
@@ -68,37 +105,43 @@ Si encuentran algún error en el documento o hay alguna duda, mandenmé un mail 
     \item Solo documentación técnica
 \end{enumerate}
 
-\item En el contexto de protección de datos, ¿qué estrategia es más efectiva para datos sensibles en uso?
+\item ¿Cuál de las siguientes dimensiones de calidad de datos se enfoca en la frecuencia de actualización de la información?
 \begin{enumerate}
-    \item Solo encriptación en reposo
-    \item Únicamente control de acceso
-    \item Backup diario
-    \item Encriptación en tránsito + Enmascaramiento dinámico
+    \item Precisión
+    \item Actualidad
+    \item Unicidad
+    \item Accesibilidad
 \end{enumerate}
 
-\item Para mejorar la calidad de datos en tiempo real, ¿qué enfoque es más efectivo?
+\item En el contexto de arquitectura de datos, ¿qué tipo de procesamiento sería más adecuado para analizar datos históricos de ventas mensuales?
 \begin{enumerate}
-    \item Reglas automatizadas + Monitoreo continuo + Alertas
-    \item Validación manual periódica
-    \item Solo documentación
-    \item Revisión mensual
+    \item Procesamiento en streaming
+    \item Procesamiento por lotes (Batch)
+    \item Procesamiento en tiempo real
+    \item Procesamiento híbrido
 \end{enumerate}
 
-\item En una arquitectura moderna de datos, ¿qué característica es esencial para garantizar el linaje de datos?
+\item ¿Cuál de las siguientes métricas de calidad de datos mide la frecuencia de duplicados en un conjunto de datos?
 \begin{enumerate}
-    \item Solo logs de acceso
-    \item Metadata activa + Tracking de transformaciones
-    \item Únicamente documentación
-    \item Backup semanal
+    \item Tasa de error
+    \item Tasa de duplicación
+    \item Tasa de actualización
+    \item Tasa de completitud
 \end{enumerate}
 
-\item Para implementar DataOps efectivamente, ¿qué conjunto de prácticas es más importante?
+\item En el ciclo de vida de los datos, ¿qué fase incluye principalmente la transformación y limpieza de datos?
 \begin{enumerate}
-    \item Solo testing manual
-    \item Únicamente documentación
-    \item Automatización + CI/CD + Monitoreo + Colaboración
-    \item Reuniones diarias
+    \item Creación y Captura
+    \item Almacenamiento
+    \item Procesamiento
+    \item Análisis
 \end{enumerate}
+
+\item ¿Qué rol en el gobierno de datos es responsable de mantener los datos actualizados y consistentes a nivel operativo?
+\item ¿Cuáles son las tres dimensiones de calidad de datos más críticas para garantizar la confiabilidad de un sistema de información?
+\item ¿En qué se diferencia un Data Lake de un Data Warehouse en términos de almacenamiento y uso?
+\item ¿Por qué es importante implementar políticas de retención de datos en una organización?
+\item ¿Cuál es la diferencia entre procesamiento por lotes y procesamiento en streaming, y cuándo se usa cada uno?
 
 \end{enumerate}
 
@@ -134,14 +177,14 @@ Data Lake/Warehouse (a) o solo Warehouse (b) NO manejan tiempo real eficientemen
 \end{enumerate}
 Data Steward SÍ hace metadatos (a), calidad (b) y cumplimiento (c). Estrategia general (d) es responsabilidad del CDO, no del Steward.
 
-\item ¿Qué desafío principal resuelve la arquitectura Data Mesh?
+\item En el ciclo de vida de los datos, ¿cuál es el objetivo principal de la fase de archivado y eliminación?
 \begin{enumerate}
-    \item \textbf{La centralización excesiva en equipos de datos}
-    \item La necesidad de procesamiento batch exclusivamente
-    \item La falta de seguridad en los datos
-    \item La imposibilidad de usar machine learning
+    \item \textbf{Garantizar que los datos se conserven solo el tiempo necesario y se eliminen de forma segura}
+    \item Mejorar la visualizacion de los datos
+    \item Aumentar la velocidad de procesamiento en tiempo real
+    \item Automatizar la captura de datos desde sensores
 \end{enumerate}
-Data Mesh NO resuelve batch (b), seguridad (c) o ML (d). Su foco es descentralizar equipos de datos mediante dominios autónomos.
+El objetivo de archivado y eliminacion es asegurarse de que los datos no se guarden mas tiempo del necesario y que se borren de manera segura. No tiene que ver con visualizacion, velocidad ni captura.
 
 \item En el ciclo de vida de los datos, ¿qué fase debería incluir necesariamente validación de calidad?
 \begin{enumerate}
@@ -161,41 +204,61 @@ Archivado (a), Análisis (c) y Creación (d) NO transforman datos. ETL es donde 
 \end{enumerate}
 Solo tecnología (a), automatización (b) o documentación (d) NO bastan. Gobierno necesita roles, políticas y procesos integrados para funcionar.
 
-\item En el contexto de protección de datos, ¿qué estrategia es más efectiva para datos sensibles en uso?
+\item ¿Cuál de las siguientes dimensiones de calidad de datos se enfoca en la frecuencia de actualización de la información?
 \begin{enumerate}
-    \item Solo encriptación en reposo
-    \item Únicamente control de acceso
-    \item Backup diario
-    \item \textbf{Encriptación en tránsito + Enmascaramiento dinámico}
+    \item Precisión
+    \item \textbf{Actualidad}
+    \item Unicidad
+    \item Accesibilidad
 \end{enumerate}
-Encriptación en reposo (a), control de acceso (b) o backup (c) NO protegen datos EN USO. Tránsito + enmascaramiento sí.
+La actualidad se refiere a qué tan recientes son los datos. Precisión (a) es exactitud, unicidad (c) es ausencia de duplicados, accesibilidad (d) es facilidad de acceso.
 
-\item Para mejorar la calidad de datos en tiempo real, ¿qué enfoque es más efectivo?
+\item En el contexto de arquitectura de datos, ¿qué tipo de procesamiento sería más adecuado para analizar datos históricos de ventas mensuales?
 \begin{enumerate}
-    \item \textbf{Reglas automatizadas + Monitoreo continuo + Alertas}
-    \item Validación manual periódica
-    \item Solo documentación
-    \item Revisión mensual
+    \item Procesamiento en streaming
+    \item \textbf{Procesamiento por lotes (Batch)}
+    \item Procesamiento en tiempo real
+    \item Procesamiento híbrido
 \end{enumerate}
-Validación manual (b), documentación (c) o revisión mensual (d) NO detectan problemas en tiempo real. Automatización + monitoreo sí.
+Datos históricos mensuales no requieren tiempo real. Batch es ideal para grandes volúmenes sin urgencia inmediata. Streaming (a) y tiempo real (c) son para datos inmediatos.
 
-\item En una arquitectura moderna de datos, ¿qué característica es esencial para garantizar el linaje de datos?
+\item ¿Cuál de las siguientes métricas de calidad de datos mide la frecuencia de duplicados en un conjunto de datos?
 \begin{enumerate}
-    \item Solo logs de acceso
-    \item \textbf{Metadata activa + Tracking de transformaciones}
-    \item Únicamente documentación
-    \item Backup semanal
+    \item Tasa de error
+    \item \textbf{Tasa de duplicación}
+    \item Tasa de actualización
+    \item Tasa de completitud
 \end{enumerate}
-Logs (a), documentación (c) o backup (d) NO rastrean transformaciones. Metadata activa + tracking sí registra origen y cambios.
+La tasa de duplicación mide específicamente la frecuencia de registros duplicados. Tasa de error (a) mide errores generales, actualización (c) mide frecuencia de cambios, completitud (d) no es una métrica estándar.
 
-\item Para implementar DataOps efectivamente, ¿qué conjunto de prácticas es más importante?
+\item En el ciclo de vida de los datos, ¿qué fase incluye principalmente la transformación y limpieza de datos?
 \begin{enumerate}
-    \item Solo testing manual
-    \item Únicamente documentación
-    \item \textbf{Automatización + CI/CD + Monitoreo + Colaboración}
-    \item Reuniones diarias
+    \item Creación y Captura
+    \item Almacenamiento
+    \item \textbf{Procesamiento}
+    \item Análisis
 \end{enumerate}
-Testing manual (a), documentación (b) o reuniones (d) NO escalan. DataOps requiere automatización, CI/CD y monitoreo para agilidad.
+El procesamiento incluye ETL, limpieza y validación. Creación (a) es captura inicial, almacenamiento (b) es guardado, análisis (d) es uso final.
+
+\item ¿Qué rol en el gobierno de datos es responsable de mantener los datos actualizados y consistentes a nivel operativo?
+
+El Data Steward es el responsable operativo que mantiene los datos actualizados y consistentes, a diferencia del CDO que define estrategia o el Data Owner que tiene responsabilidad general.
+
+\item ¿Cuáles son las tres dimensiones de calidad de datos más críticas para garantizar la confiabilidad de un sistema de información?
+
+Precisión asegura exactitud, completitud evita datos faltantes, y consistencia garantiza coherencia entre sistemas.
+
+\item ¿En qué se diferencia un Data Lake de un Data Warehouse en términos de almacenamiento y uso?
+
+Data Lake almacena datos en formato original (estructurados y no estructurados) para análisis exploratorio. Data Warehouse almacena datos estructurados y procesados para análisis histórico y reportes.
+
+\item ¿Por qué es importante implementar políticas de retención de datos en una organización?
+
+Evita almacenar datos innecesarios, cumple leyes de privacidad y reduce riesgos de seguridad.
+
+\item ¿Cuál es la diferencia entre procesamiento por lotes y procesamiento en streaming, y cuándo se usa cada uno?
+
+Batch procesa grandes volúmenes sin urgencia (datos históricos). Streaming procesa datos inmediatamente (sensores, transacciones). Batch es más eficiente para análisis, streaming para tiempo real.
 
 \end{enumerate}
 
