@@ -74,7 +74,7 @@ Una plataforma de streaming necesita modelar su sistema. Los usuarios pueden cre
 Una aerolínea necesita gestionar sus vuelos y reservas. Los vuelos tienen un número único, aeropuerto de origen, aeropuerto de destino, fecha y hora de salida y llegada. Los aeropuertos tienen código IATA (único), nombre, ciudad y país. Los pasajeros realizan reservas para vuelos específicos, y de cada pasajero se guarda DNI, nombre, pasaporte y contacto de emergencia. Cada avión (identificado por matrícula) tiene un modelo, capacidad y fecha del último mantenimiento. Los vuelos son operados por tripulaciones, donde cada miembro (piloto, copiloto, auxiliares) tiene diferentes roles y certificaciones.
 
 \newpage
-\section{Soluciones}
+\section{Anexo: Respuestas}
 
 \subsection{Sistema de Biblioteca Personal}
 \begin{center}
@@ -211,32 +211,32 @@ Una aerolínea necesita gestionar sus vuelos y reservas. Los vuelos tienen un n�
     \coordinate (fk_profesor) at ($(dictado.west)+(0,0.1)$);
     \coordinate (pk_profesor) at ($(profesor.east)+(0,0.4)$);
     \draw[-latex] (fk_profesor) to[out=180,in=0] 
-        node[pos=0.2,above] {1..N} 
-        node[pos=0.8,above] {1..1} 
+        node[pos=0.2,left] {1..N} 
+        node[pos=0.8,right] {1..1} 
         (pk_profesor);
     
     % Conexiones materia-dictado
-    \coordinate (fk_materia) at ($(dictado.north)+(0,0.1)$);
-    \coordinate (pk_materia) at ($(materia.south)+(0,-0.1)$);
-    \draw[-latex] (fk_materia) to[out=90,in=-90] 
+    \coordinate (fk_materia) at ($(dictado.east)+(0,0.1)$);
+    \coordinate (pk_materia) at ($(materia.east)+(0,-0.1)$);
+    \draw[-latex] (fk_materia) to[out=0,in=0] 
         node[pos=0.2,right] {1..N} 
         node[pos=0.8,right] {1..1} 
         (pk_materia);
         
     % Conexiones dictado-inscripcion
-    \coordinate (fk_dictado) at ($(inscripcion.north)+(0,0.1)$);
-    \coordinate (pk_dictado) at ($(dictado.south)+(0,-0.1)$);
-    \draw[-latex] (fk_dictado) to[out=90,in=-90] 
-        node[pos=0.2,right] {1..N} 
-        node[pos=0.8,right] {1..1} 
+    \coordinate (fk_dictado) at ($(inscripcion.west)+(0,0.1)$);
+    \coordinate (pk_dictado) at ($(dictado.west)+(0,-0.1)$);
+    \draw[-latex] (fk_dictado) to[out=180,in=180] 
+        node[pos=0.2,left] {1..N} 
+        node[pos=0.8,left] {1..1} 
         (pk_dictado);
         
     % Conexiones alumno-inscripcion
     \coordinate (fk_alumno) at ($(inscripcion.east)+(0,-0.5)$);
-    \coordinate (pk_alumno) at ($(alumno.south)+(0,-0.1)$);
+    \coordinate (pk_alumno) at ($(alumno.west)+(0,0.4)$);
     \draw[-latex] (fk_alumno) to[out=0,in=180] 
-        node[pos=0.2,above] {N..1} 
-        node[pos=0.8,above] {1..1} 
+        node[pos=0.2,right] {N..1} 
+        node[pos=0.8,left] {1..1} 
         (pk_alumno);
 \end{tikzpicture}
 }
@@ -256,40 +256,40 @@ Una aerolínea necesita gestionar sus vuelos y reservas. Los vuelos tienen un n�
     \coordinate (fk_empleado) at ($(asignacion.west)+(0,0.1)$);
     \coordinate (pk_empleado) at ($(empleado.east)+(0,0.4)$);
     \draw[-latex] (fk_empleado) to[out=180,in=0] 
-        node[pos=0.2,above] {1..N} 
-        node[pos=0.8,above] {1..1} 
+        node[pos=0.2,left] {1..N} 
+        node[pos=0.8,right] {1..1} 
         (pk_empleado);
     
     % Conexiones proyecto-asignacion
-    \coordinate (fk_proyecto_asignacion) at ($(asignacion.north)+(0,0.1)$);
-    \coordinate (pk_proyecto_asignacion) at ($(proyecto.south)+(0,-0.1)$);
-    \draw[-latex] (fk_proyecto_asignacion) to[out=90,in=-90] 
-        node[pos=0.2,right] {1..N} 
-        node[pos=0.8,right] {1..1} 
+    \coordinate (fk_proyecto_asignacion) at ($(asignacion.east)+(0,0.1)$);
+    \coordinate (pk_proyecto_asignacion) at ($(proyecto.east)+(0,0.3)$);
+    \draw[-latex] (fk_proyecto_asignacion) to[out=0,in=0] 
+        node[pos=0.2,left] {1..N} 
+        node[pos=0.8,left] {1..1} 
         (pk_proyecto_asignacion);
         
     % Conexiones proyecto-tarea
     \coordinate (fk_proyecto_tarea) at ($(tarea.west)+(0,0.1)$);
     \coordinate (pk_proyecto_tarea) at ($(proyecto.east)+(0,0.4)$);
     \draw[-latex] (fk_proyecto_tarea) to[out=180,in=0] 
-        node[pos=0.2,above] {1..N} 
-        node[pos=0.8,above] {1..1} 
+        node[pos=0.2,right] {1..N} 
+        node[pos=0.9,right] {1..1} 
         (pk_proyecto_tarea);
         
     % Conexiones tarea-dependencia
-    \coordinate (fk_tarea_dependiente) at ($(dependencia.north)+(0,0.1)$);
-    \coordinate (pk_tarea_dependiente) at ($(tarea.south)+(0,-0.1)$);
-    \draw[-latex] (fk_tarea_dependiente) to[out=90,in=-90] 
-        node[pos=0.2,right] {1..N} 
+    \coordinate (fk_tarea_dependiente) at ($(dependencia.west)+(0,-0.7)$);
+    \coordinate (pk_tarea_dependiente) at ($(tarea.west)+(0,0.4)$);
+    \draw[-latex] (fk_tarea_dependiente) to[out=-180,in=-180] 
+        node[pos=0.2,left] {1..N} 
         node[pos=0.8,right] {1..1} 
         (pk_tarea_dependiente);
         
     % Conexiones tarea-dependencia (requerida)
     \coordinate (fk_tarea_requerida) at ($(dependencia.east)+(0,-0.5)$);
-    \coordinate (pk_tarea_requerida) at ($(tarea.south)+(0,-0.1)$);
-    \draw[-latex] (fk_tarea_requerida) to[out=0,in=180] 
-        node[pos=0.2,above] {N..1} 
-        node[pos=0.8,above] {1..1} 
+    \coordinate (pk_tarea_requerida) at ($(tarea.east)+(0,0.6)$);
+    \draw[-latex] (fk_tarea_requerida) to[out=0,in=0] 
+        node[pos=0.2,right] {N..1} 
+        node[pos=0.8,right] {1..1} 
         (pk_tarea_requerida);
 \end{tikzpicture}
 }
@@ -299,34 +299,34 @@ Una aerolínea necesita gestionar sus vuelos y reservas. Los vuelos tienen un n�
 \begin{center}
 \resizebox{1\textwidth}{!}{
 \begin{tikzpicture}[node distance=2cm]
-    \node[entity] (paciente) {Paciente\nodepart{second}\textbf{dni (PK)}\\ nombre\\ alergias\\ enfermedades\_cronicas};
-    \node[entity] (medico) [right=of paciente] {Medico\nodepart{second}\textbf{matricula (PK)}\\ nombre\\ especialidad\\ horarios};
+    \node[entity] (medico) {Medico\nodepart{second}\textbf{matricula (PK)}\\ nombre\\ especialidad\\ horarios};
     \node[entity] (consulta) [right=of medico] {Consulta\nodepart{second}\textbf{id\_consulta (PK)}\\ \underline{dni\_paciente (FK)}\\ \underline{matricula\_medico (FK)}\\ fecha\\ hora\\ consultorio\\ diagnostico};
+    \node[entity] (paciente) [right=of consulta] {Paciente\nodepart{second}\textbf{dni (PK)}\\ nombre\\ alergias\\ enfermedades\_cronicas};
     \node[entity] (receta) [below=of consulta] {Receta\nodepart{second}\textbf{id\_receta (PK)}\\ \underline{id\_consulta (FK)}\\ \underline{codigo\_medicamento (FK)}\\ dosis\\ instrucciones};
     \node[entity] (medicamento) [right=of receta] {Medicamento\nodepart{second}\textbf{codigo (PK)}\\ nombre\\ laboratorio\\ dosis\_recomendada};
     
     % Conexiones paciente-consulta
-    \coordinate (fk_paciente) at ($(consulta.west)+(0,0.1)$);
-    \coordinate (pk_paciente) at ($(paciente.east)+(0,0.4)$);
-    \draw[-latex] (fk_paciente) to[out=180,in=0] 
+    \coordinate (fk_paciente) at ($(consulta.east)+(0,0.6)$);
+    \coordinate (pk_paciente) at ($(paciente.west)+(0,0.4)$);
+    \draw[-latex] (fk_paciente) to[out=0,in=180] 
         node[pos=0.2,above] {1..N} 
         node[pos=0.8,above] {1..1} 
         (pk_paciente);
     
     % Conexiones medico-consulta
-    \coordinate (fk_medico) at ($(consulta.north)+(0,0.1)$);
-    \coordinate (pk_medico) at ($(medico.south)+(0,-0.1)$);
-    \draw[-latex] (fk_medico) to[out=90,in=-90] 
-        node[pos=0.2,right] {1..N} 
-        node[pos=0.8,right] {1..1} 
+    \coordinate (fk_medico) at ($(consulta.west)+(0,0.1)$);
+    \coordinate (pk_medico) at ($(medico.east)+(0,-0.1)$);
+    \draw[-latex] (fk_medico) to[out=180,in=0] 
+        node[pos=0.2,above] {1..N} 
+        node[pos=0.8,above] {1..1} 
         (pk_medico);
         
     % Conexiones consulta-receta
-    \coordinate (fk_consulta) at ($(receta.north)+(0,0.1)$);
-    \coordinate (pk_consulta) at ($(consulta.south)+(0,-0.1)$);
-    \draw[-latex] (fk_consulta) to[out=90,in=-90] 
-        node[pos=0.2,right] {1..N} 
-        node[pos=0.8,right] {1..1} 
+    \coordinate (fk_consulta) at ($(receta.west)+(0,0.1)$);
+    \coordinate (pk_consulta) at ($(consulta.west)+(0,1.2)$);
+    \draw[-latex] (fk_consulta) to[out=-210,in=210] 
+        node[pos=0.1,left] {1..N} 
+        node[pos=0.9,left] {1..1} 
         (pk_consulta);
         
     % Conexiones receta-medicamento
@@ -345,41 +345,59 @@ Una aerolínea necesita gestionar sus vuelos y reservas. Los vuelos tienen un n�
 \resizebox{1\textwidth}{!}{
 \begin{tikzpicture}[node distance=2cm]
     \node[entity] (usuario) {Usuario\nodepart{second}\textbf{email (PK)}\\ username\\ password\\ fecha\_registro};
-    \node[entity] (perfil) [right=of usuario] {Perfil\nodepart{second}\textbf{id\_perfil (PK)}\\ \underline{email\_usuario (FK)}\\ nombre\\ fecha\_creacion};
-    \node[entity] (contenido) [right=of perfil] {Contenido\nodepart{second}\textbf{id\_contenido (PK)}\\ titulo\\ genero\\ anio\\ clasificacion\\ duracion};
-    \node[entity] (reseña) [below=of contenido] {Reseña\nodepart{second}\textbf{id\_reseña (PK)}\\ \underline{id\_perfil (FK)}\\ \underline{id\_contenido (FK)}\\ puntuacion\\ comentario};
-    
-    % Conexiones usuario-perfil
+    \node[entity] (perfil) [right=of usuario] {Perfil\nodepart{second}\textbf{id\_perfil (PK)}\\ \underline{email\_usuario (FK)}\\ nombre};
+    \node[entity] (contenido) [below=of perfil] {Contenido\nodepart{second}\textbf{id\_contenido (PK)}\\ titulo\\ genero\\ anio\\ clasificacion\\ duracion\\ tipo};
+    \node[entity] (resena) [left=of contenido] {Resena\nodepart{second}\textbf{id\_resena (PK)}\\ \underline{id\_perfil (FK)}\\ \underline{id\_contenido (FK)}\\ puntuacion\\ comentario};
+    \node[entity] (lista) [right=of perfil] {Lista\nodepart{second}\textbf{id\_lista (PK)}\\ \underline{id\_perfil (FK)}\\ nombre};
+    \node[entity] (contenido_lista) [right=of contenido] {Contenido\_Lista\nodepart{second}\textbf{id\_contenido\_lista (PK)}\\ \underline{id\_lista (FK)}\\ \underline{id\_contenido (FK)}};
+
+    % usuario-perfil
     \coordinate (fk_usuario) at ($(perfil.west)+(0,0.1)$);
     \coordinate (pk_usuario) at ($(usuario.east)+(0,0.4)$);
-    \draw[-latex] (fk_usuario) to[out=180,in=0] 
-        node[pos=0.2,above] {1..N} 
-        node[pos=0.8,above] {1..1} 
+    \draw[-latex] (fk_usuario) to[out=180,in=0]
+        node[pos=0.2,above] {1..4}
+        node[pos=0.8,above] {1..1}
         (pk_usuario);
-    
-    % Conexiones perfil-contenido
-    \coordinate (fk_perfil) at ($(contenido.west)+(0,0.1)$);
-    \coordinate (pk_perfil) at ($(perfil.east)+(0,0.4)$);
-    \draw[-latex] (fk_perfil) to[out=180,in=0] 
-        node[pos=0.2,above] {1..N} 
-        node[pos=0.8,above] {1..1} 
-        (pk_perfil);
-        
-    % Conexiones contenido-reseña
-    \coordinate (fk_contenido) at ($(reseña.north)+(0,0.1)$);
-    \coordinate (pk_contenido) at ($(contenido.south)+(0,-0.1)$);
-    \draw[-latex] (fk_contenido) to[out=90,in=-90] 
-        node[pos=0.2,right] {1..N} 
-        node[pos=0.8,right] {1..1} 
-        (pk_contenido);
-        
-    % Conexiones perfil-reseña
-    \coordinate (fk_perfil_reseña) at ($(reseña.west)+(0,-0.5)$);
-    \coordinate (pk_perfil_reseña) at ($(perfil.south)+(0,-0.1)$);
-    \draw[-latex] (fk_perfil_reseña) to[out=0,in=180] 
-        node[pos=0.2,above] {N..1} 
-        node[pos=0.8,above] {1..1} 
-        (pk_perfil_reseña);
+
+    % perfil-resena
+    \coordinate (fk_perfil_resena) at ($(resena.east)+(0,0.1)$);
+    \coordinate (pk_perfil_resena) at ($(perfil.west)+(0,-0.1)$);
+    \draw[-latex] (fk_perfil_resena) to[out=0,in=-180]
+        node[pos=0.2,left] {1..N}
+        node[pos=0.8,left] {1..1}
+        (pk_perfil_resena);
+
+    % contenido-resena
+    \coordinate (fk_contenido_resena) at ($(resena.east)+(0,-0.3)$);
+    \coordinate (pk_contenido_resena) at ($(contenido.west)+(0,1.2)$);
+    \draw[-latex] (fk_contenido_resena) to[out=0,in=180]
+        node[pos=0.2,below] {1..N}
+        node[pos=0.8,above] {1..1}
+        (pk_contenido_resena);
+
+    % perfil-lista
+    \coordinate (fk_perfil_lista) at ($(lista.west)+(0,0.1)$);
+    \coordinate (pk_perfil_lista) at ($(perfil.east)+(0,-0.7)$);
+    \draw[-latex] (fk_perfil_lista) to[out=-180,in=0]
+        node[pos=0.2,above] {1..N}
+        node[pos=0.8,above] {1..1}
+        (pk_perfil_lista);
+
+    % lista-contenido_lista
+    \coordinate (fk_lista) at ($(contenido_lista.east)+(0,-0.2)$);
+    \coordinate (pk_lista) at ($(lista.east)+(0,0.4)$);
+    \draw[-latex] (fk_lista) to[out=70,in=0]
+        node[pos=0.2,left] {1..N}
+        node[pos=0.9,right] {1..1}
+        (pk_lista);
+
+    % contenido-contenido_lista
+    \coordinate (fk_contenido_lista) at ($(contenido_lista.west)+(0,-0.7)$);
+    \coordinate (pk_contenido_lista) at ($(contenido.east)+(0,1.2)$);
+    \draw[-latex] (fk_contenido_lista) to[out=-180,in=0]
+        node[pos=0.5,right] {1..N}
+        node[pos=0.8,right] {1..1}
+        (pk_contenido_lista);
 \end{tikzpicture}
 }
 \end{center}
@@ -389,11 +407,23 @@ Una aerolínea necesita gestionar sus vuelos y reservas. Los vuelos tienen un n�
 \resizebox{1\textwidth}{!}{
 \begin{tikzpicture}[node distance=2cm]
     \node[entity] (aeropuerto) {Aeropuerto\nodepart{second}\textbf{codigo (PK)}\\ nombre\\ ciudad\\ pais};
+    
     \node[entity] (vuelo) [right=of aeropuerto] {Vuelo\nodepart{second}\textbf{numero (PK)}\\ \underline{codigo\_origen (FK)}\\ \underline{codigo\_destino (FK)}\\ \underline{matricula\_avion (FK)}\\ fecha\\ hora\_salida\\ hora\_llegada};
+    
     \node[entity] (avion) [right=of vuelo] {Avion\nodepart{second}\textbf{matricula (PK)}\\ modelo\\ capacidad\\ fecha\_ultimo\_mantenimiento};
+    
     \node[entity] (pasajero) [below=of vuelo] {Pasajero\nodepart{second}\textbf{dni (PK)}\\ nombre\\ pasaporte\\ contacto\_emergencia};
+    
     \node[entity] (reserva) [right=of pasajero] {Reserva\nodepart{second}\textbf{id\_reserva (PK)}\\ \underline{numero\_vuelo (FK)}\\ \underline{dni\_pasajero (FK)}\\ fecha\_reserva\\ asiento};
     
+    \node[entity] (tripulante) [below=of asignacion, xshift=-3cm] {Tripulante\nodepart{second}\textbf{id (PK)}\\ nombre\\ rol};
+    
+    \node[entity] (asignacion) [left=of pasajero] {Vuelo\_Tripulante\nodepart{second}\textbf{id\_asignacion (PK)}\\ \underline{id\_tripulante (FK)}\\ \underline{numero\_vuelo (FK)}};
+    
+    \node[entity] (posee) [right=of tripulante] {Tripulante\_Certificacion\nodepart{second}\textbf{id (PK)}\\ \underline{id\_tripulante (FK)}\\ \underline{id\_certificacion (FK)}};
+
+    \node[entity] (certificacion) [right=of posee] {Certificacion\nodepart{second}\textbf{id (PK)}\\ descripcion};
+
     % Conexiones aeropuerto-vuelo (origen)
     \coordinate (fk_origen) at ($(vuelo.west)+(0,0.1)$);
     \coordinate (pk_origen) at ($(aeropuerto.east)+(0,0.4)$);
@@ -433,6 +463,38 @@ Una aerolínea necesita gestionar sus vuelos y reservas. Los vuelos tienen un n�
         node[pos=0.2,above] {1..N} 
         node[pos=0.8,above] {1..1} 
         (pk_pasajero);
+
+    % Conexión tripulante-asignación
+    \coordinate (fk_tripulante) at ($(asignacion.east)+(0,-0.1)$);
+    \coordinate (pk_tripulante) at ($(tripulante.west)+(0,0.4)$);
+    \draw[-latex] (fk_tripulante) to[out=0,in=180] 
+        node[pos=0.3,right] {1..N} 
+        node[pos=0.8,left] {1..1} 
+        (pk_tripulante);
+
+    % Conexión vuelo-asignación
+    \coordinate (fk_vuelo) at ($(asignacion.east)+(0,-0.7)$);
+    \coordinate (pk_vuelo) at ($(vuelo.west)+(0,1.3)$);
+    \draw[-latex] (fk_vuelo) to[out=0,in=180] 
+        node[pos=0.2,right] {1..N} 
+        node[pos=0.9,above] {1..1} 
+        (pk_vuelo);
+
+    % Conexión tripulante-posee
+    \coordinate (fk_posee_trip) at ($(posee.west)+(0,-0.5)$);
+    \coordinate (pk_posee_trip) at ($(tripulante.east)+(0,0.1)$);
+    \draw[-latex] (fk_posee_trip) to[out=-180,in=0] 
+        node[pos=0.2,above] {1..N} 
+        node[pos=0.8,below] {1..1} 
+        (pk_posee_trip);
+
+    % Conexión certificacion-posee
+    \coordinate (fk_posee_cert) at ($(posee.east)+(0,-0.8)$);
+    \coordinate (pk_posee_cert) at ($(certificacion.west)+(0,-0.1)$);
+    \draw[-latex] (fk_posee_cert) to[out=0,in=180] 
+        node[pos=0.2,below] {N..1} 
+        node[pos=0.8,above] {1..1} 
+        (pk_posee_cert);
 \end{tikzpicture}
 }
 \end{center}

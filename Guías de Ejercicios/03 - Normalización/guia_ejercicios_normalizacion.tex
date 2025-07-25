@@ -65,7 +65,7 @@ Intenten resolver los ejercicios por su cuenta. Las respuestas se encuentran al 
 
 \section{Ejercicios}
 
-\subsection{Ejercicio 1: Club de Tenis}
+\subsection{Club de Tenis}
 Se tiene la siguiente tabla para un club de tenis:
 \vspace{0.5em}
 \begin{center}
@@ -83,7 +83,7 @@ Donde:
     \item Una cancha solo puede ser reservada por un socio en un horario específico
 \end{itemize}
 
-\subsection{Ejercicio 2: Biblioteca Musical}
+\subsection{Biblioteca Musical}
 Para una biblioteca de música se almacena:
 \vspace{0.5em}
 \begin{center}
@@ -102,7 +102,7 @@ Donde:
     \item Una canción pertenece a un único álbum
 \end{itemize}
 
-\subsection{Ejercicio 3: Torneo de Fútbol}
+\subsection{Torneo de Fútbol}
 Se tiene los siguientes datos de una base de datos de un torneo de fútbol:
 
 \vspace{0.5em}
@@ -134,7 +134,7 @@ Donde:
     \item El resultado registra el marcador final
 \end{itemize}
 
-\subsection{Ejercicio 4: Empresa de Ventas}
+\subsection{Empresa de Ventas}
 Para una empresa se registran las ventas en los siguientes datos:
 
 \vspace{0.5em}
@@ -165,7 +165,7 @@ Donde:
     \item Cada producto tiene un precio unitario fijo
 \end{itemize}
 
-\subsection{Ejercicio 5: Local de Computadoras}
+\subsection{Local de Computadoras}
 Se tiene los siguientes datos de una base de datos de un local de computadoras:
 
 \vspace{0.5em}
@@ -196,7 +196,7 @@ Donde:
     \item El precio depende del modelo
 \end{itemize}
 
-\subsection{Ejercicio 6: Sistema de Cursos}
+\subsection{Sistema de Cursos}
 Para un sistema educativo se tiene los siguientes datos:
 \vspace{0.5em}
 
@@ -227,7 +227,7 @@ Donde:
     \item Un curso se dicta en un aula específica en un horario específico
 \end{itemize}
 
-\subsection{Ejercicio 7: Biblioteca de Películas}
+\subsection{Biblioteca de Películas}
 Se tiene los siguientes datos de una base de datos de una biblioteca de películas:
 
 \vspace{0.5em}
@@ -260,7 +260,7 @@ Donde:
     \item La clasificación depende del contenido de la película
 \end{itemize}
 
-\subsection{Ejercicio 8: Gestión de Proyectos}
+\subsection{Gestión de Proyectos}
 Para gestionar proyectos se usa los siguientes datos:
 
 \vspace{0.5em}
@@ -293,7 +293,7 @@ Donde:
     \item Un proyecto tiene un único líder y un único cliente
 \end{itemize}
 
-\subsection{Ejercicio 9: Local de Instrumentos}
+\subsection{Local de Instrumentos}
 Para un local de música se registra:
 
 \vspace{0.5em}
@@ -326,7 +326,7 @@ Donde:
     \item El precio y stock son específicos para cada modelo
 \end{itemize}
 
-\subsection{Ejercicio 10: Sistema de Hospital}
+\subsection{Sistema de Hospital}
 Se tiene los siguientes datos de una base de datos de un sistema de hospital:
 
 \vspace{0.5em}
@@ -364,15 +364,13 @@ Donde:
 
 \section{Anexo: Respuestas}
 
-\subsection{Respuesta Ejercicio 1: Club de Tenis}
+\subsection{Club de Tenis}
 
 Dependencias Funcionales:
 \begin{itemize}
     \item ID\_Socio → Nombre, Teléfono
     \item Cancha, Horario\_Reserva → ID\_Socio
 \end{itemize}
-
-La tabla no está en 2FN porque hay dependencias parciales. Normalización:
 
 \textbf{Socios (1FN → 2FN, 3FN)}
 \begin{center}
@@ -392,7 +390,7 @@ ID\_Socio & Cancha & Horario\_Reserva \\
 \end{tabular}
 \end{center}
 
-\subsection{Respuesta Ejercicio 2: Biblioteca Musical}
+\subsection{Biblioteca Musical}
 
 Dependencias Funcionales:
 \begin{itemize}
@@ -427,7 +425,7 @@ ID\_Canción & Título & ID\_Álbum & Género \\
 \end{tabular}
 \end{center}
 
-\subsection{Respuesta Ejercicio 3: Torneo de Fútbol}
+\subsection{Torneo de Fútbol}
 
 Dependencias Funcionales:
 \begin{itemize}
@@ -454,7 +452,7 @@ ID\_Partido & ID\_Local & ID\_Visitante & Fecha & Resultado \\
 \end{tabular}
 \end{center}
 
-\subsection{Respuesta Ejercicio 4: Empresa de Ventas}
+\subsection{Empresa de Ventas}
 
 Dependencias Funcionales:
 \begin{itemize}
@@ -500,7 +498,7 @@ ID\_Venta & ID\_Vendedor & ID\_Producto & Cantidad \\
 \end{tabular}
 \end{center}
 
-\subsection{Respuesta Ejercicio 5: Local de Computadoras}
+\subsection{Local de Computadoras}
 
 Dependencias Funcionales:
 \begin{itemize}
@@ -545,7 +543,7 @@ ID\_PC & ID\_Modelo & ID\_Procesador & RAM \\
 \end{tabular}
 \end{center}
 
-\subsection{Respuesta Ejercicio 6: Sistema de Cursos}
+\subsection{Sistema de Cursos}
 
 Dependencias Funcionales:
 \begin{itemize}
@@ -581,7 +579,7 @@ ID\_Curso & Nombre\_Curso & ID\_Profesor & ID\_Aula & Horario \\
 \end{tabular}
 \end{center}
 
-\subsection{Respuesta Ejercicio 7: Biblioteca de Películas}
+\subsection{Biblioteca de Películas}
 
 Dependencias Funcionales:
 \begin{itemize}
@@ -607,7 +605,7 @@ ID\_Película & Título & ID\_Director & Año & Género & Duración & Clasificac
 \end{tabular}
 \end{center}
 
-\subsection{Respuesta Ejercicio 8: Gestión de Proyectos}
+\subsection{Gestión de Proyectos}
 
 Dependencias Funcionales:
 \begin{itemize}
@@ -643,7 +641,7 @@ ID\_Proyecto & Nombre\_Proyecto & ID\_Líder & Presupuesto & Fecha\_Inicio & ID\
 \end{tabular}
 \end{center}
 
-\subsection{Respuesta Ejercicio 9: Local de Instrumentos}
+\subsection{Local de Instrumentos}
 
 Dependencias Funcionales:
 \begin{itemize}
@@ -679,7 +677,7 @@ ID\_Instrumento & Tipo & ID\_Marca & ID\_Modelo & Material \\
 \end{tabular}
 \end{center}
 
-\subsection{Respuesta Ejercicio 10: Sistema de Hospital}
+\subsection{Sistema de Hospital}
 
 Dependencias Funcionales:
 \begin{itemize}
