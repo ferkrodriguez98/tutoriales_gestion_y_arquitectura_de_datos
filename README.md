@@ -23,7 +23,7 @@ Este repositorio contiene los materiales, notebooks, apuntes y recursos de las c
 | # Clase | Rodríguez del Castillo | Giacchetta & Cappelloni | Apicella | Sapoznik | Lapidus & Marinelli | Rodríguez del Castillo |
 |:------:|:-----------------:|:------------------------------------:|:------------------------:|:----------------------:|:-----------------:|:------------------------------------:|
 | Horario | Mié 10:40 | Jue 12:20 | Jue 12:20 | Jue 12:20 | Jue 19:00 | Vie 10:40 |
-|   1    | 13/08 | 14/08 | 14/08 | 14/08 | 14/08 | 08/08 |
+|   1    | 13/08 | 14/08 | 14/08 | 14/08 | 14/08 | 15/08 |
 |   2    | 20/08 | 21/08 | 21/08 | 21/08 | 21/08 | 22/08 |
 |   3    | 27/08 | 28/08 | 28/08 | 28/08 | 28/08 | 29/08 |
 |   4    | 03/09 | 04/09 | 04/09 | 04/09 | 04/09 | 05/09 |
@@ -31,11 +31,11 @@ Este repositorio contiene los materiales, notebooks, apuntes y recursos de las c
 |   6    | 17/09 | 18/09 | 18/09 | 18/09 | 18/09 | 19/09 |
 |   7    | 24/09 | 25/09 | 25/09 | 25/09 | 25/09 | 26/09 |
 |   -    |       |       | **PARCIALES** |       |       |
-|   8    | 22/10 | 23/10 | 23/10 | 23/10 | 23/10 | 17/10 |
-|   9    | 29/10 | 30/10 | 30/10 | 30/10 | 30/10 | 24/10 |
-|   10   | 05/11 | 06/11 | 06/11 | 06/11 | 06/11 | 31/10 |
-|   11   | 12/11 | 13/11 | 13/11 | 13/11 | 13/11 | 07/11 |
-|   12   | 19/11 | 20/11 | 20/11 | 20/11 | 20/11 | 14/11 |
+|   8    | 22/10 | 23/10 | 23/10 | 23/10 | 23/10 | 24/10 |
+|   9    | 29/10 | 30/10 | 30/10 | 30/10 | 30/10 | 31/10 |
+|   10   | 05/11 | 06/11 | 06/11 | 06/11 | 06/11 | 07/10 |
+|   11   | 12/11 | 13/11 | 13/11 | 13/11 | 13/11 | 14/11 |
+|   12   | 19/11 | 20/11 | 20/11 | 20/11 | 20/11 | 21/11 |
 |   13   | 26/11 | 27/11 | 27/11 | 27/11 | 27/11 | 28/11 |
 
-Nota: No hay tutoriales la primera semana de clases ni la primera después de los parciales. La tutorial de los viernes sí tiene clase la primera semana para compensar con el feriado del 15/08. Ídem para post-parciales con el feriado del 21/11.
+Nota: No hay tutoriales la primera semana de clases ni la primera después de los parciales.
