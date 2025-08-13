@@ -173,7 +173,7 @@ Una aerol√≠nea necesita gestionar sus vuelos y reservas. Los vuelos tienen un n√
 \begin{tikzpicture}[node distance=2cm]
     \node[entity] (cliente) {Cliente\nodepart{second}\textbf{email (PK)}\\ nombre\\ direccion\\ telefono};
     \node[entity] (pedido) [right=of cliente] {Pedido\nodepart{second}\textbf{numero (PK)}\\ \underline{email\_cliente (FK)}\\ fecha\\ estado};
-    \node[entity] (detalle) [right=of pedido] {Detalle\_Pedido\nodepart{second}\textbf{id\_detalle (PK)}\\ \underline{numero\_pedido (FK)}\\ \underline{codigo\_producto (FK)}\\ cantidad\\ precio\_unitario};
+    \node[entity] (detalle) [right=of pedido] {Detalle\_Pedido\nodepart{second}\textbf{id\_detalle (PK)}\\ \underline{numero\_pedido (FK)}\\ \underline{codigo\_producto (FK)}\\ cantidad};
     \node[entity] (producto) [right=of detalle] {Producto\nodepart{second}\textbf{codigo (PK)}\\ nombre\\ descripcion\\ precio\\ stock};
     
     % Conexiones cliente-pedido
