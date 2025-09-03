@@ -310,12 +310,74 @@ H2 & Hotel B & C2 & G2 & María López \\
 
 Tabla: Ciudades
 \begin{center}
-\begin{tabular}{lll}
+\begin{tabular}{llll}
+\toprule
+IdCiudadHotel & CiudadHotel & IdPaisHotel & NombrePaisHotel \\
+\midrule
+C1 & Buenos Aires & P1 & Argentina \\
+C2 & Madrid & P2 & España \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Tabla: Clientes
+\begin{center}
+\begin{tabular}{ll}
+\toprule
+IDCliente & ClienteNombre \\
+\midrule
+1 & Juan García \\
+2 & María López \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Tabla: Reservas
+\begin{center}
+\begin{tabular}{lllll}
+\toprule
+IDCliente & IDHotel & FechaCheckIn & FechaCheckOut & HabitaciónTipo \\
+\midrule
+1 & H1 & 2024-01-01 & 2024-01-05 & Simple \\
+1 & H2 & 2024-02-01 & 2024-02-03 & Doble \\
+2 & H1 & 2024-03-01 & 2024-03-10 & Suite \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsubsection{3FN - Eliminar dependencias transitivas}
+Tabla: Hoteles
+\begin{center}
+\begin{tabular}{llll}
+\toprule
+IDHotel & HotelNombre & IdCiudadHotel & IdGerenteHotel \\
+\midrule
+H1 & Hotel A & C1 & G1\\
+H2 & Hotel B & C2 & G2\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Tabla: Gerentes
+\begin{center}
+\begin{tabular}{ll}
+\toprule
+IdGerenteHotel & NombreGerenteHotel \\
+\midrule
+G1 & Juan Pérez \\
+G2 & María López \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Tabla: Ciudades
+\begin{center}
+\begin{tabular}{llll}
 \toprule
 IdCiudadHotel & CiudadHotel & IdPaisHotel \\
 \midrule
-C1 & Buenos Aires & P1 \\
-C2 & Madrid & P2 \\
+C1 & Buenos Aires & P1\\
+C2 & Madrid & P2\\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -332,7 +394,6 @@ P2 & España \\
 \end{tabular}
 \end{center}
 
-\subsubsection{3FN - Eliminar dependencias transitivas}
 Tabla: Reservas
 \begin{center}
 \begin{tabular}{lllll}
@@ -362,8 +423,8 @@ IDCliente & ClienteNombre \\
 \begin{itemize}
     \item Se separaron los emails de clientes en una tabla aparte (1FN)
     \item Se separaron los idiomas de los gerentes en una tabla aparte (1FN)
-    \item Se extrajo la información de hoteles, ciudades y países en tablas separadas (2FN)
-    \item Se eliminaron las dependencias transitivas separando la información de clientes (3FN)
+    \item Se extrajo la información de hoteles, ciudades, clientes y reservas en tablas separadas (2FN)
+    \item Se eliminaron las dependencias transitivas (3FN)
 \end{itemize}
 
 \section{Ejercicio Práctico}

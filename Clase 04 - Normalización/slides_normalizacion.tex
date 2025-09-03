@@ -360,6 +360,78 @@
     \vspace{0.4cm}
 
     \textbf{Ciudades}\\[0.1cm]
+    \begin{tabular}{cccc}
+        \hline
+        IdCiudadHotel & CiudadHotel & IdPaisHotel & NombrePaisHotel \\
+        \hline
+        C1 & Buenos Aires & P1 & Argentina \\
+        C2 & Madrid & P2 & España \\
+        \hline
+    \end{tabular}
+    \vspace{0.4cm}
+    \end{center}
+\end{frame}
+
+\begin{frame}{TravelPro - Paso 2: llevar a 2FN}
+    \begin{center}
+    \textbf{Clientes}\\[0.1cm]
+    \begin{tabular}{cc}
+        \hline
+        IDCliente & ClienteNombre \\
+        \hline
+        1 & Juan Garcia \\
+        2 & Maria Lopez \\
+        \hline
+    \end{tabular}
+    \vspace{0.4cm}
+
+    \textbf{Reservas}\\[0.1cm]
+    \resizebox{\textwidth}{!}{
+    \begin{tabular}{ccccc}
+        \hline
+        IDCliente & IDHotel & FechaCheckIn & FechaCheckOut & HabitacionTipo \\
+        \hline
+        1 & H1 & 2024-01-01 & 2024-01-05 & Simple \\
+        1 & H2 & 2024-02-01 & 2024-02-03 & Doble \\
+        2 & H1 & 2024-03-01 & 2024-03-10 & Suite \\
+        \hline
+    \end{tabular}
+    }
+    \vspace{0.4cm}
+    \end{center}
+\end{frame}
+
+\begin{frame}{TravelPro - Paso 3: llevar a 3FN}
+    \begin{center}
+    \textbf{Hoteles}\\[0.1cm]
+    \resizebox{\textwidth}{!}{
+    \begin{tabular}{ccccc}
+        \hline
+        IDHotel & HotelNombre & IdCiudadHotel & IdGerenteHotel \\
+        \hline
+        H1 & Hotel A & C1 & G1\\
+        H2 & Hotel B & C2 & G2\\
+        \hline
+    \end{tabular}
+    }
+    \vspace{0.4cm}
+
+    \textbf{Gerentes}\\[0.1cm]
+    \begin{tabular}{ccc}
+        \hline
+        IdGerenteHotel & NombreGerenteHotel \\
+        \hline
+        G1 & Juan Perez \\
+        G2 & Maria Lopez \\
+        \hline
+    \end{tabular}
+    \vspace{0.4cm}
+    \end{center}
+\end{frame}
+
+\begin{frame}{TravelPro - Paso 3: llevar a 3FN}
+    \begin{center}
+    \textbf{Ciudades}\\[0.1cm]
     \begin{tabular}{ccc}
         \hline
         IdCiudadHotel & CiudadHotel & IdPaisHotel \\
