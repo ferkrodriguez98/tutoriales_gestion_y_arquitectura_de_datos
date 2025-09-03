@@ -20,7 +20,7 @@ Este repositorio contiene los materiales, notebooks, apuntes y recursos de las c
 
 ## Cronograma
 
-| # Clase | Rodríguez del Castillo | Giacchetta & Cappelloni | Apicella | Sapoznik | Lapidus & Marinelli | Rodríguez del Castillo |
+| # Clase | Rodríguez del Castillo & Zan Bisignani | Giacchetta & Cappelloni | Apicella & Arias | Sapoznik & Esquivel | Lapidus & Marinelli | Rodríguez del Castillo & Giménez Kesseru|
 |:------:|:-----------------:|:------------------------------------:|:------------------------:|:----------------------:|:-----------------:|:------------------------------------:|
 | Horario | Mié 10:40 | Jue 12:20 | Jue 12:20 | Jue 12:20 | Jue 19:00 | Vie 10:40 |
 |   1    | 13/08 | 14/08 | 14/08 | 14/08 | 14/08 | 15/08 |
