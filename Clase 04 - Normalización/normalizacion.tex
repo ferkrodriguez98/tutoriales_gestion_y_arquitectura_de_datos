@@ -428,15 +428,23 @@ IDCliente & ClienteNombre \\
 \end{itemize}
 
 \section{Ejercicio Práctico}
-Normalizar la siguiente tabla hasta 3FN:
+Una empresa de ventas registra los pedidos de sus clientes. Normalizar la siguiente tabla hasta 3FN sabiendo que:
+
+\begin{itemize}
+    \item Un pedido puede contener múltiples productos
+    \item Un cliente puede realizar múltiples pedidos
+    \item Cada producto pertenece a una única categoría
+    \item El precio es específico de cada producto
+\end{itemize}
+
 \begin{center}
 \begin{tabular}{lllllll}
 \toprule
-ID\_Pedido & Cliente & Ciudad\_Cliente & Producto & Categoría & Precio & Stock \\
+ID\_Pedido & Cliente & CodPostal & Ciudad & Producto & Categoría & Precio \\
 \midrule
-1 & Juan & CABA & Laptop & Electrónica & 1000 & 50 \\
-2 & María & CABA & Mouse & Electrónica & 20 & 100 \\
-3 & Juan & CABA & Mouse & Electrónica & 20 & 100 \\
+1 & Juan & 1000 & CABA & Laptop & Electrónica & 1000 \\
+2 & María & 1000 & CABA & Mouse & Electrónica & 20 \\
+3 & Juan & 1000 & CABA & Mouse & Electrónica & 20 \\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -461,6 +469,18 @@ ID\_Pedido & ID\_Cliente & ID\_Producto \\
 \end{tabular}
 \end{center}
 
+Tabla: Clientes
+\begin{center}
+\begin{tabular}{llll}
+\toprule
+ID\_Cliente & Nombre & CodPostal & Ciudad \\
+\midrule
+C1 & Juan & 1000 & CABA \\
+C2 & María & 1000 & CABA \\
+\bottomrule
+\end{tabular}
+\end{center}
+
 Tabla: Productos
 \begin{center}
 \begin{tabular}{llll}
@@ -475,6 +495,18 @@ P2 & Mouse & Electrónica & 20 \\
 
 \subsubsection{3FN - Eliminar dependencias transitivas}
 
+Tabla: Productos (igual que en 2FN)
+\begin{center}
+\begin{tabular}{llll}
+\toprule
+ID\_Producto & Nombre & Categoría & Precio \\
+\midrule
+P1 & Laptop & Electrónica & 1000 \\
+P2 & Mouse & Electrónica & 20 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
 Tabla: Pedidos (igual que en 2FN)
 \begin{center}
 \begin{tabular}{lll}
@@ -488,37 +520,25 @@ ID\_Pedido & ID\_Cliente & ID\_Producto \\
 \end{tabular}
 \end{center}
 
-Tabla: Productos
-\begin{center}
-\begin{tabular}{lll}
-\toprule
-ID\_Producto & Nombre & ID\_Categoría \\
-\midrule
-P1 & Laptop & CAT1 \\
-P2 & Mouse & CAT1 \\
-\bottomrule
-\end{tabular}
-\end{center}
-
-Tabla: Categorías
-\begin{center}
-\begin{tabular}{ll}
-\toprule
-ID\_Categoría & Nombre \\
-\midrule
-CAT1 & Electrónica \\
-\bottomrule
-\end{tabular}
-\end{center}
-
 Tabla: Clientes
 \begin{center}
 \begin{tabular}{lll}
 \toprule
-ID\_Cliente & Nombre & Ciudad \\
+ID\_Cliente & Nombre & CodPostal \\
 \midrule
-C1 & Juan & CABA \\
-C2 & María & CABA \\
+C1 & Juan & 1000 \\
+C2 & María & 1000 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Tabla: Códigos Postales
+\begin{center}
+\begin{tabular}{ll}
+\toprule
+CodPostal & Ciudad \\
+\midrule
+1000 & CABA \\
 \bottomrule
 \end{tabular}
 \end{center}

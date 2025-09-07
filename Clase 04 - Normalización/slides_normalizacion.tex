@@ -494,23 +494,30 @@
 
 % Ejercicio práctico
 \begin{frame}{Ejercicio práctico - Ventas de productos}
-    \small
+    Una empresa de ventas registra los pedidos de sus clientes. Se sabe que:
+    \begin{itemize}
+        \item Un pedido puede contener múltiples productos
+        \item Un cliente puede realizar múltiples pedidos
+        \item Cada producto pertenece a una única categoría     
+        \item El precio es específico de cada producto
+    \end{itemize}
     \begin{center}
-    \begin{tabular}{ccccccc}
+    \resizebox{\textwidth}{!}{
+     \begin{tabular}{ccccccc}
         \hline
-        ID\_Pedido & Cliente & Ciudad & Producto & Categoría & Precio & Stock \\
+        ID\_Pedido & Cliente & CodPostal & Ciudad & Producto & Categoría & Precio \\
         \hline
-        1 & Juan & CABA & Laptop & Electrónica & 1000 & 50 \\
-        2 & Maria & CABA & Mouse & Electrónica & 20 & 100 \\
-        3 & Juan & CABA & Mouse & Electrónica & 20 & 100 \\
+        1 & Juan & 1000 & CABA & Laptop & Electrónica & 1000 \\
+        2 & Maria & 1000 & CABA & Mouse & Electrónica & 20 \\
+        3 & Juan & 1000 & CABA & Mouse & Electrónica & 20 \\
         \hline
     \end{tabular}
+    }
     \end{center}
 \end{frame}
 
 % Paso 2FN
 \begin{frame}{Ejercicio práctico - Paso 2: 2FN}
-    \small
     \begin{center}
     \textbf{Pedidos}\\[0.1cm]
     \begin{tabular}{ccc}
@@ -522,7 +529,17 @@
         3 & C1 & P2 \\
         \hline
     \end{tabular}
-    \vspace{0.6cm}
+    \vspace{0.4cm}
+    \textbf{\\Clientes}\\[0.1cm]
+    \begin{tabular}{cccc}
+        \hline
+        ID\_Cliente & Nombre & CodPostal & Ciudad \\
+        \hline
+        C1 & Juan & 1000 & CABA \\
+        C2 & Maria & 1000 & CABA \\
+        \hline
+    \end{tabular}
+    \vspace{0.4cm}
     \textbf{\\Productos}\\[0.1cm]
     \begin{tabular}{cccc}
         \hline
@@ -537,34 +554,18 @@
 
 % Paso 3FN (1)
 \begin{frame}{Ejercicio práctico - Paso 3: 3FN (1)}
-    \small
     \begin{center}
-    \textbf{Productos}\\[0.1cm]
-    \begin{tabular}{ccc}
+    \textbf{Productos (igual que en 2FN)}\\[0.1cm]
+    \begin{tabular}{cccc}
         \hline
-        ID\_Producto & Nombre & ID\_Categoria \\
+        ID\_Producto & Nombre & Categoria & Precio \\
         \hline
-        P1 & Laptop & CAT1 \\
-        P2 & Mouse & CAT1 \\
+        P1 & Laptop & Electrónica & 1000 \\
+        P2 & Mouse & Electrónica & 20 \\
         \hline
     \end{tabular}
     \vspace{0.6cm}
-    \textbf{\\Categorias}\\[0.1cm]
-    \begin{tabular}{cc}
-        \hline
-        ID\_Categoria & Nombre \\
-        \hline
-        CAT1 & Electrónica \\
-        \hline
-    \end{tabular}
-    \end{center}
-\end{frame}
-
-% Paso 3FN (2)
-\begin{frame}{Ejercicio práctico - Paso 3: 3FN (2)}
-    \small
-    \begin{center}
-    \textbf{Pedidos}\\[0.1cm]
+    \textbf{\\Pedidos (igual que en 2FN)}\\[0.1cm]
     \begin{tabular}{ccc}
         \hline
         ID\_Pedido & ID\_Cliente & ID\_Producto \\
@@ -574,14 +575,28 @@
         3 & C1 & P2 \\
         \hline
     \end{tabular}
-    \vspace{0.6cm}
+    \end{center}
+\end{frame}
+
+% Paso 3FN (2)
+\begin{frame}{Ejercicio práctico - Paso 3: 3FN (2)}
+    \begin{center}
+    \textbf{\\Códigos Postales}\\[0.1cm]
+    \begin{tabular}{cc}
+        \hline
+        CodPostal & Ciudad \\
+        \hline
+        1000 & CABA \\
+        \hline
+    \end{tabular}
+    \vspace{0.4cm}
     \textbf{\\Clientes}\\[0.1cm]
     \begin{tabular}{ccc}
         \hline
-        ID\_Cliente & Nombre & Ciudad \\
+        ID\_Cliente & Nombre & CodPostal \\
         \hline
-        C1 & Juan & CABA \\
-        C2 & Maria & CABA \\
+        C1 & Juan & 1000 \\
+        C2 & Maria & 1000 \\
         \hline
     \end{tabular}
     \end{center}
