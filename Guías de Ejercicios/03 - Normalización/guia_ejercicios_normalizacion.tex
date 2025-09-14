@@ -647,7 +647,7 @@ Dependencias Funcionales:
 \begin{itemize}
     \item ID\_Instrumento → Tipo, Marca, Modelo, Material
     \item Marca → País\_Fabricación
-    \item Modelo → Precio, Stock
+    \item Modelo → Marca, Precio, Stock
 \end{itemize}
 
 \textbf{Marcas (3FN)}
@@ -661,9 +661,9 @@ ID\_Marca & País\_Fabricación \\
 
 \textbf{Modelos (3FN)}
 \begin{center}
-\begin{tabular}{|l|l|l|}
+\begin{tabular}{|l|l|l|l|}
 \hline
-ID\_Modelo & Precio & Stock \\
+ID\_Modelo & ID\_Marca & Precio & Stock \\
 \hline
 \end{tabular}
 \end{center}
@@ -676,6 +676,8 @@ ID\_Instrumento & Tipo & ID\_Marca & ID\_Modelo & Material \\
 \hline
 \end{tabular}
 \end{center}
+
+Nota: Poner ID\_Marca en la tabla de Instrumentos podría ser redundante si decimos que es una relación 1:1.
 
 \subsection{Sistema de Hospital}
 
