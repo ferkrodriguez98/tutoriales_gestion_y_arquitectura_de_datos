@@ -1,0 +1,685 @@
+\documentclass{beamer}
+\usetheme{metropolis}
+
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{xcolor}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{fontawesome}
+\usepackage{booktabs}
+
+\usetikzlibrary{positioning,shapes.multipart,calc,arrows,shapes.geometric}
+
+% Definición de colores personalizados
+\definecolor{primary}{RGB}{46, 204, 113}
+\definecolor{secondary}{RGB}{52, 152, 219}
+\definecolor{accent}{RGB}{231, 76, 60}
+\definecolor{background}{RGB}{236, 240, 241}
+\definecolor{gradient1}{RGB}{255, 107, 107}
+\definecolor{gradient2}{RGB}{255, 159, 67}
+
+% Configuración del tema
+\setbeamercolor{normal text}{fg=black,bg=background}
+\setbeamercolor{structure}{fg=primary}
+\setbeamercolor{alerted text}{fg=accent}
+
+\definecolor{lightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{darkgreen}{rgb}{0,0.5,0}
+\definecolor{darkblue}{rgb}{0,0,0.5}
+
+\lstset{
+  backgroundcolor=\color{lightgray},
+  basicstyle=\tiny\ttfamily,
+  keywordstyle=\color{darkblue}\bfseries,
+  commentstyle=\color{darkgreen},
+  stringstyle=\color{red},
+  numbers=left,
+  numberstyle=\tiny\color{gray},
+  stepnumber=1,
+  numbersep=5pt,
+  showspaces=false,
+  showstringspaces=false,
+  showtabs=false,
+  frame=single,
+  tabsize=2,
+  language=SQL,
+  breaklines=true,
+  breakatwhitespace=true
+}
+
+\title{\Huge\textbf{Introducción a SQL}}
+\author{Gestión y Arquitectura de Datos}
+\date{}
+
+\begin{document}
+
+\begin{frame}
+    \titlepage
+    \begin{tikzpicture}[remember picture,overlay]
+        \node[anchor=south west,inner sep=30pt] at (current page.south west) {
+            \includegraphics[height=1cm]{../misc/UdeSA.png}
+        };
+    \end{tikzpicture}
+\end{frame}
+
+\begin{frame}{¿Qué es SQL?}
+    \begin{center}
+        \begin{tabular}{c}
+            \begin{minipage}{8cm}
+                \centering
+                {\Large \faDatabase}\\[0.3cm]
+                \textbf{Structured Query Language}\\[0.2cm]
+                {\scriptsize Lenguaje estándar para interactuar con bases de datos relacionales}
+            \end{minipage}
+        \end{tabular}
+    \end{center}
+    
+    \vspace{0.5cm}
+    
+    \textbf{Características principales:}
+    \begin{itemize}
+        \item[{\makebox[1em][c]{\textcolor{black}{\faLanguage}}}] Lenguaje declarativo
+        \item[{\makebox[1em][c]{\textcolor{black}{\faCogs}}}] Especificamos QUÉ queremos, no CÓMO
+        \item[{\makebox[1em][c]{\textcolor{black}{\faGlobe}}}] Estándar universal
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Operaciones principales en SQL}
+    \begin{center}
+        \begin{tabular}{cccc}
+            \begin{minipage}{2.2cm}
+                \centering
+                {\Large \faSearch}\\[0.2cm]
+                \textbf{SELECT}\\[0.1cm]
+                {\scriptsize Consultar datos}
+            \end{minipage} &
+            \begin{minipage}{2.2cm}
+                \centering
+                {\Large \faPlus}\\[0.2cm]
+                \textbf{INSERT}\\[0.1cm]
+                {\scriptsize Insertar datos}
+            \end{minipage} &
+            \begin{minipage}{2.2cm}
+                \centering
+                {\Large \faEdit}\\[0.2cm]
+                \textbf{UPDATE}\\[0.1cm]
+                {\scriptsize Actualizar datos}
+            \end{minipage}
+        \end{tabular}
+    \end{center}
+    
+    \vspace{0.8cm}
+    
+    \begin{center}
+        \begin{tabular}{ccc}
+            \begin{minipage}{2.2cm}
+                \centering
+                {\Large \faTrash}\\[0.2cm]
+                \textbf{DELETE}\\[0.1cm]
+                {\scriptsize Eliminar datos}
+            \end{minipage} &
+            \begin{minipage}{2.2cm}
+                \centering
+                {\Large \faCog}\\[0.2cm]
+                \textbf{CREATE}\\[0.1cm]
+                {\scriptsize Crear estructuras}
+            \end{minipage} &
+            \begin{minipage}{2.2cm}
+                \centering
+                {\Large \faWrench}\\[0.2cm]
+                \textbf{ALTER}\\[0.1cm]
+                {\scriptsize Modificar}
+            \end{minipage}
+        \end{tabular}
+    \end{center}
+\end{frame}
+
+\begin{frame}[fragile]{Estructura básica de una consulta}
+    \begin{lstlisting}[language=SQL, numbers=left, numbersep=5pt]
+SELECT columna1, columna2
+FROM tabla
+WHERE condicion;
+    \end{lstlisting}
+    
+    \vspace{0.5cm}
+    
+    \textbf{Componentes principales:}
+    \begin{itemize}
+        \item[{\makebox[1em][c]{\textcolor{black}{\faEye}}}] \textbf{SELECT}: especifica qué columnas queremos ver
+        \item[{\makebox[1em][c]{\textcolor{black}{\faTable}}}] \textbf{FROM}: indica de qué tabla obtenemos los datos
+        \item[{\makebox[1em][c]{\textcolor{black}{\faFilter}}}] \textbf{WHERE}: filtra los resultados (opcional)
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Ejemplo de consulta básica}
+    \begin{lstlisting}[language=SQL, numbers=left, numbersep=5pt]
+-- Buscar empleados con salario mayor a 50000
+SELECT nombre, apellido, salario
+FROM empleados
+WHERE salario > 50000;
+    \end{lstlisting}
+    
+    \vspace{0.3cm}
+    
+    \begin{center}
+        \begin{tabular}{ccc}
+            \toprule
+            nombre & apellido & salario \\
+            \midrule
+            Juan & Pérez & 55000 \\
+            \bottomrule
+        \end{tabular}
+    \end{center}
+\end{frame}
+
+\begin{frame}{Operadores de comparación}
+    \begin{center}
+        \begin{tabular}{ccc}
+            \begin{minipage}{2.5cm}
+                \centering
+                {\Large =}\\[0.1cm]
+                \textbf{Igual}
+            \end{minipage} &
+            \begin{minipage}{2.5cm}
+                \centering
+                {\Large <}\\[0.1cm]
+                \textbf{Menor que}
+            \end{minipage} &
+            \begin{minipage}{2.5cm}
+                \centering
+                {\Large >}\\[0.1cm]
+                \textbf{Mayor que}
+            \end{minipage}
+        \end{tabular}
+        
+        \vspace{0.5cm}
+        
+        \begin{tabular}{ccc}
+            \begin{minipage}{2.5cm}
+                \centering
+                {\Large $\leq$}\\[0.1cm]
+                \textbf{Menor o igual}
+            \end{minipage} &
+            \begin{minipage}{2.5cm}
+                \centering
+                {\Large $\geq$}\\[0.1cm]
+                \textbf{Mayor o igual}
+            \end{minipage} &
+            \begin{minipage}{2.5cm}
+                \centering
+                {\Large $\neq$}\\[0.1cm]
+                \textbf{Distinto}
+            \end{minipage}
+        \end{tabular}
+    \end{center}
+\end{frame}
+
+\begin{frame}{Operadores lógicos}
+    \begin{center}
+        \begin{tabular}{ccc}
+            \begin{minipage}{2.5cm}
+                \centering
+                {\Large \faCheck}\\[0.1cm]
+                \textbf{AND}\\[0.1cm]
+                {\scriptsize Ambas condiciones}
+            \end{minipage} &
+            \begin{minipage}{2.5cm}
+                \centering
+                {\Large \faPlus}\\[0.1cm]
+                \textbf{OR}\\[0.1cm]
+                {\scriptsize Al menos una}
+            \end{minipage} &
+            \begin{minipage}{2.5cm}
+                \centering
+                {\Large \faTimes}\\[0.1cm]
+                \textbf{NOT}\\[0.1cm]
+                {\scriptsize Negación}
+            \end{minipage}
+        \end{tabular}
+    \end{center}
+    
+    \vspace{0.5cm}
+    
+    \textbf{Ejemplo:}
+    \begin{itemize}
+        \item \texttt{salario > 50000 AND nombre = 'Juan'}
+        \item \texttt{ciudad = 'Buenos Aires' OR ciudad = 'Córdoba'}
+        \item \texttt{NOT (edad < 18)}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Operador IN}
+    \begin{center}
+        {\Large \faList}\\[0.2cm]
+        \textbf{Buscar valores en una lista}
+    \end{center}
+    
+    \vspace{0.3cm}
+    
+    \begin{lstlisting}[language=SQL, numbers=left, numbersep=5pt]
+-- Buscar empleados con apellidos especificos
+SELECT nombre, apellido
+FROM empleados
+WHERE apellido IN ('Garcia', 'Lopez');
+    \end{lstlisting}
+    
+    \vspace{0.3cm}
+    
+    \begin{center}
+        \begin{tabular}{cc}
+            \toprule
+            nombre & apellido \\
+            \midrule
+            Juan & García \\
+            María & López \\
+            \bottomrule
+        \end{tabular}
+    \end{center}
+\end{frame}
+
+\begin{frame}[fragile]{Operador BETWEEN}
+    \begin{center}
+        {\Large \faArrowsH}\\[0.2cm]
+        \textbf{Buscar valores entre dos rangos}
+    \end{center}
+    
+    \vspace{0.3cm}
+    
+    \begin{lstlisting}[language=SQL, numbers=left, numbersep=5pt]
+-- Buscar empleados con salario entre 40000 y 50000
+SELECT nombre, apellido, salario
+FROM empleados
+WHERE salario BETWEEN 40000 AND 50000;
+    \end{lstlisting}
+    
+    \vspace{0.3cm}
+    
+    \begin{center}
+        \begin{tabular}{ccc}
+            \toprule
+            nombre & apellido & salario \\
+            \midrule
+            Marcos & Gómez & 42000 \\
+            \bottomrule
+        \end{tabular}
+    \end{center}
+\end{frame}
+
+\begin{frame}[fragile]{Operador LIKE}
+    \begin{center}
+        {\Large \faSearch}\\[0.2cm]
+        \textbf{Buscar patrones en texto}
+    \end{center}
+    
+    \vspace{0.3cm}
+    
+    \textbf{Comodines:}
+    \begin{itemize}
+        \item \textbf{\%} cualquier cantidad de caracteres
+        \item \textbf{\_} un único caracter
+    \end{itemize}
+    
+    \vspace{0.3cm}
+    
+    \begin{lstlisting}[language=SQL, numbers=left, numbersep=5pt]
+-- Apellidos que terminan en G
+SELECT nombre, apellido
+FROM empleados
+WHERE apellido LIKE '%G';
+
+-- Apellidos que empiezan con G
+SELECT nombre, apellido
+FROM empleados
+WHERE apellido LIKE 'G%';
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Valores NULL}
+    \begin{center}
+        {\Large \faQuestionCircle}\\[0.2cm]
+        \textbf{Representa la ausencia de un valor}
+    \end{center}
+    
+    \vspace{0.3cm}
+    
+    \textbf{Operadores para NULL:}
+    \begin{itemize}
+        \item[{\makebox[1em][c]{\textcolor{black}{\faCheck}}}] \textbf{IS NULL}: verificar si es NULL
+        \item[{\makebox[1em][c]{\textcolor{black}{\faTimes}}}] \textbf{IS NOT NULL}: verificar si NO es NULL
+    \end{itemize}
+    
+    \vspace{0.3cm}
+    
+    \begin{lstlisting}[language=SQL, numbers=left, numbersep=5pt]
+-- Buscar empleados sin telefono
+SELECT nombre, telefono
+FROM empleados
+WHERE telefono IS NULL;
+    \end{lstlisting}
+    
+    \vspace{0.3cm}
+    
+    \begin{center}
+        \begin{tabular}{cc}
+            \toprule
+            nombre & telefono \\
+            \midrule
+            Carlos & NULL \\
+            \bottomrule
+        \end{tabular}
+    \end{center}
+\end{frame}
+
+
+\begin{frame}[fragile]{ORDER BY}
+    \begin{center}
+        \textbf{Ordenar resultados}
+    \end{center}
+    
+    \textbf{Opciones de ordenamiento:}
+    \begin{itemize}
+        \item[{\makebox[1em][c]{\textcolor{black}{\faArrowUp}}}] \textbf{ASC}: ascendente (por defecto)
+        \item[{\makebox[1em][c]{\textcolor{black}{\faArrowDown}}}] \textbf{DESC}: descendente
+    \end{itemize}
+
+    \begin{lstlisting}[language=SQL, numbers=left, numbersep=5pt]
+-- Ordenar por edad descendente
+SELECT nombre, apellido, edad
+FROM empleados
+ORDER BY edad DESC;
+    \end{lstlisting}
+    
+    \vspace{0.3cm}
+    
+    \begin{center}
+        \begin{tabular}{ccc}
+            \toprule
+            nombre & apellido & edad \\
+            \midrule
+            Carlos & López & 45 \\
+            María & García & 35 \\
+            Juan & Pérez & 30 \\
+            \bottomrule
+        \end{tabular}
+    \end{center}
+\end{frame}
+
+\begin{frame}[fragile]{Alias}
+    \begin{center}
+        {\Large \faTag}\\[0.2cm]
+        \textbf{Nombres temporales para tablas o columnas}
+    \end{center}
+    
+    \vspace{0.3cm}
+    
+    \textbf{Tipos de alias:}
+    \begin{itemize}
+        \item[{\makebox[1em][c]{\textcolor{black}{\faTable}}}] \textbf{Alias de tablas}: \texttt{empleados AS e}
+        \item[{\makebox[1em][c]{\textcolor{black}{\faColumns}}}] \textbf{Alias de columnas}: \texttt{nombre AS nombre\_empleado}
+    \end{itemize}
+    
+    \vspace{0.3cm}
+    
+    \begin{lstlisting}[language=SQL, numbers=left, numbersep=5pt]
+-- Usando alias
+SELECT 
+    e.nombre AS nombre_empleado,
+    e.salario AS sueldo_mensual
+FROM empleados e
+WHERE e.salario > 50000;
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Funciones de agregación}
+    \begin{center}
+        \begin{tabular}{ccc}
+            \begin{minipage}{2.5cm}
+                \centering
+                {\Large \faCalculator}\\[0.1cm]
+                \textbf{COUNT()}\\[0.1cm]
+                {\scriptsize Contar registros}
+            \end{minipage} &
+            \begin{minipage}{2.5cm}
+                \centering
+                {\Large \faPlus}\\[0.1cm]
+                \textbf{SUM()}\\[0.1cm]
+                {\scriptsize Sumar valores}
+            \end{minipage} &
+            \begin{minipage}{2.5cm}
+                \centering
+                {\Large \faBarChart}\\[0.1cm]
+                \textbf{AVG()}\\[0.1cm]
+                {\scriptsize Promedio}
+            \end{minipage}
+        \end{tabular}
+        
+        \vspace{0.5cm}
+        
+        \begin{tabular}{cc}
+            \begin{minipage}{2.5cm}
+                \centering
+                {\Large \faArrowUp}\\[0.1cm]
+                \textbf{MAX()}\\[0.1cm]
+                {\scriptsize Valor máximo}
+            \end{minipage} &
+            \begin{minipage}{2.5cm}
+                \centering
+                {\Large \faArrowDown}\\[0.1cm]
+                \textbf{MIN()}\\[0.1cm]
+                {\scriptsize Valor mínimo}
+            \end{minipage}
+        \end{tabular}
+    \end{center}
+\end{frame}
+
+\begin{frame}[fragile]{Ejemplo de funciones de agregación}
+    \begin{lstlisting}[language=SQL, numbers=left, numbersep=5pt]
+-- Estadisticas de empleados
+SELECT 
+    COUNT(*) as total_empleados,
+    SUM(salario) as total_salarios,
+    AVG(salario) as salario_promedio,
+    MAX(salario) as salario_maximo,
+    MIN(salario) as salario_minimo
+FROM empleados;
+    \end{lstlisting}
+    
+    \vspace{0.3cm}
+    
+    \begin{center}
+    \resizebox{\textwidth}{!}{
+    \begin{tabular}{ccccc}
+        \toprule
+        total\_empleados & total\_salarios & salario\_promedio & salario\_maximo & salario\_minimo \\
+        \midrule
+        3 & 155000 & 51666.67 & 60000 & 45000 \\
+        \bottomrule
+    \end{tabular}
+    }
+    \end{center}
+\end{frame}
+
+\begin{frame}[fragile]{GROUP BY}
+    \begin{center}
+        {\Large \faUsers}\\[0.2cm]
+        \textbf{Agrupar resultados por columnas}
+    \end{center}
+    
+    \vspace{0.3cm}
+    
+    \begin{lstlisting}[language=SQL, numbers=left, numbersep=5pt]
+-- Estadisticas por departamento
+SELECT 
+    departamento,
+    COUNT(*) as cantidad_empleados,
+    AVG(salario) as salario_promedio
+FROM empleados
+GROUP BY departamento;
+    \end{lstlisting}
+    
+    \vspace{0.3cm}
+    
+    \begin{center}
+        \begin{tabular}{ccc}
+            \toprule
+            departamento & cantidad\_empleados & salario\_promedio \\
+            \midrule
+            Ventas & 2 & 55000 \\
+            IT & 1 & 45000 \\
+            \bottomrule
+        \end{tabular}
+    \end{center}
+\end{frame}
+
+\begin{frame}{Tipos de JOIN}
+    \begin{center}
+        {\Large \faLink}\\[0.2cm]
+        \textbf{Combinar filas de dos o más tablas}
+    \end{center}
+    
+    \vspace{0.5cm}
+    
+    \begin{center}
+        \begin{tabular}{ccc}
+            \begin{minipage}{2.5cm}
+                \centering
+                {\Large \faCheck}\\[0.1cm]
+                \textbf{INNER JOIN}\\[0.1cm]
+                {\scriptsize Solo coincidencias entre ambas tablas}
+            \end{minipage} &
+            \begin{minipage}{2.5cm}
+                \centering
+                {\Large \faArrowLeft}\\[0.1cm]
+                \textbf{LEFT JOIN}\\[0.1cm]
+                {\scriptsize Todos los de la izquierda}
+            \end{minipage} &
+            \begin{minipage}{2.5cm}
+                \centering
+                {\Large \faArrowRight}\\[0.1cm]
+                \textbf{RIGHT JOIN}\\[0.1cm]
+                {\scriptsize Todos los de la derecha}
+            \end{minipage}
+        \end{tabular}
+        
+        \vspace{0.5cm}
+        
+        \begin{minipage}{2.5cm}
+            \centering
+            {\Large \faArrows}\\[0.1cm]
+            \textbf{FULL JOIN}\\[0.1cm]
+            {\scriptsize Todas las filas}
+        \end{minipage}
+    \end{center}
+\end{frame}
+
+\begin{frame}[fragile]{Ejemplo de INNER JOIN}
+    \begin{lstlisting}[language=SQL, numbers=left, numbersep=5pt]
+-- Combinar empleados con departamentos
+SELECT e.nombre, d.nombre_departamento
+FROM empleados e
+INNER JOIN departamentos d ON e.id_departamento = d.id;
+    \end{lstlisting}
+    
+    \vspace{0.3cm}
+    
+    \begin{center}
+        \begin{tabular}{cc}
+            \toprule
+            nombre & nombre\_departamento \\
+            \midrule
+            Juan & Ventas \\
+            María & IT \\
+            Carlos & Ventas \\
+            \bottomrule
+        \end{tabular}
+    \end{center}
+\end{frame}
+
+\begin{frame}[fragile]{Ejemplo de LEFT JOIN}
+    \begin{lstlisting}[language=SQL, numbers=left, numbersep=5pt]
+-- Todos los empleados, con departamento si existe
+SELECT e.nombre, d.nombre_departamento
+FROM empleados e
+LEFT JOIN departamentos d ON e.id_departamento = d.id;
+    \end{lstlisting}
+    
+    \vspace{0.3cm}
+    
+    \begin{center}
+        \begin{tabular}{cc}
+            \toprule
+            nombre & nombre\_departamento \\
+            \midrule
+            Juan & Ventas \\
+            María & IT \\
+            Carlos & Ventas \\
+            Pedro & NULL \\
+            \bottomrule
+        \end{tabular}
+    \end{center}
+\end{frame}
+
+\begin{frame}[fragile]{Ejemplo de RIGHT JOIN}
+    \begin{lstlisting}[language=SQL, numbers=left, numbersep=5pt]
+-- Todos los departamentos, con empleados si existen
+SELECT e.nombre, d.nombre_departamento
+FROM empleados e
+RIGHT JOIN departamentos d ON e.id_departamento = d.id;
+    \end{lstlisting}
+    
+    \vspace{0.3cm}
+    
+    \begin{center}
+        \begin{tabular}{cc}
+            \toprule
+            nombre & nombre\_departamento \\
+            \midrule
+            Juan & Ventas \\
+            María & IT \\
+            Carlos & Ventas \\
+            NULL & Marketing \\
+            \bottomrule
+        \end{tabular}
+    \end{center}
+\end{frame}
+
+\begin{frame}[fragile]{Ejemplo de FULL JOIN}
+    \begin{lstlisting}[language=SQL, numbers=left, numbersep=5pt]
+-- Todas las filas de ambas tablas
+SELECT e.nombre, d.nombre_departamento
+FROM empleados e
+FULL JOIN departamentos d ON e.id_departamento = d.id;
+    \end{lstlisting}
+    
+    \vspace{0.3cm}
+    
+    \begin{center}
+        \begin{tabular}{cc}
+            \toprule
+            nombre & nombre\_departamento \\
+            \midrule
+            Juan & Ventas \\
+            María & IT \\
+            Carlos & Ventas \\
+            Pedro & NULL \\
+            NULL & Marketing \\
+            \bottomrule
+        \end{tabular}
+    \end{center}
+\end{frame}
+
+\begin{frame}{Terminamos}
+    \begin{center}
+        \Large{\textbf{¿Dudas?\\¿Consultas?}}
+    \end{center}
+    \begin{tikzpicture}[remember picture,overlay]
+        \node[anchor=south,inner sep=30pt] at (current page.south) {
+            \includegraphics[height=1cm]{../misc/UdeSA.png}
+        };
+    \end{tikzpicture}
+\end{frame}
+
+\end{document}
