@@ -249,14 +249,14 @@ SET carrito:1 "['producto1', 'producto2']"
         \midrule
         MongoDB & CP & Availability \\
         Cassandra & AP & Consistency \\
-        Redis & CP & Availability \\
+        Redis & AP & Consistency \\
         Neo4j & CA & Partition Tolerance \\
         \bottomrule
         \end{tabular}
     \end{center}
     
     \vspace{0.5cm}
-    \textbf{Nota}: MongoDB es configurable para priorizar Consistency o Availability.
+    \textbf{Nota}: MongoDB es configurable para priorizar Consistency o Availability. Redis por defecto prioriza AP (replicación asíncrona), pero puede configurarse como CP.
 \end{frame}
 
 \begin{frame}{Cuándo Usar NoSQL}

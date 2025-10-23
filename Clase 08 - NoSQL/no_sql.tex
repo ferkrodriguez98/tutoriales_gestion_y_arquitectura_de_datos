@@ -163,13 +163,13 @@ Base de Datos & Prioriza & Sacrifica \\
 \midrule
 MongoDB & CP & Availability \\
 Cassandra & AP & Consistency \\
-Redis & CP & Availability \\
+Redis & AP & Consistency \\
 Neo4j & CA & Partition Tolerance \\
 \bottomrule
 \end{tabular}
 \end{center}
 
-\textbf{Nota}: MongoDB es configurable para priorizar Consistency o Availability (modo CP o modo AP, por defecto es CP). Neo4J no tolera particiones.
+\textbf{Nota}: MongoDB es configurable para priorizar Consistency o Availability (modo CP o modo AP, por defecto es CP). Redis por defecto prioriza AP (replicación asíncrona), pero puede configurarse como CP con replicación síncrona. Neo4J no tolera particiones.
 
 
 \section{Cuándo Usar NoSQL}
