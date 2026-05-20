@@ -1,0 +1,243 @@
+\documentclass[12pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[spanish]{babel}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{forest}
+\usepackage{float}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{array}
+\usepackage{tabularx}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+
+\sloppy
+\setlength{\parindent}{0pt}
+
+\begin{document}
+
+\begin{center}
+  {\LARGE \textbf{Trabajo Práctico Grupal \\ Stacks Enterprise de Datos}}\\[0.5em]
+  {Gestión y Arquitectura de Datos, Universidad de San Andrés}
+\end{center}
+
+\section{Introducción}
+
+A lo largo del curso vieron distintos paradigmas para gestionar datos: bases relacionales, normalización, SQL, y las cuatro grandes familias de NoSQL (documental, clave-valor, columnar y grafos). También discutimos el teorema CAP y los trade-offs que aparecen cuando un sistema crece.
+
+\bigskip
+
+En el mundo real, las empresas no usan una sola base de datos: combinan varias tecnologías en lo que se conoce como un \textbf{stack de datos}. Un stack es un conjunto de herramientas integradas que cubren todo el ciclo de vida del dato: ingesta, almacenamiento, procesamiento, transformación y consumo final (dashboards, reportes, aplicaciones).
+
+\bigskip
+
+El objetivo de este trabajo es que investiguen un stack enterprise real, entiendan cómo se integran sus piezas, y se lo expliquen al resto de la clase. La presentación se realizará en la \textbf{Clase 10}, y servirá como punto de partida para la discusión sobre arquitecturas analíticas.
+
+\section{Modalidad}
+
+\begin{itemize}
+    \item Se dividirán en \textbf{grupos de 2 a 4 personas}.
+    \item Cada grupo recibe un stack \textbf{por sorteo} al final de la Clase 9. No puede haber dos grupos con el mismo stack.
+    \item La entrega consiste en una \textbf{presentación oral grupal} de 12 a 15 minutos, seguida de 5 minutos de preguntas.
+    \item Las slides son obligatorias. Todos los integrantes deben hablar durante la exposición.
+    \item La presentación se realiza en la \textbf{Clase 10}.
+\end{itemize}
+
+\section{Stacks Disponibles}
+
+\subsection{Stack 1: Google Cloud Platform (GCP)}
+El stack de datos de Google. Tiene sentido que sea uno de los más fuertes del mercado porque Google viene manejando volúmenes absurdos de datos desde hace décadas (búsqueda, YouTube, Gmail) y mucho de lo que después se volvió estándar en la industria salió de papers de Google: MapReduce, BigTable, Dremel.
+
+\bigskip
+
+El componente central es BigQuery, un data warehouse serverless. Serverless quiere decir que el usuario no administra ni servidores ni clusters: tira queries y Google se encarga del resto. Se cobra por la cantidad de datos que escanea cada query. Lo eligen mucho las empresas que no quieren pelearse con infraestructura.
+
+\bigskip
+
+Componentes principales: \textbf{BigQuery}, \textbf{Cloud Storage}, \textbf{Dataflow}, \textbf{Pub/Sub}, \textbf{Dataproc} y \textbf{Looker}.
+
+\subsection{Stack 2: Amazon Web Services (AWS)}
+AWS fue el primero en el negocio del cloud moderno (lanzó S3 en 2006) y hoy sigue siendo el que más mercado tiene. Su stack de datos es enorme: tiene un servicio para prácticamente cualquier problema, lo que también significa que hay que conocer muchas piezas para armar algo razonable.
+
+\bigskip
+
+S3 es la base de casi todo el stack analítico de AWS y probablemente sea el sistema de almacenamiento más usado del mundo. Comparado con GCP, AWS es más modular: te da las piezas, vos las integrás. Más flexibilidad, más complejidad.
+
+\bigskip
+
+Componentes principales: \textbf{Amazon S3}, \textbf{Redshift}, \textbf{AWS Glue}, \textbf{Kinesis}, \textbf{Athena}, \textbf{EMR} y \textbf{QuickSight}.
+
+\subsection{Stack 3: Microsoft Azure}
+El stack de datos de Microsoft. Donde más pega es en empresas que ya viven en el mundo Microsoft: Office 365, Active Directory, SQL Server, Windows Server. Si ya usás Power BI todos los días, sumar Azure es el camino natural.
+
+\bigskip
+
+La pieza más característica es Synapse Analytics, que junta data warehouse, data lake y herramientas de integración en un solo producto. La idea es no tener que armarlo con piezas sueltas.
+
+\bigskip
+
+Componentes principales: \textbf{Azure Synapse Analytics}, \textbf{Azure Data Lake Storage}, \textbf{Azure Data Factory}, \textbf{Event Hubs}, \textbf{Azure Databricks} y \textbf{Power BI}.
+
+\subsection{Stack 4: Databricks Lakehouse}
+Databricks fue fundada por los mismos que crearon Apache Spark en Berkeley. Su aporte principal es la idea de \emph{lakehouse}: combinar lo bueno de un data warehouse (consultas SQL rápidas, transacciones) con lo bueno de un data lake (almacenamiento barato, cualquier tipo de dato).
+
+\bigskip
+
+A diferencia de los stacks de los gigantes cloud, Databricks corre arriba de AWS, Azure o GCP. Es decir, no te casás con un solo proveedor. Donde más se usa es en empresas que mezclan analytics con machine learning.
+
+\bigskip
+
+Componentes principales: \textbf{Delta Lake}, \textbf{Apache Spark}, \textbf{Unity Catalog}, \textbf{MLflow} y \textbf{Databricks SQL}.
+
+\subsection{Stack 5: Snowflake}
+Snowflake apareció en 2014 con una propuesta distinta: hacer un data warehouse cloud desde cero, sin reciclar nada de los warehouses tradicionales como Teradata, Oracle o Vertica. Su idea más copiada fue separar almacenamiento de cómputo. El dato vive en object storage barato y aparte se levantan \emph{warehouses} (clusters de cómputo) cuando hacen falta, y se apagan cuando no.
+
+\bigskip
+
+Otra cosa que ayudó a que explotara comercialmente es que corre sobre los tres grandes clouds (AWS, Azure, GCP) sin estar atado a ninguno. Su salida a bolsa en 2020 fue la IPO más grande de la historia del software.
+
+\bigskip
+
+Componentes principales: \textbf{Snowflake (motor)}, \textbf{Snowpipe}, \textbf{Streams \& Tasks}, \textbf{Snowpark}, \textbf{Snowflake Marketplace} y \textbf{Time Travel}.
+
+\subsection{Stack 6: Modern Data Stack (Best-of-Breed)}
+A diferencia de los anteriores, donde un solo proveedor te da todo, el llamado Modern Data Stack es más una filosofía: armar el stack con la mejor herramienta de cada categoría. Todas SaaS, todas conectándose entre sí. Empezó a tomar forma entre 2018 y 2020 con la maduración de productos como dbt, Fivetran y Looker.
+
+\bigskip
+
+Es el stack de moda en startups y empresas data-driven. Permite arrancar rápido porque todo viene plug-and-play y escala sin tener que reescribir la arquitectura. La contra es que la suma de varios contratos SaaS puede salir bastante cara.
+
+\bigskip
+
+Componentes típicos: \textbf{Fivetran} o \textbf{Airbyte} (ingesta), \textbf{dbt} (transformación), \textbf{Snowflake} o \textbf{BigQuery} (almacenamiento), \textbf{Airflow} o \textbf{Dagster} (orquestación), \textbf{Looker} o \textbf{Metabase} (visualización).
+
+\subsection{Stack 7: Confluent / Streaming}
+Todos los stacks anteriores están pensados principalmente para procesamiento por lotes (\emph{batch}). El de Confluent va por otro lado: datos en tiempo real. El corazón es Apache Kafka, que nació en LinkedIn para mover billones de eventos por día entre sistemas.
+
+\bigskip
+
+Confluent es la empresa fundada por los creadores de Kafka, que vende una versión enterprise y managed. Este stack es lo que hay abajo de casi cualquier sistema moderno que tenga que reaccionar a eventos en milisegundos: detección de fraude, recomendaciones en vivo, tracking de logística, telemetría de IoT.
+
+\bigskip
+
+Componentes principales: \textbf{Apache Kafka}, \textbf{Kafka Connect}, \textbf{ksqlDB}, \textbf{Schema Registry}, \textbf{Apache Flink} y \textbf{Confluent Cloud}.
+
+\subsection{Stack 8: Hadoop Ecosystem (Open Source Tradicional)}
+Hadoop fue \emph{el} stack de Big Data en la década del 2010. Salió de los papers de Google sobre MapReduce y GFS, y fue el primero que demostró que se podía procesar petabytes de datos arriba de hardware comercial. Yahoo!, Facebook, Twitter y LinkedIn armaron sus primeras plataformas de datos sobre Hadoop.
+
+\bigskip
+
+Hoy ya se considera medio \emph{legacy}. Mantener un cluster propio es un dolor de cabeza y los stacks cloud lo desplazaron en muchos casos. Igual sigue siendo importante: muchísimas empresas todavía lo usan en producción, y conceptualmente dio origen a casi todo lo que vino después (Spark, Hive, los formatos Parquet y ORC, etc.).
+
+\bigskip
+
+Componentes principales: \textbf{HDFS}, \textbf{Hive}, \textbf{Apache Spark}, \textbf{Apache Airflow}, \textbf{Presto/Trino} y \textbf{Apache Superset}.
+
+\section{Contenido de la Presentación}
+
+Cada grupo debe cubrir los siguientes puntos en su exposición. El orden es sugerido pero pueden adaptarlo.
+
+\subsection{Visión general del stack}
+\begin{itemize}
+    \item ¿Quién provee este stack? ¿Es de una empresa única o una combinación de herramientas independientes?
+    \item ¿Cuándo surgió y qué problema vino a resolver?
+    \item ¿Es propietario, open source, o híbrido?
+    \item Modelo de negocio: ¿cómo se cobra? (pago por uso, suscripción, licencias, etc.)
+\end{itemize}
+
+\subsection{Diagrama de arquitectura}
+\begin{itemize}
+    \item Hagan un diagrama que muestre cómo fluye un dato desde su origen hasta su consumo final.
+    \item Identifiquen claramente las etapas: \textbf{ingesta}, \textbf{almacenamiento}, \textbf{procesamiento/transformación} y \textbf{consumo}.
+    \item Indiquen qué componente del stack cubre cada etapa.
+\end{itemize}
+
+\subsection{Componente por componente}
+Para cada herramienta principal del stack, expliquen:
+\begin{itemize}
+    \item Qué hace y por qué existe.
+    \item Qué tipo de datos maneja (estructurados, semi-estructurados, no estructurados).
+    \item Cómo se integra con el resto del stack.
+\end{itemize}
+
+\subsection{Conexión con los conceptos del curso}
+Esta sección es \textbf{obligatoria} y es la que más valoramos. Respondan:
+\begin{itemize}
+    \item ¿Qué componentes del stack son \textbf{SQL/relacionales} y cuáles son \textbf{NoSQL}? Si hay NoSQL, ¿de qué tipo (documental, clave-valor, columnar, grafos)?
+    \item ¿Dónde aparecen los \textbf{trade-offs del teorema CAP} en este stack? ¿Hay componentes que prioricen consistencia y otros disponibilidad?
+    \item ¿Hay algún componente que use un \textbf{modelo de datos o paradigma que no vimos en clase}? Nómbrenlo (no hace falta que lo expliquen en profundidad).
+\end{itemize}
+
+\subsection{Casos de uso reales}
+\begin{itemize}
+    \item Mencionen al menos \textbf{2 empresas conocidas} que usen este stack y para qué.
+    \item ¿En qué tipo de industria o escenario es la mejor opción?
+    \item ¿En qué casos \textbf{no} conviene usar este stack?
+\end{itemize}
+
+\subsection{Comparación con otro stack}
+\begin{itemize}
+    \item Comparen su stack con al menos uno de los otros que están investigando sus compañeros.
+    \item ¿Por qué una empresa elegiría este sobre el otro?
+    \item ¿Qué tan difícil sería migrar de uno al otro? (concepto de \emph{vendor lock-in})
+\end{itemize}
+
+\section{Criterios de Evaluación}
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{lXc}
+\toprule
+\textbf{Criterio} & \textbf{Qué evaluamos} & \textbf{Peso} \\
+\midrule
+Rigor técnico & Que la información sea correcta y no marketing. Que entiendan lo que están explicando. & 30\% \\
+\addlinespace
+Conexión con el curso & Calidad de la sección que relaciona el stack con los conceptos vistos (SQL/NoSQL, CAP, etc.). & 25\% \\
+\addlinespace
+Diagrama y claridad & Que el diagrama de arquitectura sea claro y que la presentación tenga buena estructura. & 20\% \\
+\addlinespace
+Casos de uso y comparación & Profundidad del análisis de cuándo conviene el stack y comparación con alternativas. & 15\% \\
+\addlinespace
+Respuesta a preguntas & Capacidad del grupo para responder preguntas del docente y de sus compañeros. & 10\% \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Recomendaciones}
+
+\begin{itemize}
+    \item \textbf{No se queden en el marketing.} Las páginas oficiales venden el producto. Busquen blogs técnicos, comparaciones independientes y casos de estudio reales. Los blogs de ingeniería de Spotify, Netflix, Uber o Airbnb suelen publicar sobre sus stacks.
+    \item \textbf{No traten de cubrir todo.} Es mejor explicar 4-5 componentes bien que listar 15 superficialmente.
+    \item \textbf{Practiquen la presentación} antes de la clase. 12-15 minutos pasan rápido.
+\end{itemize}
+
+\end{document}

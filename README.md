@@ -12,11 +12,9 @@ Este repositorio contiene los materiales, notebooks, apuntes y recursos de las c
 - [Clase 06 - SQL Parte 1](/Clase%2006%20-%20SQL%20Parte%201/): Introducción a SQL. Data Definition Language y Data Manipulation Language.
 - [Clase 07 - SQL Parte 2](/Clase%2007%20-%20SQL%20Parte%202/): SQL Avanzado. Having, sub-queries, window functions, CTEs y optimización de consultas.
 - [Clase 08 - NoSQL](/Clase%2008%20-%20NoSQL/): NoSQL. Bases de datos agregadas y sin esquema.
-- [Clase 09 - NoSQL - Clase Práctica](/Clase%2009%20-%20NoSQL%20-%20Clase%20Práctica/): Resolución de casos prácticos de la guía.
-- [Clase 10 - Arquitecturas Analíticas](/Clase%2010%20-%20Arquitecturas%20Analíticas/): Data Lakes, Data Warehouses & Data Marts
-- [Clase 11 - Casos Integradores](/Clase%2011%20-%20Casos%20Integradores/): Presentación por parte de los tutores de lo que será el trabajo integrador de tutoriales.
-- Clase 12 - Presentación de Casos Integradores: Presentación de los casos resueltos por los alumnos.
-- Clase 13 - Repaso: Repaso para el final. Cierre de las tutoriales.
+- [Clase 09 - TP Enterprise](/Clase%2009%20-%20TP%20Enterprise/): Presentación del Trabajo Práctico sobre tecnologías entreprise.
+- [Clase 11 - Arquitecturas Analíticas](/Clase%2011%20-%20Arquitecturas%20Analíticas/): Data Lakes, Data Warehouses & Data Marts
+- [Clase 12 - Casos Integradores](/Clase%2012%20-%20Casos%20Integradores/): Presentación por parte de los tutores de lo que será el trabajo integrador de tutoriales.
 
 ## Cronograma
 
