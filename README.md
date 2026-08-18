@@ -18,20 +18,25 @@ Este repositorio contiene los materiales, notebooks, apuntes y recursos de las c
 
 ## Cronograma
 
-| # Clase | Giacchetta (Martes) | Lapidus (Martes) | Rodríguez del Castillo (Miércoles) | Rodríguez del Castillo (Jueves) |
-|:------:|:-----------:|:-----------:|:-----------:|:-----------:|
-|   X    | **SIN** | **TUTORIALES** | **LA PRIMERA** | **SEMANA** |
-|   1    | 10/03 | 10/03 | 11/03 | 12/03 |
-|   2    | 17/03 | 17/03 | 18/03 | 19/03 |
-|   3    | 24/03 (Feriado) | 24/03 (Feriado) | 25/03 | 26/03 |
-|   4    | 31/03 | 31/03 | 01/04 | 02/04 (Feriado) |
-|   5    | 07/04 | 07/04 | 08/04 | 09/04 |
-|   6    | 14/04 | 14/04 | 15/04 | 16/04 |
-|   7    | 21/04 | 21/04 | 22/04 | 23/04 |
-|   8    | 28/04 | 28/04 | 29/04 | 30/04 |
-|   -    | **PARCIALES** | **PARCIALES** | **PARCIALES** | **PARCIALES** |
-|   9    | 12/05 | 12/05 | 13/05 | 14/05 |
-|   10   | 19/05 | 19/05 | 20/05 | 21/05 |
-|   11   | 26/05 | 26/05 | 27/05 | 28/05 |
-|   12   | 02/06 | 02/06 | 03/06 | 04/06 |
-|   13   | 09/06 | 09/06 | 10/06 | 11/06 |
+Las clases tutoriales están a cargo de Rodríguez del Castillo y son los martes.
+
+| # Clase | Rodríguez del Castillo (Martes) |
+|:------:|:-----------:|
+|   X    | 04/08 — **Sin tutoriales la primera semana** |
+|   1    | 11/08 |
+|   2    | 18/08 |
+|   3    | 25/08 |
+|   4    | 01/09 |
+|   5    | 08/09 |
+|   6    | 15/09 |
+|   7    | 22/09 |
+|   -    | **PARCIALES** |
+|   X    | 13/10 — **Sin tutoriales la primera semana post-parciales** |
+|   8    | 20/10 |
+|   9    | 27/10 |
+|   10   | 03/11 |
+|   11   | 10/11 |
+|   12   | 17/11 |
+|   13   | 24/11 |
+
+Nota: No hay tutoriales la primera semana de clases ni la primera después de los parciales.
