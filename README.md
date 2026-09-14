@@ -9,8 +9,8 @@ Este repositorio contiene los materiales, notebooks, apuntes y recursos de las c
 - [Clase 03 - DER - Clase Práctica](/Clase%2003%20-%20DER%20-%20Clase%20Práctica/): Resolución de casos prácticos de la guía. 
 - [Clase 04 - Normalización](/Clase%2004%20-%20Normalización/): Normalización de datos. Pasar de 1FN a 3FN.
 - [Clase 05 - Normalización - Clase Práctica](/Clase%2005%20-%20Normalización%20-%20Clase%20Práctica/): Resolución de casos prácticos de la guía.
-- [Clase 06 - SQL Parte 1](/Clase%2006%20-%20SQL%20Parte%201/): Introducción a SQL. Data Definition Language y Data Manipulation Language.
-- [Clase 07 - SQL Parte 2](/Clase%2007%20-%20SQL%20Parte%202/): SQL Avanzado. Having, sub-queries, window functions, CTEs y optimización de consultas.
+- [Clase 06 - SQL](/Clase%2006%20-%20SQL/): Introducción a SQL. Data Definition Language y Data Manipulation Language. Funciones de agregación, GROUP BY, HAVING y JOINs.
+- [Clase 07 - SQL - Clase Práctica](/Clase%2007%20-%20SQL%20-%20Clase%20Práctica/): Resolución de casos prácticos de la guía.
 - [Clase 08 - NoSQL](/Clase%2008%20-%20NoSQL/): NoSQL. Bases de datos agregadas y sin esquema.
 - [Clase 09 - TP Enterprise](/Clase%2009%20-%20TP%20Enterprise/): Presentación del Trabajo Práctico sobre tecnologías entreprise.
 - [Clase 11 - Arquitecturas Analíticas](/Clase%2011%20-%20Arquitecturas%20Analíticas/): Data Lakes, Data Warehouses & Data Marts
